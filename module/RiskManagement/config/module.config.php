@@ -612,7 +612,12 @@ return [
         'RiskManagement\\V1\\Rest\\Sport\\Validator' => [
             0 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'sport_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing sports',
