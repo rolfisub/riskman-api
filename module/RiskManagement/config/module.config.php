@@ -771,7 +771,9 @@ return [
                 'filters' => [
                     0 => [
                         'name' => \Zend\Filter\DateTimeFormatter::class,
-                        'options' => [],
+                        'options' => [
+                            'format' => 'Y-m-d H:i:s',
+                        ],
                     ],
                 ],
                 'name' => 'start_time',
@@ -892,7 +894,15 @@ return [
         'RiskManagement\\V1\\Rest\\Odd\\Validator' => [
             0 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'odd_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing odds',
@@ -900,7 +910,15 @@ return [
             ],
             1 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '64',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'name',
                 'description' => 'Odd name',
@@ -908,15 +926,35 @@ return [
             ],
             2 => [
                 'required' => false,
-                'validators' => [],
-                'filters' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\DateTime::class,
+                        'options' => [],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\DateTimeFormatter::class,
+                        'options' => [
+                            'format' => 'Y-m-d H:i:s',
+                        ],
+                    ],
+                ],
                 'name' => 'odd_start_time',
                 'description' => 'Odd start time, if none provided event start time assumed, if event_id doesn’t exists and odd_start_time not provided results in error',
                 'field_type' => 'Varchar(32)',
             ],
             3 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'event_id',
                 'description' => 'Existing event_id to create an odd for',
@@ -924,7 +962,15 @@ return [
             ],
             4 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '64',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'event_name',
                 'field_type' => 'Varchar(64)',
@@ -932,15 +978,40 @@ return [
             ],
             5 => [
                 'required' => false,
-                'validators' => [],
-                'filters' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\DateTime::class,
+                        'options' => [],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\DateTimeFormatter::class,
+                        'options' => [
+                            'format' => 'Y-m-d H:i:s',
+                        ],
+                    ],
+                ],
                 'name' => 'event_start_time',
                 'description' => 'if creating a new event, it is required. If just assigning an eisting event then it is not required.',
                 'field_type' => 'Varchar(32)',
             ],
             6 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\Digits::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Validator\Between::class,
+                        'options' => [
+                            'max' => '1',
+                            'min' => '0',
+                            'inclusive' => true,
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'asian_handicap',
                 'description' => 'notes if the odd should be handled as an asian handicap or not',
@@ -950,7 +1021,19 @@ return [
         'RiskManagement\\V1\\Rest\\OddSelection\\Validator' => [
             0 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'odd_selection_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing oddselections',
@@ -958,7 +1041,19 @@ return [
             ],
             1 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                    1 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'odd_id',
                 'description' => 'Existing odd_id to create an oddselection for',
@@ -966,7 +1061,15 @@ return [
             ],
             2 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '64',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'selection_name',
                 'description' => 'selection name or team name',
@@ -974,15 +1077,39 @@ return [
             ],
             3 => [
                 'required' => false,
-                'validators' => [],
-                'filters' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\DateTime::class,
+                        'options' => [],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\DateTimeFormatter::class,
+                        'options' => [
+                            'format' => 'Y-m-d H:i:s',
+                        ],
+                    ],
+                ],
                 'name' => 'odd_start_time',
                 'description' => 'if creating a new odd is required, or if updating exisiting one then is not',
                 'field_type' => 'Varchar(32)',
             ],
             4 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                    1 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'event_id',
                 'description' => 'if new odd is created, event_id is required, if existing event id will update the other fields',
@@ -990,7 +1117,15 @@ return [
             ],
             5 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '64',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'event_name',
                 'description' => 'update event name if existis or event name if creating a new one',
@@ -998,8 +1133,20 @@ return [
             ],
             6 => [
                 'required' => false,
-                'validators' => [],
-                'filters' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\DateTime::class,
+                        'options' => [],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\DateTimeFormatter::class,
+                        'options' => [
+                            'format' => 'Y-m-d H:i:s',
+                        ],
+                    ],
+                ],
                 'name' => 'event_start_time',
                 'description' => 'if creating a enw event is required, if not just updates the event time',
                 'field_type' => 'Varchar(32)',
@@ -1024,7 +1171,19 @@ return [
         'RiskManagement\\V1\\Rest\\Player\\Validator' => [
             0 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                    1 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'player_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing players',
@@ -1032,7 +1191,15 @@ return [
             ],
             1 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '64',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'name',
                 'description' => 'player name',
@@ -1042,7 +1209,19 @@ return [
         'RiskManagement\\V1\\Rest\\Single\\Validator' => [
             0 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                    1 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'single_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing singles',
@@ -1050,7 +1229,19 @@ return [
             ],
             1 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                    1 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'event_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing events',
@@ -1058,7 +1249,19 @@ return [
             ],
             2 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                    1 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'odd_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing odds',
@@ -1066,7 +1269,19 @@ return [
             ],
             3 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                    1 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'odd_selection_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing oddselections',
@@ -1074,7 +1289,12 @@ return [
             ],
             4 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\IsInt::class,
+                        'options' => [],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'risk',
                 'description' => 'Amount bet',
@@ -1092,7 +1312,19 @@ return [
         'RiskManagement\\V1\\Rest\\Multiple\\Validator' => [
             0 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                    1 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'multiple_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing multiples',
@@ -1100,7 +1332,12 @@ return [
             ],
             1 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\IsInt::class,
+                        'options' => [],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'risk',
                 'description' => 'Amount to bet',
@@ -1118,7 +1355,19 @@ return [
         'RiskManagement\\V1\\Rest\\MultipleSelection\\Validator' => [
             0 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'multiple_selection_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing multipleselections',
@@ -1126,7 +1375,19 @@ return [
             ],
             1 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'odd_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing events',
@@ -1134,7 +1395,19 @@ return [
             ],
             2 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'odd_selection_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing oddselections',
