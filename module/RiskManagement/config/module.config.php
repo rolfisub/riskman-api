@@ -617,6 +617,13 @@ return [
                         'name' => \Zend\I18n\Validator\Alnum::class,
                         'options' => [],
                     ],
+                    1 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
                 ],
                 'filters' => [],
                 'name' => 'sport_id',
@@ -625,7 +632,15 @@ return [
             ],
             1 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'min' => '1',
+                            'max' => '64',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'name',
                 'field_type' => 'Varchar(64)',
@@ -635,7 +650,19 @@ return [
         'RiskManagement\\V1\\Rest\\Region\\Validator' => [
             0 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'min' => '1',
+                            'max' => '32',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'region_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing regions',
@@ -643,7 +670,15 @@ return [
             ],
             1 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '64',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'name',
                 'description' => 'name of the region',
@@ -653,7 +688,19 @@ return [
         'RiskManagement\\V1\\Rest\\League\\Validator' => [
             0 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'league_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing leagues',
@@ -661,7 +708,15 @@ return [
             ],
             1 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '64',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'name',
                 'description' => 'name of league / tournament',
@@ -671,7 +726,19 @@ return [
         'RiskManagement\\V1\\Rest\\Event\\Validator' => [
             0 => [
                 'required' => true,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'event_id',
                 'description' => 'Alpha Numeric only, Max 32 Char, Unique id with in the existing events',
@@ -679,7 +746,15 @@ return [
             ],
             1 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '64',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'name',
                 'description' => 'name of the event',
@@ -687,8 +762,18 @@ return [
             ],
             2 => [
                 'required' => true,
-                'validators' => [],
-                'filters' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\DateTime::class,
+                        'options' => [],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\DateTimeFormatter::class,
+                        'options' => [],
+                    ],
+                ],
                 'name' => 'start_time',
                 'description' => 'Options are:
 1. unix timestamp
@@ -697,7 +782,19 @@ return [
             ],
             3 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'sport_id',
                 'description' => 'Existing ID or New ID to create if not found',
@@ -705,7 +802,15 @@ return [
             ],
             4 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '64',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'sport_name',
                 'description' => 'sport_name if creating a new one or updating an existing one',
@@ -713,7 +818,19 @@ return [
             ],
             5 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'region_id',
                 'description' => 'Existing ID or New ID to create if not found',
@@ -721,7 +838,15 @@ return [
             ],
             6 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '64',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'region_name',
                 'description' => 'region_name if creating a new one or updating an existing one',
@@ -729,7 +854,19 @@ return [
             ],
             7 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '32',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'league_id',
                 'description' => 'Existing ID or New ID to create if not found',
@@ -737,7 +874,15 @@ return [
             ],
             8 => [
                 'required' => false,
-                'validators' => [],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => '64',
+                            'min' => '1',
+                        ],
+                    ],
+                ],
                 'filters' => [],
                 'name' => 'league_name',
                 'description' => 'league_name if creating a new one or updating an existing one',
