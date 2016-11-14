@@ -26,5 +26,7 @@ return [
     'ZF\\Rpc',
     'ZF\\Versioning',
     'Application',
+    'Mysql',
+    'DomainObjects',
     'RiskManagement',
 ];
