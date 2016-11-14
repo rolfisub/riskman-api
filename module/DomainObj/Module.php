@@ -1,13 +1,13 @@
 <?php
 /**
- * Module config for ApiResponse
+ * Module config for DomainObj
  *
  * @package   DLMysql 
  * @author    Rolf
  * @copyright Rolf Bansbach
  */
 
-namespace DLMysql;
+namespace DomainObj;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\ResponseSender\SendResponseEvent;
