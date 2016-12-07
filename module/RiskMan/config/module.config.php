@@ -567,8 +567,21 @@ return array(
             ),
             10 => array(
                 'required' => false,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '128',
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'datetime',
             ),
         ),
@@ -641,8 +654,21 @@ return array(
             ),
             3 => array(
                 'required' => false,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'max' => '64',
+                            'min' => '1',
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'datetime',
             ),
         ),
@@ -692,19 +718,34 @@ return array(
             2 => array(
                 'required' => true,
                 'validators' => array(),
-                'filters' => array(),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'odds',
             ),
             3 => array(
                 'required' => false,
                 'validators' => array(),
-                'filters' => array(),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'points',
             ),
             4 => array(
                 'required' => false,
                 'validators' => array(),
-                'filters' => array(),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'asian_handicap',
             ),
         ),
@@ -782,31 +823,56 @@ return array(
             3 => array(
                 'required' => false,
                 'validators' => array(),
-                'filters' => array(),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'approval',
             ),
             4 => array(
                 'required' => false,
                 'validators' => array(),
-                'filters' => array(),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'odds',
             ),
             5 => array(
                 'required' => false,
                 'validators' => array(),
-                'filters' => array(),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'points',
             ),
             6 => array(
                 'required' => true,
                 'validators' => array(),
-                'filters' => array(),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'risk',
             ),
             7 => array(
                 'required' => false,
                 'validators' => array(),
-                'filters' => array(),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'win',
             ),
         ),
@@ -850,7 +916,7 @@ return array(
             3 => array(
                 'required' => true,
                 'validators' => array(),
-                'filters' => array(), 
+                'filters' => array(),
                 'name' => 'risk',
             ),
             4 => array(
