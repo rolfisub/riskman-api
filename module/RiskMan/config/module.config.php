@@ -322,8 +322,25 @@ return array(
         'RiskMan\\V1\\Rest\\Sport\\Validator' => array(
             0 => array(
                 'required' => true,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'sport_id',
                 'description' => 'Book sport_id',
             ),
@@ -338,64 +355,214 @@ return array(
         'RiskMan\\V1\\Rest\\Event\\Validator' => array(
             0 => array(
                 'required' => true,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'event_id',
                 'description' => 'Bookmaker event_id',
             ),
             1 => array(
                 'required' => false,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '128',
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'event_name',
             ),
             2 => array(
                 'required' => false,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'sport_id',
             ),
             3 => array(
                 'required' => false,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '128',
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'sport_name',
             ),
             4 => array(
                 'required' => false,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'region_id',
             ),
             5 => array(
                 'required' => false,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '128',
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'region_name',
             ),
             6 => array(
                 'required' => false,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'league_id',
                 'description' => 'league_name',
             ),
             7 => array(
                 'required' => false,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '128',
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'league_name',
             ),
             8 => array(
                 'required' => false,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'period_id',
             ),
             9 => array(
                 'required' => false,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '128',
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'period_name',
             ),
             10 => array(
@@ -408,21 +575,68 @@ return array(
         'RiskMan\\V1\\Rest\\Odd\\Validator' => array(
             0 => array(
                 'required' => true,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'odd_id',
                 'description' => 'Bookmaker odd_id',
             ),
             1 => array(
                 'required' => false,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '128',
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'odd_name',
             ),
             2 => array(
                 'required' => true,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'event_id',
             ),
             3 => array(
@@ -435,14 +649,44 @@ return array(
         'RiskMan\\V1\\Rest\\OddSelection\\Validator' => array(
             0 => array(
                 'required' => true,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'odd_selection_id',
             ),
             1 => array(
                 'required' => false,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '128',
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'odd_selection_name',
             ),
             2 => array(
@@ -467,21 +711,72 @@ return array(
         'RiskMan\\V1\\Rest\\Single\\Validator' => array(
             0 => array(
                 'required' => true,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'single_id',
                 'description' => 'operator bet id',
             ),
             1 => array(
                 'required' => true,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'odd_id',
             ),
             2 => array(
                 'required' => true,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'odd_selection_id',
             ),
             3 => array(
@@ -518,8 +813,25 @@ return array(
         'RiskMan\\V1\\Rest\\Multiple\\Validator' => array(
             0 => array(
                 'required' => true,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'multiple_id',
                 'description' => 'operator bet_id',
             ),
@@ -538,7 +850,7 @@ return array(
             3 => array(
                 'required' => true,
                 'validators' => array(),
-                'filters' => array(),
+                'filters' => array(), 
                 'name' => 'risk',
             ),
             4 => array(
