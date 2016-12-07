@@ -2,17 +2,57 @@
 return array(
     'service_manager' => array(
         'factories' => array(
-            'RiskMan\\V1\\Rest\\Sport\\SportResource' => 'RiskMan\\V1\\Rest\\Sport\\SportResourceFactory',
+            'RiskMan\\V1\\Rest\\Single\\SingleResource' => 'RiskMan\\V1\\Rest\\Single\\SingleResourceFactory',
+            'RiskMan\\V1\\Rest\\Multiple\\MultipleResource' => 'RiskMan\\V1\\Rest\\Multiple\\MultipleResourceFactory',
+            'RiskMan\\V1\\Rest\\Event\\EventResource' => 'RiskMan\\V1\\Rest\\Event\\EventResourceFactory',
+            'RiskMan\\V1\\Rest\\Odd\\OddResource' => 'RiskMan\\V1\\Rest\\Odd\\OddResourceFactory',
+            'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResource' => 'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResourceFactory',
         ),
     ),
     'router' => array(
         'routes' => array(
-            'risk-man.rest.sport' => array(
+            'risk-man.rest.single' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/sport[/:sport_id]',
+                    'route' => '/single[/:single_id]',
                     'defaults' => array(
-                        'controller' => 'RiskMan\\V1\\Rest\\Sport\\Controller',
+                        'controller' => 'RiskMan\\V1\\Rest\\Single\\Controller',
+                    ),
+                ),
+            ),
+            'risk-man.rest.multiple' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/multiple[/:multiple_id]',
+                    'defaults' => array(
+                        'controller' => 'RiskMan\\V1\\Rest\\Multiple\\Controller',
+                    ),
+                ),
+            ),
+            'risk-man.rest.event' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/event[/:event_id]',
+                    'defaults' => array(
+                        'controller' => 'RiskMan\\V1\\Rest\\Event\\Controller',
+                    ),
+                ),
+            ),
+            'risk-man.rest.odd' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/odd[/:odd_id]',
+                    'defaults' => array(
+                        'controller' => 'RiskMan\\V1\\Rest\\Odd\\Controller',
+                    ),
+                ),
+            ),
+            'risk-man.rest.odd-selection' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/odd-selection[/:odd_selection_id]',
+                    'defaults' => array(
+                        'controller' => 'RiskMan\\V1\\Rest\\OddSelection\\Controller',
                     ),
                 ),
             ),
@@ -20,15 +60,19 @@ return array(
     ),
     'zf-versioning' => array(
         'uri' => array(
-            0 => 'risk-man.rest.sport',
+            0 => 'risk-man.rest.single',
+            1 => 'risk-man.rest.multiple',
+            2 => 'risk-man.rest.event',
+            3 => 'risk-man.rest.odd',
+            4 => 'risk-man.rest.odd-selection',
         ),
     ),
     'zf-rest' => array(
-        'RiskMan\\V1\\Rest\\Sport\\Controller' => array(
-            'listener' => 'RiskMan\\V1\\Rest\\Sport\\SportResource',
-            'route_name' => 'risk-man.rest.sport',
-            'route_identifier_name' => 'sport_id',
-            'collection_name' => 'sport',
+        'RiskMan\\V1\\Rest\\Single\\Controller' => array(
+            'listener' => 'RiskMan\\V1\\Rest\\Single\\SingleResource',
+            'route_name' => 'risk-man.rest.single',
+            'route_identifier_name' => 'single_id',
+            'collection_name' => 'single',
             'entity_http_methods' => array(
                 0 => 'GET',
                 1 => 'PATCH',
@@ -42,24 +86,152 @@ return array(
             'collection_query_whitelist' => array(),
             'page_size' => 25,
             'page_size_param' => null,
-            'entity_class' => 'RiskMan\\V1\\Rest\\Sport\\SportEntity',
-            'collection_class' => 'RiskMan\\V1\\Rest\\Sport\\SportCollection',
-            'service_name' => 'Sport',
+            'entity_class' => 'RiskMan\\V1\\Rest\\Single\\SingleEntity',
+            'collection_class' => 'RiskMan\\V1\\Rest\\Single\\SingleCollection',
+            'service_name' => 'Single',
+        ),
+        'RiskMan\\V1\\Rest\\Multiple\\Controller' => array(
+            'listener' => 'RiskMan\\V1\\Rest\\Multiple\\MultipleResource',
+            'route_name' => 'risk-man.rest.multiple',
+            'route_identifier_name' => 'multiple_id',
+            'collection_name' => 'multiple',
+            'entity_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'RiskMan\\V1\\Rest\\Multiple\\MultipleEntity',
+            'collection_class' => 'RiskMan\\V1\\Rest\\Multiple\\MultipleCollection',
+            'service_name' => 'Multiple',
+        ),
+        'RiskMan\\V1\\Rest\\Event\\Controller' => array(
+            'listener' => 'RiskMan\\V1\\Rest\\Event\\EventResource',
+            'route_name' => 'risk-man.rest.event',
+            'route_identifier_name' => 'event_id',
+            'collection_name' => 'event',
+            'entity_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'RiskMan\\V1\\Rest\\Event\\EventEntity',
+            'collection_class' => 'RiskMan\\V1\\Rest\\Event\\EventCollection',
+            'service_name' => 'Event',
+        ),
+        'RiskMan\\V1\\Rest\\Odd\\Controller' => array(
+            'listener' => 'RiskMan\\V1\\Rest\\Odd\\OddResource',
+            'route_name' => 'risk-man.rest.odd',
+            'route_identifier_name' => 'odd_id',
+            'collection_name' => 'odd',
+            'entity_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'RiskMan\\V1\\Rest\\Odd\\OddEntity',
+            'collection_class' => 'RiskMan\\V1\\Rest\\Odd\\OddCollection',
+            'service_name' => 'Odd',
+        ),
+        'RiskMan\\V1\\Rest\\OddSelection\\Controller' => array(
+            'listener' => 'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResource',
+            'route_name' => 'risk-man.rest.odd-selection',
+            'route_identifier_name' => 'odd_selection_id',
+            'collection_name' => 'odd_selection',
+            'entity_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionEntity',
+            'collection_class' => 'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionCollection',
+            'service_name' => 'OddSelection',
         ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
-            'RiskMan\\V1\\Rest\\Sport\\Controller' => 'HalJson',
+            'RiskMan\\V1\\Rest\\Single\\Controller' => 'HalJson',
+            'RiskMan\\V1\\Rest\\Multiple\\Controller' => 'HalJson',
+            'RiskMan\\V1\\Rest\\Event\\Controller' => 'HalJson',
+            'RiskMan\\V1\\Rest\\Odd\\Controller' => 'HalJson',
+            'RiskMan\\V1\\Rest\\OddSelection\\Controller' => 'HalJson',
         ),
         'accept_whitelist' => array(
-            'RiskMan\\V1\\Rest\\Sport\\Controller' => array(
+            'RiskMan\\V1\\Rest\\Single\\Controller' => array(
+                0 => 'application/vnd.risk-man.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'RiskMan\\V1\\Rest\\Multiple\\Controller' => array(
+                0 => 'application/vnd.risk-man.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'RiskMan\\V1\\Rest\\Event\\Controller' => array(
+                0 => 'application/vnd.risk-man.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'RiskMan\\V1\\Rest\\Odd\\Controller' => array(
+                0 => 'application/vnd.risk-man.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'RiskMan\\V1\\Rest\\OddSelection\\Controller' => array(
                 0 => 'application/vnd.risk-man.v1+json',
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
         ),
         'content_type_whitelist' => array(
-            'RiskMan\\V1\\Rest\\Sport\\Controller' => array(
+            'RiskMan\\V1\\Rest\\Single\\Controller' => array(
+                0 => 'application/vnd.risk-man.v1+json',
+                1 => 'application/json',
+            ),
+            'RiskMan\\V1\\Rest\\Multiple\\Controller' => array(
+                0 => 'application/vnd.risk-man.v1+json',
+                1 => 'application/json',
+            ),
+            'RiskMan\\V1\\Rest\\Event\\Controller' => array(
+                0 => 'application/vnd.risk-man.v1+json',
+                1 => 'application/json',
+            ),
+            'RiskMan\\V1\\Rest\\Odd\\Controller' => array(
+                0 => 'application/vnd.risk-man.v1+json',
+                1 => 'application/json',
+            ),
+            'RiskMan\\V1\\Rest\\OddSelection\\Controller' => array(
                 0 => 'application/vnd.risk-man.v1+json',
                 1 => 'application/json',
             ),
@@ -67,17 +239,84 @@ return array(
     ),
     'zf-hal' => array(
         'metadata_map' => array(
-            'RiskMan\\V1\\Rest\\Sport\\SportEntity' => array(
+            'RiskMan\\V1\\Rest\\Single\\SingleEntity' => array(
                 'entity_identifier_name' => 'id',
-                'route_name' => 'risk-man.rest.sport',
-                'route_identifier_name' => 'sport_id',
+                'route_name' => 'risk-man.rest.single',
+                'route_identifier_name' => 'single_id',
                 'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
             ),
-            'RiskMan\\V1\\Rest\\Sport\\SportCollection' => array(
+            'RiskMan\\V1\\Rest\\Single\\SingleCollection' => array(
                 'entity_identifier_name' => 'id',
-                'route_name' => 'risk-man.rest.sport',
-                'route_identifier_name' => 'sport_id',
+                'route_name' => 'risk-man.rest.single',
+                'route_identifier_name' => 'single_id',
                 'is_collection' => true,
+            ),
+            'RiskMan\\V1\\Rest\\Multiple\\MultipleEntity' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'risk-man.rest.multiple',
+                'route_identifier_name' => 'multiple_id',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
+            ),
+            'RiskMan\\V1\\Rest\\Multiple\\MultipleCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'risk-man.rest.multiple',
+                'route_identifier_name' => 'multiple_id',
+                'is_collection' => true,
+            ),
+            'RiskMan\\V1\\Rest\\Event\\EventEntity' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'risk-man.rest.event',
+                'route_identifier_name' => 'event_id',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
+            ),
+            'RiskMan\\V1\\Rest\\Event\\EventCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'risk-man.rest.event',
+                'route_identifier_name' => 'event_id',
+                'is_collection' => true,
+            ),
+            'RiskMan\\V1\\Rest\\Odd\\OddEntity' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'risk-man.rest.odd',
+                'route_identifier_name' => 'odd_id',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
+            ),
+            'RiskMan\\V1\\Rest\\Odd\\OddCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'risk-man.rest.odd',
+                'route_identifier_name' => 'odd_id',
+                'is_collection' => true,
+            ),
+            'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionEntity' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'risk-man.rest.odd-selection',
+                'route_identifier_name' => 'odd_selection_id',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
+            ),
+            'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'risk-man.rest.odd-selection',
+                'route_identifier_name' => 'odd_selection_id',
+                'is_collection' => true,
+            ),
+        ),
+    ),
+    'zf-content-validation' => array(),
+    'input_filter_specs' => array(
+        'RiskMan\\V1\\Rest\\Sport\\Validator' => array(
+            0 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'sport_id',
+                'description' => 'Book sport_id',
+            ),
+            1 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'name',
+                'description' => 'Book sport name',
             ),
         ),
     ),
