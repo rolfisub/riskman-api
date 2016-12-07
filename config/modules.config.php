@@ -26,7 +26,7 @@ return [
     'ZF\\Rpc',
     'ZF\\Versioning',
     'Application',
-    'DLMysql',
-    'DomainObj',
+    //database layer
+    //domain object
     'RiskManagement',
 ];
