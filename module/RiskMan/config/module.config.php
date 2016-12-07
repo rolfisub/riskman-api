@@ -1,7 +1,15 @@
 <?php
 return array(
+    'database_config' => array(
+        'database_service' => 'DatabaseService',
+        'database_config_key' => 'db1'
+    ),
     'service_manager' => array(
         'factories' => array(
+            //Database Service
+            'DatabaseService' => 'RiskMan\\Database\\DatabaseFactory',
+            
+            //REST controllers
             'RiskMan\\V1\\Rest\\Single\\SingleResource' => 'RiskMan\\V1\\Rest\\Single\\SingleResourceFactory',
             'RiskMan\\V1\\Rest\\Multiple\\MultipleResource' => 'RiskMan\\V1\\Rest\\Multiple\\MultipleResourceFactory',
             'RiskMan\\V1\\Rest\\Event\\EventResource' => 'RiskMan\\V1\\Rest\\Event\\EventResourceFactory',
