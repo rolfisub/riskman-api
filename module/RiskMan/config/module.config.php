@@ -1,12 +1,23 @@
 <?php
 return array(
+    'database_config' => array(
+        'database_service' => 'DatabaseService',
+        'database_config_key' => 'db1'
+    ),
     'service_manager' => array(
         'factories' => array(
+            //Database Service
+            'DatabaseService' => 'RiskMan\\Database\\DatabaseFactory',
+            
+            //REST controllers
             'RiskMan\\V1\\Rest\\Single\\SingleResource' => 'RiskMan\\V1\\Rest\\Single\\SingleResourceFactory',
             'RiskMan\\V1\\Rest\\Multiple\\MultipleResource' => 'RiskMan\\V1\\Rest\\Multiple\\MultipleResourceFactory',
             'RiskMan\\V1\\Rest\\Event\\EventResource' => 'RiskMan\\V1\\Rest\\Event\\EventResourceFactory',
             'RiskMan\\V1\\Rest\\Odd\\OddResource' => 'RiskMan\\V1\\Rest\\Odd\\OddResourceFactory',
             'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResource' => 'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResourceFactory',
+            
+            
+            
         ),
     ),
     'router' => array(
@@ -77,6 +88,7 @@ return array(
                 0 => 'GET',
                 1 => 'PATCH',
                 2 => 'PUT',
+                3 => 'DELETE',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
@@ -98,6 +110,7 @@ return array(
                 0 => 'GET',
                 1 => 'PATCH',
                 2 => 'PUT',
+                3 => 'DELETE',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
@@ -119,6 +132,7 @@ return array(
                 0 => 'GET',
                 1 => 'PATCH',
                 2 => 'PUT',
+                3 => 'DELETE',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
@@ -140,6 +154,7 @@ return array(
                 0 => 'GET',
                 1 => 'PATCH',
                 2 => 'PUT',
+                3 => 'DELETE',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
@@ -563,21 +578,8 @@ return array(
             ),
             10 => array(
                 'required' => false,
-                'validators' => array(
-                    0 => array(
-                        'name' => 'Zend\\Validator\\StringLength',
-                        'options' => array(
-                            'min' => '1',
-                            'max' => '64',
-                        ),
-                    ),
-                ),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
+                'validators' => array(),
+                'filters' => array(),
                 'name' => 'datetime',
             ),
         ),
@@ -650,21 +652,8 @@ return array(
             ),
             3 => array(
                 'required' => false,
-                'validators' => array(
-                    0 => array(
-                        'name' => 'Zend\\Validator\\StringLength',
-                        'options' => array(
-                            'max' => '64',
-                            'min' => '1',
-                        ),
-                    ),
-                ),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
+                'validators' => array(),
+                'filters' => array(),
                 'name' => 'datetime',
             ),
         ),
@@ -714,34 +703,19 @@ return array(
             2 => array(
                 'required' => true,
                 'validators' => array(),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
+                'filters' => array(),
                 'name' => 'odds',
             ),
             3 => array(
                 'required' => false,
                 'validators' => array(),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
+                'filters' => array(),
                 'name' => 'points',
             ),
             4 => array(
                 'required' => false,
                 'validators' => array(),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
+                'filters' => array(),
                 'name' => 'asian_handicap',
             ),
         ),
@@ -819,56 +793,31 @@ return array(
             3 => array(
                 'required' => false,
                 'validators' => array(),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
+                'filters' => array(),
                 'name' => 'approval',
             ),
             4 => array(
                 'required' => false,
                 'validators' => array(),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
+                'filters' => array(),
                 'name' => 'odds',
             ),
             5 => array(
                 'required' => false,
                 'validators' => array(),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
+                'filters' => array(),
                 'name' => 'points',
             ),
             6 => array(
                 'required' => true,
                 'validators' => array(),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
+                'filters' => array(),
                 'name' => 'risk',
             ),
             7 => array(
                 'required' => false,
                 'validators' => array(),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
+                'filters' => array(),
                 'name' => 'win',
             ),
         ),
@@ -912,7 +861,7 @@ return array(
             3 => array(
                 'required' => true,
                 'validators' => array(),
-                'filters' => array(),
+                'filters' => array(), 
                 'name' => 'risk',
             ),
             4 => array(
