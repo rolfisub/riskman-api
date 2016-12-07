@@ -14,7 +14,7 @@ return array(
             'risk-man.rest.single' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/single[/:single_id]',
+                    'route' => '/bet/single[/:single_id]',
                     'defaults' => array(
                         'controller' => 'RiskMan\\V1\\Rest\\Single\\Controller',
                     ),
@@ -23,7 +23,7 @@ return array(
             'risk-man.rest.multiple' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/multiple[/:multiple_id]',
+                    'route' => '/bet/multiple[/:multiple_id]',
                     'defaults' => array(
                         'controller' => 'RiskMan\\V1\\Rest\\Multiple\\Controller',
                     ),
@@ -32,7 +32,7 @@ return array(
             'risk-man.rest.event' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/event[/:event_id]',
+                    'route' => '/feed/event[/:event_id]',
                     'defaults' => array(
                         'controller' => 'RiskMan\\V1\\Rest\\Event\\Controller',
                     ),
@@ -41,7 +41,7 @@ return array(
             'risk-man.rest.odd' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/odd[/:odd_id]',
+                    'route' => '/feed/odd[/:odd_id]',
                     'defaults' => array(
                         'controller' => 'RiskMan\\V1\\Rest\\Odd\\Controller',
                     ),
@@ -50,7 +50,7 @@ return array(
             'risk-man.rest.odd-selection' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/odd-selection[/:odd_selection_id]',
+                    'route' => '/feed/odd-selection[/:odd_selection_id]',
                     'defaults' => array(
                         'controller' => 'RiskMan\\V1\\Rest\\OddSelection\\Controller',
                     ),
@@ -301,7 +301,23 @@ return array(
             ),
         ),
     ),
-    'zf-content-validation' => array(),
+    'zf-content-validation' => array(
+        'RiskMan\\V1\\Rest\\Event\\Controller' => array(
+            'input_filter' => 'RiskMan\\V1\\Rest\\Event\\Validator',
+        ),
+        'RiskMan\\V1\\Rest\\Odd\\Controller' => array(
+            'input_filter' => 'RiskMan\\V1\\Rest\\Odd\\Validator',
+        ),
+        'RiskMan\\V1\\Rest\\OddSelection\\Controller' => array(
+            'input_filter' => 'RiskMan\\V1\\Rest\\OddSelection\\Validator',
+        ),
+        'RiskMan\\V1\\Rest\\Single\\Controller' => array(
+            'input_filter' => 'RiskMan\\V1\\Rest\\Single\\Validator',
+        ),
+        'RiskMan\\V1\\Rest\\Multiple\\Controller' => array(
+            'input_filter' => 'RiskMan\\V1\\Rest\\Multiple\\Validator',
+        ),
+    ),
     'input_filter_specs' => array(
         'RiskMan\\V1\\Rest\\Sport\\Validator' => array(
             0 => array(
@@ -317,6 +333,219 @@ return array(
                 'filters' => array(),
                 'name' => 'name',
                 'description' => 'Book sport name',
+            ),
+        ),
+        'RiskMan\\V1\\Rest\\Event\\Validator' => array(
+            0 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'event_id',
+                'description' => 'Bookmaker event_id',
+            ),
+            1 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'event_name',
+            ),
+            2 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'sport_id',
+            ),
+            3 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'sport_name',
+            ),
+            4 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'region_id',
+            ),
+            5 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'region_name',
+            ),
+            6 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'league_id',
+                'description' => 'league_name',
+            ),
+            7 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'league_name',
+            ),
+            8 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'period_id',
+            ),
+            9 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'period_name',
+            ),
+            10 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'datetime',
+            ),
+        ),
+        'RiskMan\\V1\\Rest\\Odd\\Validator' => array(
+            0 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'odd_id',
+                'description' => 'Bookmaker odd_id',
+            ),
+            1 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'odd_name',
+            ),
+            2 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'event_id',
+            ),
+            3 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'datetime',
+            ),
+        ),
+        'RiskMan\\V1\\Rest\\OddSelection\\Validator' => array(
+            0 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'odd_selection_id',
+            ),
+            1 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'odd_selection_name',
+            ),
+            2 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'odds',
+            ),
+            3 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'points',
+            ),
+            4 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'asian_handicap',
+            ),
+        ),
+        'RiskMan\\V1\\Rest\\Single\\Validator' => array(
+            0 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'single_id',
+                'description' => 'operator bet id',
+            ),
+            1 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'odd_id',
+            ),
+            2 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'odd_selection_id',
+            ),
+            3 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'approval',
+            ),
+            4 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'odds',
+            ),
+            5 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'points',
+            ),
+            6 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'risk',
+            ),
+            7 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'win',
+            ),
+        ),
+        'RiskMan\\V1\\Rest\\Multiple\\Validator' => array(
+            0 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'multiple_id',
+                'description' => 'operator bet_id',
+            ),
+            1 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'selections',
+            ),
+            2 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'approval',
+            ),
+            3 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'risk',
+            ),
+            4 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'win',
             ),
         ),
     ),
