@@ -77,7 +77,6 @@ return array(
                 0 => 'GET',
                 1 => 'PATCH',
                 2 => 'PUT',
-                3 => 'DELETE',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
@@ -99,7 +98,6 @@ return array(
                 0 => 'GET',
                 1 => 'PATCH',
                 2 => 'PUT',
-                3 => 'DELETE',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
@@ -121,7 +119,6 @@ return array(
                 0 => 'GET',
                 1 => 'PATCH',
                 2 => 'PUT',
-                3 => 'DELETE',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
@@ -143,7 +140,6 @@ return array(
                 0 => 'GET',
                 1 => 'PATCH',
                 2 => 'PUT',
-                3 => 'DELETE',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
@@ -572,7 +568,7 @@ return array(
                         'name' => 'Zend\\Validator\\StringLength',
                         'options' => array(
                             'min' => '1',
-                            'max' => '128',
+                            'max' => '64',
                         ),
                     ),
                 ),
