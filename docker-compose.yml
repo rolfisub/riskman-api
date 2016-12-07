@@ -1,7 +1,0 @@
-apigility:
-  build: .
-  dockerfile: Dockerfile
-  ports:
-   - "8080:80"
-  volumes:
-   - .:/var/www
