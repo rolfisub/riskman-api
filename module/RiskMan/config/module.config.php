@@ -1,5 +1,20 @@
 <?php
+namespace RiskMan;
 return array(
+    'doctrine' => array(
+        'driver' => array(
+            __NAMESPACE__ . '_driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
+                )
+            )
+        )
+    ),
     'database_config' => array(
         'database_service' => 'DatabaseService',
         'database_config_key' => 'db1'
@@ -8,13 +23,16 @@ return array(
         'factories' => array(
             //Database Service
             'DatabaseService' => 'RiskMan\\Database\\DatabaseFactory',
-            
+
             //REST controllers
             'RiskMan\\V1\\Rest\\Single\\SingleResource' => 'RiskMan\\V1\\Rest\\Single\\SingleResourceFactory',
             'RiskMan\\V1\\Rest\\Multiple\\MultipleResource' => 'RiskMan\\V1\\Rest\\Multiple\\MultipleResourceFactory',
             'RiskMan\\V1\\Rest\\Event\\EventResource' => 'RiskMan\\V1\\Rest\\Event\\EventResourceFactory',
             'RiskMan\\V1\\Rest\\Odd\\OddResource' => 'RiskMan\\V1\\Rest\\Odd\\OddResourceFactory',
             'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResource' => 'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResourceFactory',
+        ),
+        'abstract_factories' => array(
+            'RiskMan\\Domain\\DomainFactory'
         ),
     ),
     'router' => array(
