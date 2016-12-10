@@ -26,4 +26,9 @@ abstract class DomainObject
             $this->em = $em;
         }
     }
+    
+    protected function _findBy($class, $array)
+    {
+        return $this->em->getRepository($class)->findBy($array);
+    }
 }

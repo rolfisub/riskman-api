@@ -1,11 +1,21 @@
 <?php
 namespace RiskMan\V1\Rest\Event;
-
+use RiskMan\Domain\DEvent;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
 class EventResource extends AbstractResourceListener
 {
+    /*
+     * @var RiskMan\Domain\DEvent
+     */
+    protected $de;
+    
+    public function __construct(DEvent $de) {
+        if (null === $this->de) {
+            $this->de = $de;
+        }
+    }
     /**
      * Create a resource
      *
@@ -14,6 +24,7 @@ class EventResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $this->de->create($data);
         return new ApiProblem(405, 'The POST method has not been defined');
     }
 

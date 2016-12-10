@@ -17,27 +17,21 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class DomainFactory implements AbstractFactoryInterface
 {
-    protected $objects;
     
-    public function construct()
-    {
-        $this->objects = array('DEvent');
-    }
     
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName) 
     {
-        if(in_array($requestedName, $this->objects)) {
-            return true;
-        }
-        return false;
+        $objects = array(
+            0 => 'RiskMan\Domain\DEvent',
+        );
+        return in_array($requestedName, $objects);
     }
     
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName) 
     {
         if (class_exists($requestedName)) {
-            //TODO: get entity manager
-            
-            return new $requestedName();
+            $em = $serviceLocator->get('doctrine.entitymanager.orm_default');
+            return new $requestedName($em);
         }
         return false;
     }

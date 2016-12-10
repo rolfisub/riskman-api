@@ -41,31 +41,31 @@ class Event extends BaseFeedEntity
     protected $event_id;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
     protected $name;
     
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $datetime;
     
     /**
-     * @ORM\Column(name="sport_id", type="integer")
+     * @ORM\Column(name="sport_id", type="integer", nullable=true)
      * @ORM\ManyToOne(targetEntity="Sport")
      * @ORM\JoinColumn(name="sport_id", referencedColumnName="id")
      */
     protected $sport;
     
     /**
-     * @ORM\Column(name="league_id", type="integer")
+     * @ORM\Column(name="league_id", type="integer", nullable=true)
      * @ORM\ManyToOne(targetEntity="League")
      * @ORM\JoinColumn(name="league_id", referencedColumnName="id")
      */
     protected $league;
     
     /**
-     * @ORM\Column(name="region_id", type="integer")
+     * @ORM\Column(name="region_id", type="integer", nullable=true)
      * @ORM\ManyToOne(targetEntity="Region")
      * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      */
