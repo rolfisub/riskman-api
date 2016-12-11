@@ -24,4 +24,8 @@ class BaseFeedEntity extends MagicClass
      * @ORM\JoinColumn(name="book_id", referencedColumnName="id")
      */
     protected $book_id;
+    
+    public function __toString() {
+        return (string) $this->getId();
+    }
 }

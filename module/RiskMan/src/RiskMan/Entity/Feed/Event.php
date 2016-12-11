@@ -251,4 +251,6 @@ class Event extends BaseFeedEntity
     {
         return $this->book_id;
     }
+    
+    
 }

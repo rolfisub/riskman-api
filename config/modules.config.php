@@ -5,7 +5,7 @@
  * The previous config file has been stored in ./config/modules.config.old
  */
 return array(
-    'ZendDeveloperTools',
+   // 'ZendDeveloperTools',
     'Application',
     'ZF\\DevelopmentMode',
     'ZF\\Apigility',
