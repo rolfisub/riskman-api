@@ -9,11 +9,11 @@
 namespace RiskMan\Domain;
 use Doctrine\ORM\EntityManager;
 /**
- * Description of DomainObject
+ * Description of DomainFeedObject
  *
  * @author rolf
  */
-abstract class DomainObject 
+abstract class DomainFeedObject 
 {
     /**
      * @var Doctrine\ORM\EntityManager

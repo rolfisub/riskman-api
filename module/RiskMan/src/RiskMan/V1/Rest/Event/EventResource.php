@@ -24,7 +24,7 @@ class EventResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $this->de->create($data);
+        $this->de->create($data, 2);
         return new ApiProblem(405, 'The POST method has not been defined');
     }
 

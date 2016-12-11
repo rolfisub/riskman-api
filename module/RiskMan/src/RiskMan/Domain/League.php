@@ -7,7 +7,7 @@
  */
 
 namespace RiskMan\Domain;
-use RiskMan\Domain\DomainObject;
+use RiskMan\Domain\DomainFeedObject;
 use RiskMan\Entity\Feed\League as ELeague;
 
 
@@ -16,7 +16,7 @@ use RiskMan\Entity\Feed\League as ELeague;
  *
  * @author rolf
  */
-class League extends DomainObject
+class League extends DomainFeedObject
 {
     /*
      * @var Doctrine\ORM\EntityManager
