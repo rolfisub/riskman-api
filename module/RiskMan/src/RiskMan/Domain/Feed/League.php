@@ -6,8 +6,8 @@
  * and open the template in the editor.
  */
 
-namespace RiskMan\Domain;
-use RiskMan\Domain\DomainFeedObject;
+namespace RiskMan\Domain\Feed;
+use RiskMan\Domain\Feed\DomainFeedObject;
 use RiskMan\Entity\Feed\League as ELeague;
 
 
@@ -38,7 +38,6 @@ class League extends DomainFeedObject
     //POST
     public function create ($data, $bookId)
     {
-        
         $league_id = $data->league_id;
         $l = $this->_exists('League', $bookId, 'league_id', $league_id);
         if (!$l) {
@@ -48,17 +47,19 @@ class League extends DomainFeedObject
         } else {
             //update league data if any
             echo "existing league\n";
-            $l = $this->update($data, $bookId);
+            $l = $this->update($data, $bookId, $l);
         }
         $this->l = $l;
         $this->em->flush();
         return $this->l;
     }
     
-    public function update ($data, $bookId)
+    public function update ($data, $bookId, $l = null)
     {
         $league_id = $data->league_id;
-        $l = $this->_exists('League', $bookId, 'league_id', $league_id);
+        if(!$l){
+            $l = $this->_exists('League', $bookId, 'league_id', $league_id);
+        }
         if (!$l) {
             //create new league
             echo "new league\n";

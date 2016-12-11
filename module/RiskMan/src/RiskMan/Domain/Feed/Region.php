@@ -6,8 +6,8 @@
  * and open the template in the editor.
  */
 
-namespace RiskMan\Domain;
-use RiskMan\Domain\DomainFeedObject;
+namespace RiskMan\Domain\Feed;
+use RiskMan\Domain\Feed\DomainFeedObject;
 use RiskMan\Entity\Feed\Region as ERegion;
 
 
@@ -47,17 +47,19 @@ class Region extends DomainFeedObject
         } else {
             //update region data if any
             echo "existing region\n";
-            $r = $this->update($data, $bookId);
+            $r = $this->update($data, $bookId, $r);
         }
         $this->r = $r;
         $this->em->flush();
         return $this->r;
     }
     
-    public function update ($data, $bookId)
+    public function update ($data, $bookId, $r = null)
     {
         $region_id = $data->region_id;
-        $r = $this->_exists('Region', $bookId, 'region_id', $region_id);
+        if (!$r){
+            $r = $this->_exists('Region', $bookId, 'region_id', $region_id);
+        }
         if (!$r) {
             //create new region
             echo "new region\n";

@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace RiskMan\Domain;
+namespace RiskMan\Domain\Feed;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -15,17 +15,17 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  *
  * @author rolf
  */
-class DomainFactory implements AbstractFactoryInterface
+class DomainFeedFactory implements AbstractFactoryInterface
 {
     
     
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName) 
     {
         $objects = array(
-            0 => 'RiskMan\Domain\Event',
-            1 => 'RiskMan\Domain\Sport',
-            2 => 'RiskMan\Domain\League',
-            3 => 'RiskMan\Domain\Region',
+            0 => 'RiskMan\Domain\Feed\Event',
+            1 => 'RiskMan\Domain\Feed\Sport',
+            2 => 'RiskMan\Domain\Feed\League',
+            3 => 'RiskMan\Domain\Feed\Region',
         );
         return in_array($requestedName, $objects);
     }
@@ -35,22 +35,22 @@ class DomainFactory implements AbstractFactoryInterface
         if (class_exists($requestedName)) {
             $em = $serviceLocator->get('doctrine.entitymanager.orm_default');
             switch ($requestedName){
-                case 'RiskMan\Domain\Event':
-                    echo "creating domain event\n";
-                    $sport = $serviceLocator->get('RiskMan\Domain\Sport');
-                    $league = $serviceLocator->get('RiskMan\Domain\League');
-                    $region = $serviceLocator->get('RiskMan\Domain\Region');
+                case 'RiskMan\Domain\Feed\Event':
+                    echo "creating domain Event\n";
+                    $sport = $serviceLocator->get('RiskMan\Domain\Feed\Sport');
+                    $league = $serviceLocator->get('RiskMan\Domain\Feed\League');
+                    $region = $serviceLocator->get('RiskMan\Domain\Feed\Region');
                     return new $requestedName($em, $sport, $league, $region);
                     break;
-                case 'RiskMan\Domain\Sport':
+                case 'RiskMan\Domain\Feed\Sport':
                     echo "creating domain Sport\n";
                     return new $requestedName($em);
                     break;
-                case 'RiskMan\Domain\League':
+                case 'RiskMan\Domain\Feed\League':
                     echo "creating domain League\n";
                     return new $requestedName($em);
                     break;
-                case 'RiskMan\Domain\Region':
+                case 'RiskMan\Domain\Feed\Region':
                     echo "creating domain Region\n";
                     return new $requestedName($em);
                     break;

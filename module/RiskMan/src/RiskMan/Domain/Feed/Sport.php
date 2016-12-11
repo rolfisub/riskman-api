@@ -6,8 +6,8 @@
  * and open the template in the editor.
  */
 
-namespace RiskMan\Domain;
-use RiskMan\Domain\DomainFeedObject;
+namespace RiskMan\Domain\Feed;
+use RiskMan\Domain\Feed\DomainFeedObject;
 use RiskMan\Entity\Feed\Sport as ESport;
 
 
@@ -47,17 +47,19 @@ class Sport extends DomainFeedObject
         } else {
             //update sport data if any
             echo "existing sport\n";
-            $s = $this->update($data, $bookId);
+            $s = $this->update($data, $bookId, $s);
         }
         $this->s = $s;
         $this->em->flush($this->s);
         return $this->s;
     }
     
-    public function update ($data, $bookId)
+    public function update ($data, $bookId, $s = null)
     {
         $sport_id = $data->sport_id;
-        $s = $this->_exists('Sport', $bookId, 'sport_id', $sport_id);
+        if (!$s){
+            $s = $this->_exists('Sport', $bookId, 'sport_id', $sport_id);
+        }
         if (!$s) {
             //create new sport
             echo "new sport\n";

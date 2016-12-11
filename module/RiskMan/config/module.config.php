@@ -32,7 +32,7 @@ return array(
             'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResource' => 'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResourceFactory',
         ),
         'abstract_factories' => array(
-            'RiskMan\\Domain\\DomainFactory'
+            'RiskMan\\Domain\\Feed\\DomainFeedFactory'
         ),
     ),
     'router' => array(
