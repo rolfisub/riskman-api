@@ -22,7 +22,10 @@ class DomainFactory implements AbstractFactoryInterface
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName) 
     {
         $objects = array(
-            0 => 'RiskMan\Domain\DEvent',
+            0 => 'RiskMan\Domain\Event',
+            1 => 'RiskMan\Domain\Sport',
+            2 => 'RiskMan\Domain\League',
+            3 => 'RiskMan\Domain\Region',
         );
         return in_array($requestedName, $objects);
     }
@@ -31,7 +34,27 @@ class DomainFactory implements AbstractFactoryInterface
     {
         if (class_exists($requestedName)) {
             $em = $serviceLocator->get('doctrine.entitymanager.orm_default');
-            return new $requestedName($em);
+            switch ($requestedName){
+                case 'RiskMan\Domain\Event':
+                    echo "creating domain event\n";
+                    $sport = $serviceLocator->get('RiskMan\Domain\Sport');
+                    $league = $serviceLocator->get('RiskMan\Domain\League');
+                    $region = $serviceLocator->get('RiskMan\Domain\Region');
+                    return new $requestedName($em, $sport, $league, $region);
+                    break;
+                case 'RiskMan\Domain\Sport':
+                    echo "creating domain Sport\n";
+                    return new $requestedName($em);
+                    break;
+                case 'RiskMan\Domain\League':
+                    echo "creating domain League\n";
+                    return new $requestedName($em);
+                    break;
+                case 'RiskMan\Domain\Region':
+                    echo "creating domain Region\n";
+                    return new $requestedName($em);
+                    break;
+            }
         }
         return false;
     }

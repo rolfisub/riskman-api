@@ -1,6 +1,6 @@
 <?php
 namespace RiskMan\V1\Rest\Event;
-use RiskMan\Domain\DEvent;
+use RiskMan\Domain\Event;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
@@ -11,7 +11,7 @@ class EventResource extends AbstractResourceListener
      */
     protected $de;
     
-    public function __construct(DEvent $de) {
+    public function __construct(Event $de) {
         if (null === $this->de) {
             $this->de = $de;
         }
