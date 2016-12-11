@@ -36,16 +36,58 @@ class League extends DomainFeedObject
     }
     
     //POST
-    public function create($data, $bookId = 1)
+    public function create ($data, $bookId)
     {
-        return new ELeague();
+        
+        $league_id = $data->league_id;
+        $l = $this->_exists('League', $bookId, 'league_id', $league_id);
+        if (!$l) {
+            //create new league
+            echo "creating new league\n";
+            $l = $this->_newLeague($data, $bookId);
+        } else {
+            //update league data if any
+            echo "existing league\n";
+            $l = $this->update($data, $bookId);
+        }
+        $this->l = $l;
+        $this->em->flush();
+        return $this->l;
     }
     
-    
-    private function _newLeague($bookId, $data)
+    public function update ($data, $bookId)
     {
+        $league_id = $data->league_id;
+        $l = $this->_exists('League', $bookId, 'league_id', $league_id);
+        if (!$l) {
+            //create new league
+            echo "new league\n";
+            $l = $this->create($data, $bookId);
+        } else {
+            //update league data if any
+            echo "updating existing league\n";
+            $l = $this->_updateLeague($data, $l);
+        }
+        $this->l = $l;
+        $this->em->flush();
+        return $this->l;
+    }
+    
+    private function _newLeague ($data, $bookId)
+    {
+        
         $l = new ELeague();
-        $l = $l->setBookId($bookId);
+        $l = $l->setBookId($bookId)
+                ->setLeagueId($data->league_id);
+        if($data->league_name) {
+            $l = $l->setName ($data->league_name);
+        }
+        $this->em->persist($l);
+        return $l;
+    }
+    
+    private function _updateLeague ($data, $l)
+    {
         if($data->league_name) {
             $l = $l->setName ($data->league_name);
         }

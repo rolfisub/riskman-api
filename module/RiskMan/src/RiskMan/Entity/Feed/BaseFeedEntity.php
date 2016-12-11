@@ -25,7 +25,8 @@ class BaseFeedEntity extends MagicClass
      */
     protected $book_id;
     
-    public function __toString() {
+    public function __toString() 
+    {
         return (string) $this->getId();
     }
 }

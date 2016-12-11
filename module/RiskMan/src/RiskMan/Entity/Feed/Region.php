@@ -9,6 +9,7 @@
 namespace RiskMan\Entity\Feed;
 use RiskMan\Entity\Feed\BaseFeedEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Description of Sport

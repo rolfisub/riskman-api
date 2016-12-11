@@ -123,6 +123,14 @@ class Event extends DomainFeedObject
             $s = $this->sport->create($data, $bookId);
             $e = $e->setSport($s);
         }
+        if ($data->league_id){
+            $l = $this->league->create($data, $bookId);
+            $e = $e->setLeague($l);
+        }
+        if ($data->region_id){
+            $r = $this->region->create($data, $bookId);
+            $e = $e->setRegion($r);
+        }
         return $e;
     }
     
