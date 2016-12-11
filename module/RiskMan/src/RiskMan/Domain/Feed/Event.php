@@ -6,12 +6,12 @@
  * and open the template in the editor.
  */
 
-namespace RiskMan\Domain;
-use RiskMan\Domain\DomainFeedObject;
+namespace RiskMan\Domain\Feed;
+use RiskMan\Domain\Feed\DomainFeedObject;
 use RiskMan\Entity\Feed\Event as EEvent;
-use RiskMan\Domain\Sport;
-use RiskMan\Domain\League;
-use RiskMan\Domain\Region;
+use RiskMan\Domain\Feed\Sport;
+use RiskMan\Domain\Feed\League;
+use RiskMan\Domain\Feed\Region;
 
 
 /**
@@ -51,6 +51,7 @@ class Event extends DomainFeedObject
     public function __construct(\Doctrine\ORM\EntityManager $em, Sport $sport, League $league, Region $region) 
     {
         parent::__construct($em);
+        
         $this->em = $em;
         $this->sport = $sport;
         $this->league = $league;
@@ -69,17 +70,19 @@ class Event extends DomainFeedObject
         } else {
             //event exist
             echo "existing event\n";
-            $e = $this->update($data, $bookId);
+            $e = $this->update($data, $bookId, $e);
         }
         $this->e = $e;
         $this->em->flush($this->e);
         return $this->e;
     }
     
-    public function update($data, $bookId) 
+    public function update($data, $bookId, $e = null) 
     {
         $event_id = $data->event_id;
-        $e = $this->_exists('Event', $bookId, 'event_id', $event_id);
+        if(!$e) {
+            $e = $this->_exists('Event', $bookId, 'event_id', $event_id);
+        }
         if (!$e) {
             //create new sport
             echo "new event\n";

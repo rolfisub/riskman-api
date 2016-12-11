@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace RiskMan\Domain;
+namespace RiskMan\Domain\Feed;
 use Doctrine\ORM\EntityManager;
 /**
  * Description of DomainFeedObject
