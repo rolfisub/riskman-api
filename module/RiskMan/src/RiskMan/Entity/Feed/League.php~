@@ -136,38 +136,4 @@ class League extends BaseFeedEntity
     {
         return $this->book_id;
     }
-
-    /**
-     * Add event
-     *
-     * @param \RiskMan\Entity\Feed\Event $event
-     *
-     * @return League
-     */
-    public function addEvent(\RiskMan\Entity\Feed\Event $event)
-    {
-        $this->events[] = $event;
-
-        return $this;
-    }
-
-    /**
-     * Remove event
-     *
-     * @param \RiskMan\Entity\Feed\Event $event
-     */
-    public function removeEvent(\RiskMan\Entity\Feed\Event $event)
-    {
-        $this->events->removeElement($event);
-    }
-
-    /**
-     * Get events
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEvents()
-    {
-        return $this->events;
-    }
 }

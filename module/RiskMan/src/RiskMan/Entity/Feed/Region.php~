@@ -11,17 +11,17 @@ use RiskMan\Entity\Feed\BaseFeedEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Description of league
+ * Description of Sport
  *
  * @author rolf
  * @ORM\Entity
- * @ORM\Table(name="league")
+ * @ORM\Table(name="region")
  * @property int $id 
  * @property int $book_id 
- * @property string $league_id 
+ * @property string $region_id 
  * @property string $name 
  */
-class League extends BaseFeedEntity
+class Region extends BaseFeedEntity
 {
 
     /**
@@ -34,7 +34,7 @@ class League extends BaseFeedEntity
     /**
      * @ORM\Column(type="string", length=32)
      */
-    protected $league_id;
+    protected $region_id;
 
     /**
      * @ORM\Column(type="string", length=64)
@@ -42,7 +42,7 @@ class League extends BaseFeedEntity
     protected $name;
     
     /**
-     * @ORM\OneToMany(targetEntity="Event", mappedBy="League")
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="Region")
      */
     protected $events;
     
@@ -66,27 +66,27 @@ class League extends BaseFeedEntity
     }
 
     /**
-     * Set leagueId
+     * Set regionId
      *
-     * @param string $leagueId
+     * @param string $regionId
      *
-     * @return League
+     * @return Region
      */
-    public function setLeagueId($leagueId)
+    public function setRegionId($regionId)
     {
-        $this->league_id = $leagueId;
+        $this->region_id = $regionId;
 
         return $this;
     }
 
     /**
-     * Get leagueId
+     * Get regionId
      *
      * @return string
      */
-    public function getLeagueId()
+    public function getRegionId()
     {
-        return $this->league_id;
+        return $this->region_id;
     }
 
     /**
@@ -94,7 +94,7 @@ class League extends BaseFeedEntity
      *
      * @param string $name
      *
-     * @return League
+     * @return Region
      */
     public function setName($name)
     {
@@ -118,7 +118,7 @@ class League extends BaseFeedEntity
      *
      * @param integer $bookId
      *
-     * @return League
+     * @return Region
      */
     public function setBookId($bookId)
     {
@@ -135,39 +135,5 @@ class League extends BaseFeedEntity
     public function getBookId()
     {
         return $this->book_id;
-    }
-
-    /**
-     * Add event
-     *
-     * @param \RiskMan\Entity\Feed\Event $event
-     *
-     * @return League
-     */
-    public function addEvent(\RiskMan\Entity\Feed\Event $event)
-    {
-        $this->events[] = $event;
-
-        return $this;
-    }
-
-    /**
-     * Remove event
-     *
-     * @param \RiskMan\Entity\Feed\Event $event
-     */
-    public function removeEvent(\RiskMan\Entity\Feed\Event $event)
-    {
-        $this->events->removeElement($event);
-    }
-
-    /**
-     * Get events
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEvents()
-    {
-        return $this->events;
     }
 }

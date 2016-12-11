@@ -30,71 +30,72 @@ class DEvent extends DomainObject
     protected $e;
     
     /*
-     * @var RiskMan\Entity\Feed\Sport
-     */
-    protected $s;
-    
-    /*
      * constructor TODO: Annotations
      */
     public function __construct(\Doctrine\ORM\EntityManager $em) {
         parent::__construct($em);
         $this->em = $em;
     }
+    
     //POST
-    public function create($data, $book_id = 1)
+    public function create($data, $bookId = 1)
     {
         $event_id = $data->event_id;
-        $this->e = $this->_getFeedEntity('RiskMan\Entity\Feed\Event', $book_id, 'event_id', $event_id);
-        if (!$this->e) {
+        $e = $this->_getFeedEntity('RiskMan\Entity\Feed\Event', $bookId, 'event_id', $event_id);
+        if (!$e) {
             //create new event
             echo "new event\n";
-            $this->e = $this->_newEvent($book_id, $data);
+            $e = $this->_newEvent($bookId, $data);
         } else {
             //event exist
             echo "existing event\n";
+            
         }
-                
+        $this->e = $e;
+        $this->em->flush();
         var_dump($this->e);die("test");
     }
     
-    private function _newEvent($book_id, $data)
+    private function _newEvent($bookId, $data)
     {
         var_dump($data);
         $e = new EEvent();
-        $e->book_id = $book_id;
-        $e->event_id = $data->event_id;
+        $e = $e->setBookId($bookId)
+                ->setEventId($data->event_id);
         if ($data->event_name) {
-           $e->name = $data->event_name; 
+           $e = $e->setName($data->event_name);
         }
         if ($data->sport_id){
             $sport_id = $data->sport_id;
-            $this->s = $this->_getFeedEntity('RiskMan\Entity\Feed\Sport', $book_id, 'sport_id', $sport_id);
-            if (!$this->s) {
+            $s = $this->_getFeedEntity('RiskMan\Entity\Feed\Sport', $bookId, 'sport_id', $sport_id);
+            if (!$s) {
                 //create new sport
                 echo "new sport\n";
-                $this->s = $this->_newSport($book_id, $data);
+                $s = $this->_newSport($bookId, $data);
             } else {
                 //update sport data if any
                 echo "existing sport\n";
+                if ($data->sport_name){
+                    if($s->getName() != $data->sport_name){
+                        $s = $s->setName($data->sport_name);
+                    }
+                }
             }
-            $this->e->sport = $this->s;
+            $e = $e->setSport($s);
+            var_dump($s);
         }
         $this->em->persist($e);
-        $this->em->flush();
         return $e;
     }
     
-    private function _newSport($book_id, $data)
+    private function _newSport($bookId, $data)
     {
         $s = new Sport();
-        $s->book_id = $book_id;
-        $s->sport_id = $data->sport_id;
-        if ($data->sport_name) {
-            $s->name = $data->sport_name;
+        $s = $s->setBookId($bookId);
+        if($data->sport_name) {
+            $s = $s->setName ($data->sport_name);
         }
         $this->em->persist($s);
-        $this->em->flush();
         return $s;
     }
     
