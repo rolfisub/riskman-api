@@ -1,6 +1,6 @@
 <?php
 namespace RiskMan\V1\Rest\Event;
-use RiskMan\Domain\Event;
+use RiskMan\Domain\Feed\Event;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
