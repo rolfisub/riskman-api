@@ -7,7 +7,7 @@
  */
 
 namespace RiskMan\Domain;
-use RiskMan\Domain\DomainObject;
+use RiskMan\Domain\DomainFeedObject;
 use RiskMan\Entity\Feed\Region as ERegion;
 
 
@@ -16,7 +16,7 @@ use RiskMan\Entity\Feed\Region as ERegion;
  *
  * @author rolf
  */
-class Region extends DomainObject
+class Region extends DomainFeedObject
 {
     /*
      * @var Doctrine\ORM\EntityManager

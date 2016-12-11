@@ -7,7 +7,7 @@
  */
 
 namespace RiskMan\Domain;
-use RiskMan\Domain\DomainObject;
+use RiskMan\Domain\DomainFeedObject;
 use RiskMan\Entity\Feed\Sport as ESport;
 
 
@@ -16,7 +16,7 @@ use RiskMan\Entity\Feed\Sport as ESport;
  *
  * @author rolf
  */
-class Sport extends DomainObject
+class Sport extends DomainFeedObject
 {
     /*
      * @var Doctrine\ORM\EntityManager
@@ -36,7 +36,7 @@ class Sport extends DomainObject
     }
     
     //POST
-    public function create ($data, $bookId = 1)
+    public function create ($data, $bookId)
     {
         $sport_id = $data->sport_id;
         $s = $this->_exists('Sport', $bookId, 'sport_id', $sport_id);
@@ -54,7 +54,7 @@ class Sport extends DomainObject
         return $this->s;
     }
     
-    public function update ($data, $bookId = 1)
+    public function update ($data, $bookId)
     {
         $sport_id = $data->sport_id;
         $s = $this->_exists('Sport', $bookId, 'sport_id', $sport_id);

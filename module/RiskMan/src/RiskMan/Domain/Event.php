@@ -7,7 +7,7 @@
  */
 
 namespace RiskMan\Domain;
-use RiskMan\Domain\DomainObject;
+use RiskMan\Domain\DomainFeedObject;
 use RiskMan\Entity\Feed\Event as EEvent;
 use RiskMan\Domain\Sport;
 use RiskMan\Domain\League;
@@ -19,7 +19,7 @@ use RiskMan\Domain\Region;
  *
  * @author rolf
  */
-class Event extends DomainObject
+class Event extends DomainFeedObject
 {
     /*
      * @var Doctrine\ORM\EntityManager
@@ -58,13 +58,13 @@ class Event extends DomainObject
     }
     
     //POST
-    public function create($data, $bookId = 1)
+    public function create($data, $bookId)
     {
         $event_id = $data->event_id;
         $e = $this->_exists('Event', $bookId, 'event_id' ,$event_id);
         if (!$e) {
             //create new event
-            echo "new event\n";
+            echo "creating new event\n";
             $e = $this->_newEvent($data, $bookId);
         } else {
             //event exist
@@ -76,7 +76,7 @@ class Event extends DomainObject
         return $this->e;
     }
     
-    public function update($data, $bookId = 1) 
+    public function update($data, $bookId) 
     {
         $event_id = $data->event_id;
         $e = $this->_exists('Event', $bookId, 'event_id', $event_id);
@@ -87,7 +87,7 @@ class Event extends DomainObject
         } else {
             //update sport data if any
             echo "updating existing event\n";
-            $e = $this->_updateEvent($data, $e);
+            $e = $this->_updateEvent($data, $bookId, $e);
         }
         $this->e = $e;
         $this->em->flush($this->e);
@@ -102,20 +102,27 @@ class Event extends DomainObject
         if ($data->event_name) {
            $e = $e->setName($data->event_name);
         }
-        if ($data->sport_id){
-            $s = $this->sport->create($data, $bookId);
-            $e = $e->setSport($s);
-        }
+        $e = $this->_createOtherObjects($data, $bookId, $e);
         $this->em->persist($e);
         return $e;
     }
     
-    private function _updateEvent($data, $e)
+    private function _updateEvent($data, $bookId, $e)
     {
         if ($data->event_name) {
            $e = $e->setName($data->event_name);
         }
+        $e = $this->_createOtherObjects($data, $bookId, $e);
         $this->em->persist($e);
+        return $e;
+    }
+    
+    private function _createOtherObjects($data, $bookId, $e)
+    {
+        if ($data->sport_id){
+            $s = $this->sport->create($data, $bookId);
+            $e = $e->setSport($s);
+        }
         return $e;
     }
     
