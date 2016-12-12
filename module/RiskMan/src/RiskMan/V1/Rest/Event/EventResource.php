@@ -58,7 +58,11 @@ class EventResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        
+        $result = $this->de->getEvent($id, 2);
+        echo $result;
+        die();
+        //return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 
     /**
