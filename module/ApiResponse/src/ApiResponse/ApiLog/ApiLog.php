@@ -41,7 +41,7 @@ class ApiLog
                 'ip_address' => ($response->getServer('REMOTE_ADDR')== null ? 0 :$response->getServer('REMOTE_ADDR')),
                 'user_id' => $user_id,
                 'service_name' => $service_name,
-                'url' => $response->getServer('HTTP_HOST') . $response->getUri(),
+                'url' => $response->getUri(),
                 'http_method' => $response->getMethod(),
                 'http_code' => $status,
                 'http_message' => $title . ' ' . $detail,
