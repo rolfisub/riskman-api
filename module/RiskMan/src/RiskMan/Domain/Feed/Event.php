@@ -97,6 +97,17 @@ class Event extends DomainFeedObject
         return $this->e;
     }
     
+    public function getEvent($id, $bookId)
+    {
+        $event_id = $id;
+        $e = $this->_exists('Event', $bookId, 'event_id' ,$event_id);
+        if ($e){
+            return $e;
+        } else {
+            return null;
+        }
+    }
+    
     private function _newEvent($data, $bookId)
     {
         $e = new EEvent();

@@ -6,6 +6,7 @@
  */
 return array(
    // 'ZendDeveloperTools',
+    
     'Application',
     'ZF\\DevelopmentMode',
     'ZF\\Apigility',
@@ -25,4 +26,5 @@ return array(
     'DoctrineModule',
     'DoctrineORMModule',
     'RiskMan',
+    'ApiResponse',
 );
