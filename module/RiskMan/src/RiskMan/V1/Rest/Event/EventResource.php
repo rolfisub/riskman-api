@@ -1,6 +1,6 @@
 <?php
 namespace RiskMan\V1\Rest\Event;
-use RiskMan\Domain\Feed\Event;
+use RiskMan\Domain\Feed\Event as DEvent;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use ApiResponse\ApiResponse;
@@ -17,8 +17,10 @@ class EventResource extends AbstractResourceListener
      */
     protected $api;
     
-    public function __construct(Event $de, ApiResponse $api) 
+    public function __construct($services) 
     {
+        $de = $services->get('RiskMan\Domain\Feed\Event');
+        $api = $services->get('ApiResponse');
         if (null === $this->de) {
             $this->de = $de;
         }
@@ -75,7 +77,7 @@ class EventResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        
+        //echo "test\n";
         /*$id = $this->de->getEventId($id, 2);
         $event = $this->de->getEvent($id);
         $json = $event->exportTo('json');

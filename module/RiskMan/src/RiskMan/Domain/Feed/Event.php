@@ -7,6 +7,7 @@
  */
 
 namespace RiskMan\Domain\Feed;
+use RiskMan\Domain\Feed\DomainFeedObject;
 use RiskMan\Model\Feed\Event as MEvent;
 use RiskMan\Domain\Feed\Sport;
 use RiskMan\Domain\Feed\League;
