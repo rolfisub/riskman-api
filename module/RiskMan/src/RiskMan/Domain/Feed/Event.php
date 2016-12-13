@@ -7,8 +7,7 @@
  */
 
 namespace RiskMan\Domain\Feed;
-use RiskMan\Domain\Feed\DomainFeedObject;
-use RiskMan\Entity\Feed\Event as EEvent;
+use RiskMan\Model\Feed\Event as MEvent;
 use RiskMan\Domain\Feed\Sport;
 use RiskMan\Domain\Feed\League;
 use RiskMan\Domain\Feed\Region;
@@ -22,11 +21,7 @@ use RiskMan\Domain\Feed\Region;
 class Event extends DomainFeedObject
 {
     /*
-     * @var Doctrine\ORM\EntityManager
-     */
-    protected $em;
-    /*
-     * @var RiskMan\Entity\Feed\Event
+     * @var RiskMan\Model\Feed\Event
      */
     protected $e;
     
@@ -48,11 +43,9 @@ class Event extends DomainFeedObject
     /*
      * constructor TODO: Annotations
      */
-    public function __construct(\Doctrine\ORM\EntityManager $em, Sport $sport, League $league, Region $region) 
+    public function __construct(MEvent $event, Sport $sport, League $league, Region $region) 
     {
-        parent::__construct($em);
-        
-        $this->em = $em;
+        $this->e = $event;
         $this->sport = $sport;
         $this->league = $league;
         $this->region = $region;
@@ -61,73 +54,18 @@ class Event extends DomainFeedObject
     //POST
     public function create($data, $bookId)
     {
-        $event_id = $data->event_id;
-        $e = $this->_exists('Event', $bookId, 'event_id' ,$event_id);
+        
+        $eventId = $data->event_id;
+        $e = $this->e->getEvent($eventId, $bookId); 
         if (!$e) {
             //create new event
             echo "creating new event\n";
-            $e = $this->_newEvent($data, $bookId);
+            $e = $this->e->newEvent($data, $bookId);
         } else {
             //event exist
             echo "existing event\n";
-            $e = $this->update($data, $bookId, $e);
+            //$e = $this->update($data, $bookId, $e);
         }
-        $this->e = $e;
-        $this->em->flush($this->e);
-        return $this->e;
-    }
-    
-    public function update($data, $bookId, $e = null) 
-    {
-        $event_id = $data->event_id;
-        if(!$e) {
-            $e = $this->_exists('Event', $bookId, 'event_id', $event_id);
-        }
-        if (!$e) {
-            //create new sport
-            echo "new event\n";
-            $e = $this->create($data, $bookId);
-        } else {
-            //update sport data if any
-            echo "updating existing event\n";
-            $e = $this->_updateEvent($data, $bookId, $e);
-        }
-        $this->e = $e;
-        $this->em->flush($this->e);
-        return $this->e;
-    }
-    
-    public function getEvent($id, $bookId)
-    {
-        $event_id = $id;
-        $e = $this->_exists('Event', $bookId, 'event_id' ,$event_id);
-        if ($e){
-            return $e;
-        } else {
-            return null;
-        }
-    }
-    
-    private function _newEvent($data, $bookId)
-    {
-        $e = new EEvent();
-        $e = $e->setBookId($bookId)
-                ->setEventId($data->event_id);
-        if ($data->event_name) {
-           $e = $e->setName($data->event_name);
-        }
-        $e = $this->_createOtherObjects($data, $bookId, $e);
-        $this->em->persist($e);
-        return $e;
-    }
-    
-    private function _updateEvent($data, $bookId, $e)
-    {
-        if ($data->event_name) {
-           $e = $e->setName($data->event_name);
-        }
-        $e = $this->_createOtherObjects($data, $bookId, $e);
-        $this->em->persist($e);
         return $e;
     }
     

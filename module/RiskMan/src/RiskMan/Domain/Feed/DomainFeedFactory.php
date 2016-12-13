@@ -33,26 +33,30 @@ class DomainFeedFactory implements AbstractFactoryInterface
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName) 
     {
         if (class_exists($requestedName)) {
-            $em = $serviceLocator->get('doctrine.entitymanager.orm_default');
             switch ($requestedName){
                 case 'RiskMan\Domain\Feed\Event':
                     echo "creating domain Event\n";
-                    $sport = $serviceLocator->get('RiskMan\Domain\Feed\Sport');
+                    $event  = $serviceLocator->get('RiskMan\Model\Feed\Event');
+                    $sport  = $serviceLocator->get('RiskMan\Domain\Feed\Sport');
                     $league = $serviceLocator->get('RiskMan\Domain\Feed\League');
                     $region = $serviceLocator->get('RiskMan\Domain\Feed\Region');
-                    return new $requestedName($em, $sport, $league, $region);
+                    $e = new $requestedName($event, $sport, $league, $region);
+                    return $e;
                     break;
                 case 'RiskMan\Domain\Feed\Sport':
                     echo "creating domain Sport\n";
-                    return new $requestedName($em);
+                    $sport = $serviceLocator->get('RiskMan\Model\Feed\Sport');
+                    return new $requestedName($sport);
                     break;
                 case 'RiskMan\Domain\Feed\League':
                     echo "creating domain League\n";
-                    return new $requestedName($em);
+                    $league = $serviceLocator->get('RiskMan\Model\Feed\League');
+                    return new $requestedName($league);
                     break;
                 case 'RiskMan\Domain\Feed\Region':
                     echo "creating domain Region\n";
-                    return new $requestedName($em);
+                    $region = $serviceLocator->get('RiskMan\Model\Feed\Region');
+                    return new $requestedName($region);
                     break;
             }
         }

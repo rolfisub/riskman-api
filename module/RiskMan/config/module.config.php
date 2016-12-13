@@ -32,7 +32,11 @@ return array(
             'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResource' => 'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResourceFactory',
         ),
         'abstract_factories' => array(
-            'RiskMan\\Domain\\Feed\\DomainFeedFactory'
+            // Domain Feed Objects
+            'RiskMan\\Domain\\Feed\\DomainFeedFactory',
+            
+            // Model Feed Objects
+            'RiskMan\\Model\\Feed\\ModelFeedFactory',
         ),
     ),
     'router' => array(

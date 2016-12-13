@@ -3,17 +3,27 @@ namespace RiskMan\V1\Rest\Event;
 use RiskMan\Domain\Feed\Event;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use ApiResponse\ApiResponse;
 
 class EventResource extends AbstractResourceListener
 {
     /*
-     * @var RiskMan\Domain\DEvent
+     * @var RiskMan\Domain\Event
      */
     protected $de;
     
-    public function __construct(Event $de) {
+    /*
+     * @var ApiResponse\ApiResponse
+     */
+    protected $api;
+    
+    public function __construct(Event $de, ApiResponse $api) 
+    {
         if (null === $this->de) {
             $this->de = $de;
+        }
+        if (null === $this->api) {
+            $this->api = $api;
         }
     }
     /**
@@ -24,8 +34,15 @@ class EventResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $this->de->create($data, 2);
-        return new ApiProblem(405, 'The POST method has not been defined');
+        //var_dump();
+        /*return $this->api->sendResponse(
+            200,
+            'detail',
+            'type',
+            'title',
+            $this->de->create($data, 2) 
+        );*/
+        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
 
     /**
@@ -59,10 +76,12 @@ class EventResource extends AbstractResourceListener
     public function fetch($id)
     {
         
-        $result = $this->de->getEvent($id, 2);
-        echo $result;
-        die();
-        //return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        /*$id = $this->de->getEventId($id, 2);
+        $event = $this->de->getEvent($id);
+        $json = $event->exportTo('json');
+        echo $json;
+        die();*/
+        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 
     /**
