@@ -32,26 +32,38 @@ class ModelFeedFactory implements AbstractFactoryInterface
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName) 
     {
         if (class_exists($requestedName)) {
+            echo "requested name = " . $requestedName . "\n";
             $em = $serviceLocator->get('doctrine.entitymanager.orm_default');
             switch ($requestedName){
                 case 'RiskMan\Model\Feed\Event':
-                    echo "creating model Event\n";
-                    return new $requestedName($em);
+                    echo "creating model Event";
+                    $o = new $requestedName($em);
+                    echo " ...done.\n";
+                    return $o;
                     break;
                 case 'RiskMan\Model\Feed\Sport':
-                    echo "creating model Sport\n";
-                    return new $requestedName($em);
+                    echo "creating model Sport";
+                    $o = new $requestedName($em);
+                    echo " ...done.\n";
+                    return $o;
                     break;
                 case 'RiskMan\Model\Feed\League':
-                    echo "creating model League\n";
-                    return new $requestedName($em);
+                    echo "creating model League";
+                    $o = new $requestedName($em);
+                    echo " ...done\n";
+                    return $o;
                     break;
                 case 'RiskMan\Model\Feed\Region':
                     echo "creating model Region\n";
-                    return new $requestedName($em);
+                    $o = new $requestedName($em);
+                    echo " ...done\n";
+                    return $o;
                     break;
             }
         }
+        else {
+            echo "this should never happen";
+        }
         return false;
-    }
+    } 
 }

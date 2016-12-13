@@ -32,33 +32,45 @@ class DomainFeedFactory implements AbstractFactoryInterface
     
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName) 
     {
+        
         if (class_exists($requestedName)) {
+            echo "requested name = " . $requestedName . "\n";
             switch ($requestedName){
                 case 'RiskMan\Domain\Feed\Event':
                     echo "creating domain Event\n";
-                    $event  = $serviceLocator->get('RiskMan\Model\Feed\Event');
                     $sport  = $serviceLocator->get('RiskMan\Domain\Feed\Sport');
                     $league = $serviceLocator->get('RiskMan\Domain\Feed\League');
                     $region = $serviceLocator->get('RiskMan\Domain\Feed\Region');
-                    $e = new $requestedName($event, $sport, $league, $region);
-                    return $e;
+                    $event  = $serviceLocator->get('RiskMan\Model\Feed\Event');
+                    $o = new $requestedName($event, $sport, $league, $region);
+                    echo " ...done\n";
+                    return $o;
                     break;
                 case 'RiskMan\Domain\Feed\Sport':
                     echo "creating domain Sport\n";
                     $sport = $serviceLocator->get('RiskMan\Model\Feed\Sport');
-                    return new $requestedName($sport);
+                    $o = new $requestedName($sport);
+                    echo " ...done\n";
+                    return $o;
                     break;
                 case 'RiskMan\Domain\Feed\League':
                     echo "creating domain League\n";
                     $league = $serviceLocator->get('RiskMan\Model\Feed\League');
-                    return new $requestedName($league);
+                    $o = new $requestedName($league);
+                    echo " ...done\n";
+                    return $o;
                     break;
                 case 'RiskMan\Domain\Feed\Region':
                     echo "creating domain Region\n";
                     $region = $serviceLocator->get('RiskMan\Model\Feed\Region');
-                    return new $requestedName($region);
+                    $o = new $requestedName($region);
+                    echo " ...done\n";
+                    return $o;
                     break;
             }
+        }
+        else {
+            echo "this should never happen";
         }
         return false;
     }

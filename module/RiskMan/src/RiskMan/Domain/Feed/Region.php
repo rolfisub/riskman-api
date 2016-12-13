@@ -8,7 +8,7 @@
 
 namespace RiskMan\Domain\Feed;
 use RiskMan\Domain\Feed\DomainFeedObject;
-use RiskMan\Entity\Feed\Region as ERegion;
+use RiskMan\Model\Feed\Region as MRegion;
 
 
 /**
