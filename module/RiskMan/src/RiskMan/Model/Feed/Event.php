@@ -37,6 +37,9 @@ class Event extends ModelFeedObject
             'event_id' => $eventId,
             'book_id' => $bookId
         ]);
+        if(!$e){
+            return false;
+        }
         return $this->_toArray($e);
     }
     
