@@ -5,7 +5,7 @@
  * The previous config file has been stored in ./config/modules.config.old
  */
 return array(
-    'ZendDeveloperTools',
+    //'ZendDeveloperTools',
     
     'Application',
     'ZF\\DevelopmentMode',
@@ -23,8 +23,8 @@ return array(
     'ZF\\Rest',
     'ZF\\Rpc',
     'ZF\\Versioning',
-    'DoctrineModule',
-    'DoctrineORMModule',
+//    'DoctrineModule',
+//    'DoctrineORMModule',
     'RiskMan',
     'ApiResponse',
 );
