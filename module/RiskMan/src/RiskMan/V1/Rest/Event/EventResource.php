@@ -37,14 +37,14 @@ class EventResource extends AbstractResourceListener
     public function create($data)
     {
         //var_dump();
-        /*return $this->api->sendResponse(
+        return $this->api->sendResponse(
             200,
             'detail',
             'type',
             'title',
             $this->de->create($data, 2) 
-        );*/
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        );
+        //return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
 
     /**
