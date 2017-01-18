@@ -48,7 +48,7 @@ class ModelObject
     {
         $i = $this->sql->insert();
         $i->values($data);
-        return $this->exec($i);
+        return $this->exec($i)->getGeneratedValue();
     }
     
     public function read($id)
@@ -60,14 +60,24 @@ class ModelObject
         return $this->getArrayFrom($r);
     }
     
+    public function readInternalId($id)
+    {
+        $r = $this->sql->select();
+        $this->where['id'] = $id;
+        $r->limit(1);
+        return $this->getArrayFrom($r);
+    }
+    
     public function update($id, $data, $where = null)
     {
         $u = $this->sql->update();
         $u->set($data);
         $this->where[$this->name . '_id'] = $id;
-        $u->where($this->where);
         if (is_array($where)) {
-            $u->where($where);
+            $w = array_merge($where, $this->where);
+            $u->where($w);
+        } else {
+            $u->where($this->where);
         }
         return $this->exec($u);
     }
@@ -78,7 +88,10 @@ class ModelObject
         $this->where[$this->name . '_id'] = $id;
         $d->where($this->where);
         if (is_array($where)) {
-            $d->where($where);
+            $w = array_merge($where, $this->where);
+            $d->where($w);
+        } else {
+            $d->where($this->where);
         }
         return $this->exec($d);
     }
@@ -86,7 +99,8 @@ class ModelObject
     protected function exec ($o)
     {
         $stmt = $this->sql->prepareStatementForSqlObject($o);
-        return $stmt->execute();
+        $r = $stmt->execute();
+        return $r;
     }
     
     protected function getArrayFrom($o) 
@@ -101,5 +115,7 @@ class ModelObject
         }
         return false;
     }
+    
+    
     
 }

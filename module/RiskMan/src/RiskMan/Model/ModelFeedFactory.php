@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace RiskMan\Model\Feed;
+namespace RiskMan\Model;
 use RiskMan\AbstractFactoryServiceClass;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -37,6 +37,13 @@ class ModelFeedFactory extends AbstractFactoryServiceClass implements AbstractFa
     
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName) 
     {
-        return $this->create($serviceLocator, $name);
-    } 
+        $adapter = $serviceLocator->get('DatabaseService');
+        $table = $this->getTableName($name);
+        $name = $this->getShortName($name);
+        $book_id = 1;//TODO get the book id from current user (OAUTH2)
+        return new $name($adapter, $table, $name, $book_id);
+    }
+    
+     
+    
 }

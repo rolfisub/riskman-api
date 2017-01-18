@@ -42,7 +42,7 @@ class EventResource extends AbstractResourceListener
             'detail',
             'type',
             'title',
-            $this->de->create($data, 2) 
+            $this->de->create($data) 
         );
         //return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }

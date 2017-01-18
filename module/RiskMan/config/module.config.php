@@ -22,7 +22,7 @@ return array(
             'RiskMan\\Domain\\Feed\\DomainFeedFactory',
             
             // Model Feed Objects
-            'RiskMan\\Model\\Feed\\ModelFeedFactory',
+            'RiskMan\\Model\\ModelFeedFactory',
         ),
     ),
     'router' => array(
