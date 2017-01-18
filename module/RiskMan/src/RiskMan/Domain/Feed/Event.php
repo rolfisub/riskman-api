@@ -73,9 +73,9 @@ class Event extends DomainFeedObject
     private function returnEventArray($event_id, $event_arr)
     {
         $e = $this->e->read($event_id);
-        $a = $e;
-        if(sizeof($a) > 0){
-
+        $a = [];
+        if($e){
+            $a = $e;
             //delete private data
             if(isset($a['id'])) {
                 unset($a['id']);
@@ -97,17 +97,17 @@ class Event extends DomainFeedObject
             if (isset($event_arr['sport_id']) && $event_arr['sport_id'] != NULL ) {
                 $s = $this->s->readInternalId($event_arr['sport_id']);
                 $a['sport_id'] = $s['sport_id'];
-                $a['sport_name'] = $s['sport_name'];
+                $a['sport_name'] = $s['name'];
             }
             if (isset($event_arr['league_id']) && $event_arr['league_id'] != NULL ) {
                 $s = $this->l->readInternalId($event_arr['league_id']);
                 $a['league_id'] = $s['league_id'];
-                $a['league_name'] = $s['league_name'];
+                $a['league_name'] = $s['name'];
             }
             if (isset($event_arr['region_id']) && $event_arr['region_id'] != NULL ) {
                 $s = $this->r->readInternalId($event_arr['region_id']);
                 $a['region_id'] = $s['region_id'];
-                $a['region_name'] = $s['region_name'];
+                $a['region_name'] = $s['name'];
             }
             
             return $a;
