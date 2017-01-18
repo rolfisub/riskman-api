@@ -18,7 +18,5 @@ use RiskMan\Model\ModelObject;
 class Event extends ModelObject
 {
     
-    
-    
-    
+
 }

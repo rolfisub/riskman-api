@@ -6,14 +6,14 @@
  * and open the template in the editor.
  */
 
-namespace RiskMan\AbstractFactoryServiceClass;
+namespace RiskMan;
 
 /**
  * Description of AbstractFactoryServiceClass
  *
  * @author rolf
  */
-abstract class AbstractFactoryServiceClass 
+class AbstractFactoryServiceClass 
 {
     protected $nps;
     
@@ -42,6 +42,18 @@ abstract class AbstractFactoryServiceClass
             return $v;
         }
         return false;
+    }
+    
+    protected function getShortName($name)
+    {
+        $f = new \ReflectionClass($name);
+        return strtolower($f->getShortName());
+    }
+    
+    protected function getTableName($name)
+    {
+        $short = $this->getShortName($name);
+        return strtolower($short);
     }
     
 }
