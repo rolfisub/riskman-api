@@ -21,10 +21,10 @@ class ModelFeedFactory extends AbstractFactoryServiceClass implements AbstractFa
     public function __construct() 
     {
         $objects = array(
-            0 => 'RiskMan\\Model\\Feed\\Event',
-            1 => 'RiskMan\\Model\\Feed\\Sport',
-            2 => 'RiskMan\\Model\\Feed\\League',
-            3 => 'RiskMan\\Model\\Feed\\Region',
+            0 => 'RiskMan\Model\Feed\Event',
+            1 => 'RiskMan\Model\Feed\Sport',
+            2 => 'RiskMan\Model\Feed\League',
+            3 => 'RiskMan\Model\Feed\Region',
         );
         parent::__construct($objects);
     }
@@ -32,16 +32,16 @@ class ModelFeedFactory extends AbstractFactoryServiceClass implements AbstractFa
     
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName) 
     {
-        return $this->can($name);
+        return $this->can($requestedName);
     }
     
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName) 
     {
         $adapter = $serviceLocator->get('DatabaseService');
-        $table = $this->getTableName($name);
-        $name = $this->getShortName($name);
+        $table = $this->getTableName($requestedName);
+        $name = $this->getShortName($requestedName);
         $book_id = 1;//TODO get the book id from current user (OAUTH2)
-        return new $name($adapter, $table, $name, $book_id);
+        return new $requestedName($adapter, $table, $name, $book_id);
     }
     
      

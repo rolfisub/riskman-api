@@ -9,6 +9,7 @@
 namespace RiskMan\Model;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Sql;
+use Zend\Db\ResultSet\ResultSet;
 
 /**
  * Description of ModelObject
@@ -47,6 +48,7 @@ class ModelObject
     public function create($data)
     {
         $i = $this->sql->insert();
+        $data['book_id'] = $this->where['book_id'];
         $i->values($data);
         return $this->exec($i)->getGeneratedValue();
     }
