@@ -59,15 +59,26 @@ class ModelObject
         $this->where[$this->name . '_id'] = $id;
         $r->where($this->where);
         $r->limit(1);
-        return $this->getArrayFrom($r);
+        $result = $this->getArrayFrom($r);
+        if(isset($result[0])){
+            return $result[0];
+        } else {
+            return false;
+        }
     }
     
     public function readInternalId($id)
     {
         $r = $this->sql->select();
         $this->where['id'] = $id;
+        $r->where($this->where);
         $r->limit(1);
-        return $this->getArrayFrom($r);
+        $result = $this->getArrayFrom($r);
+        if(isset($result[0])){
+            return $result[0];
+        } else {
+            return false;
+        }
     }
     
     public function update($id, $data, $where = null)
