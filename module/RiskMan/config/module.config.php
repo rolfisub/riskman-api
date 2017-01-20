@@ -1,21 +1,30 @@
 <?php
+namespace RiskMan;
 return array(
     'database_config' => array(
         'database_service' => 'DatabaseService',
-        'database_config_key' => 'db1',
+        'database_config_key' => 'db1'
     ),
     'service_manager' => array(
         'factories' => array(
+            //Database Service
             'DatabaseService' => 'RiskMan\\Database\\DatabaseFactory',
+
+            //REST controllers
             'RiskMan\\V1\\Rest\\Single\\SingleResource' => 'RiskMan\\V1\\Rest\\Single\\SingleResourceFactory',
             'RiskMan\\V1\\Rest\\Multiple\\MultipleResource' => 'RiskMan\\V1\\Rest\\Multiple\\MultipleResourceFactory',
             'RiskMan\\V1\\Rest\\Event\\EventResource' => 'RiskMan\\V1\\Rest\\Event\\EventResourceFactory',
             'RiskMan\\V1\\Rest\\Odd\\OddResource' => 'RiskMan\\V1\\Rest\\Odd\\OddResourceFactory',
             'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResource' => 'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResourceFactory',
+            
+            
         ),
         'abstract_factories' => array(
-            0 => 'RiskMan\\Domain\\Feed\\DomainFeedFactory',
-            1 => 'RiskMan\\Model\\ModelFeedFactory',
+            // Domain Feed Objects
+            'RiskMan\\Domain\\Feed\\DomainFeedFactory',
+            
+            // Model Feed Objects
+            'RiskMan\\Model\\ModelFeedFactory',
         ),
     ),
     'router' => array(
@@ -582,7 +591,8 @@ return array(
                     ),
                     1 => array(
                         'name' => 'RiskMan\\Validator\\ValidateDateTime',
-                        'options' => array(),
+                        'options' => array(
+                        ),
                     ),
                 ),
                 'filters' => array(
@@ -651,7 +661,7 @@ return array(
                     1 => array(
                         'name' => 'Zend\\I18n\\Validator\\Alnum',
                         'options' => array(),
-                    ),
+                    )
                 ),
                 'filters' => array(
                     0 => array(
@@ -669,6 +679,11 @@ return array(
                         'options' => array(
                             'max' => '64',
                             'min' => '1',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'RiskMan\\Validator\\ValidateDateTime',
+                        'options' => array(
                         ),
                     ),
                 ),
@@ -706,57 +721,6 @@ return array(
                 'name' => 'odd_selection_id',
             ),
             1 => array(
-                'required' => true,
-                'validators' => array(
-                    0 => array(
-                        'name' => 'Zend\\Validator\\StringLength',
-                        'options' => array(
-                            'min' => '1',
-                            'max' => '32',
-                        ),
-                    ),
-                ),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
-                'name' => 'odd_id',
-            ),
-            2 => array(
-                'required' => false,
-                'validators' => array(
-                    0 => array(
-                        'name' => 'Zend\\I18n\\Validator\\IsFloat',
-                        'options' => array(),
-                    ),
-                ),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
-                'name' => 'points',
-            ),
-            3 => array(
-                'required' => false,
-                'validators' => array(
-                    0 => array(
-                        'name' => 'Zend\\I18n\\Validator\\IsFloat',
-                        'options' => array(),
-                    ),
-                ),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
-                'name' => 'asian_handicap',
-            ),
-            4 => array(
                 'required' => false,
                 'validators' => array(
                     0 => array(
@@ -767,8 +731,46 @@ return array(
                         ),
                     ),
                 ),
-                'filters' => array(),
-                'name' => 'name',
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
+                'name' => 'odd_selection_name',
+            ),
+            2 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
+                'name' => 'odd_id',
+            ),
+            3 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
+                'name' => 'points',
+            ),
+            4 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
+                'name' => 'asian_handicap',
             ),
         ),
         'RiskMan\\V1\\Rest\\Single\\Validator' => array(

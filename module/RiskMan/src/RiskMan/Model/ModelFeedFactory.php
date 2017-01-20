@@ -25,6 +25,8 @@ class ModelFeedFactory extends AbstractFactoryServiceClass implements AbstractFa
             1 => 'RiskMan\Model\Feed\Sport',
             2 => 'RiskMan\Model\Feed\League',
             3 => 'RiskMan\Model\Feed\Region',
+            4 => 'RiskMan\Model\Feed\Odd',
+            5 => 'RiskMan\Model\Feed\OddSelection',
         );
         parent::__construct($objects);
     }
@@ -39,9 +41,9 @@ class ModelFeedFactory extends AbstractFactoryServiceClass implements AbstractFa
     {
         $adapter = $serviceLocator->get('DatabaseService');
         $table = $this->getTableName($requestedName);
-        $name = $this->getShortName($requestedName);
-        $book_id = 2;//TODO get the book id from current user (OAUTH2)
-        return new $requestedName($adapter, $table, $name, $book_id);
+        $thisname = $this->getShortName($requestedName);
+        $book_id = 1;//TODO get the book id from current user (OAUTH2)
+        return new $requestedName($adapter, $table, $thisname, $book_id);
     }
     
      
