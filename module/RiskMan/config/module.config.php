@@ -1,16 +1,12 @@
 <?php
-namespace RiskMan;
 return array(
     'database_config' => array(
         'database_service' => 'DatabaseService',
-        'database_config_key' => 'db1'
+        'database_config_key' => 'db1',
     ),
     'service_manager' => array(
         'factories' => array(
-            //Database Service
             'DatabaseService' => 'RiskMan\\Database\\DatabaseFactory',
-
-            //REST controllers
             'RiskMan\\V1\\Rest\\Single\\SingleResource' => 'RiskMan\\V1\\Rest\\Single\\SingleResourceFactory',
             'RiskMan\\V1\\Rest\\Multiple\\MultipleResource' => 'RiskMan\\V1\\Rest\\Multiple\\MultipleResourceFactory',
             'RiskMan\\V1\\Rest\\Event\\EventResource' => 'RiskMan\\V1\\Rest\\Event\\EventResourceFactory',
@@ -18,11 +14,8 @@ return array(
             'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResource' => 'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResourceFactory',
         ),
         'abstract_factories' => array(
-            // Domain Feed Objects
-            'RiskMan\\Domain\\Feed\\DomainFeedFactory',
-            
-            // Model Feed Objects
-            'RiskMan\\Model\\ModelFeedFactory',
+            0 => 'RiskMan\\Domain\\Feed\\DomainFeedFactory',
+            1 => 'RiskMan\\Model\\ModelFeedFactory',
         ),
     ),
     'router' => array(
@@ -589,8 +582,7 @@ return array(
                     ),
                     1 => array(
                         'name' => 'RiskMan\\Validator\\ValidateDateTime',
-                        'options' => array(
-                        ),
+                        'options' => array(),
                     ),
                 ),
                 'filters' => array(
@@ -734,18 +726,31 @@ return array(
             ),
             2 => array(
                 'required' => true,
-                'validators' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                ),
                 'filters' => array(
                     0 => array(
                         'name' => 'Zend\\Filter\\StringTrim',
                         'options' => array(),
                     ),
                 ),
-                'name' => 'odds',
+                'name' => 'odd_id',
             ),
             3 => array(
                 'required' => false,
-                'validators' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\I18n\\Validator\\IsFloat',
+                        'options' => array(),
+                    ),
+                ),
                 'filters' => array(
                     0 => array(
                         'name' => 'Zend\\Filter\\StringTrim',
@@ -756,7 +761,12 @@ return array(
             ),
             4 => array(
                 'required' => false,
-                'validators' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\I18n\\Validator\\IsFloat',
+                        'options' => array(),
+                    ),
+                ),
                 'filters' => array(
                     0 => array(
                         'name' => 'Zend\\Filter\\StringTrim',
