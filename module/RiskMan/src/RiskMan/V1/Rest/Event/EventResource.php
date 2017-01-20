@@ -36,13 +36,16 @@ class EventResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        //var_dump();
+        //manual filter, it should be valid already (workaround)
+        if(isset($data->datetime)){
+           $data->datetime =  date("Y-m-d g:i:s", strtotime($data->datetime));
+        }
         return $this->api->sendResponse(
             200,
-            'detail',
-            'type',
-            'title',
-            $this->de->create($data) 
+            $this->de->create($data),
+            'OK',
+            'Success'
+            
         );
         //return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }

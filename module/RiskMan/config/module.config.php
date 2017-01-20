@@ -587,6 +587,11 @@ return array(
                             'max' => '64',
                         ),
                     ),
+                    1 => array(
+                        'name' => 'RiskMan\\Validator\\ValidateDateTime',
+                        'options' => array(
+                        ),
+                    ),
                 ),
                 'filters' => array(
                     0 => array(
