@@ -27,7 +27,7 @@ class ModelObject
     
     public function __construct(Adapter $za, $table, $name, $bookId)
     {
-        if(null === $this->za){
+        if(null === $this->za){   
             $this->za = $za;
             $this->sql = new Sql($this->za);       
         }

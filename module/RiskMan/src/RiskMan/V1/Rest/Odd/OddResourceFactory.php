@@ -5,6 +5,6 @@ class OddResourceFactory
 {
     public function __invoke($services)
     {
-        return new OddResource();
+        return new OddResource($services);
     }
 }

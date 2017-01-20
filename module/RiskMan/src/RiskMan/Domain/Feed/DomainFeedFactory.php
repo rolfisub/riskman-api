@@ -22,7 +22,10 @@ class DomainFeedFactory implements AbstractFactoryInterface
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName) 
     {
         $objects = array(
-            0 => 'RiskMan\\Domain\\Feed\\Event'
+            0 => 'RiskMan\\Domain\\Feed\\Event',
+            1 => 'RiskMan\\Domain\\Feed\\Odd',
+            
+            
         );
         return in_array($requestedName, $objects);
     }
@@ -40,6 +43,14 @@ class DomainFeedFactory implements AbstractFactoryInterface
                     $region = $serviceLocator->get('RiskMan\\Model\\Feed\\Region');
                     $event  = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
                     $o = new $requestedName($event, $sport, $league, $region);
+                    echo " ...done\n";
+                    return $o;
+                    
+                case 'RiskMan\\Domain\\Feed\\Odd':
+                    echo "creating domain Odd\n";
+                    $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
+                    $odd = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
+                    $o = new $requestedName($e, $odd);
                     echo " ...done\n";
                     return $o;
             }
