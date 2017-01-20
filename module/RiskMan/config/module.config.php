@@ -706,25 +706,6 @@ return array(
                 'name' => 'odd_selection_id',
             ),
             1 => array(
-                'required' => false,
-                'validators' => array(
-                    0 => array(
-                        'name' => 'Zend\\Validator\\StringLength',
-                        'options' => array(
-                            'min' => '1',
-                            'max' => '128',
-                        ),
-                    ),
-                ),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
-                'name' => 'odd_selection_name',
-            ),
-            2 => array(
                 'required' => true,
                 'validators' => array(
                     0 => array(
@@ -743,7 +724,7 @@ return array(
                 ),
                 'name' => 'odd_id',
             ),
-            3 => array(
+            2 => array(
                 'required' => false,
                 'validators' => array(
                     0 => array(
@@ -759,7 +740,7 @@ return array(
                 ),
                 'name' => 'points',
             ),
-            4 => array(
+            3 => array(
                 'required' => false,
                 'validators' => array(
                     0 => array(
@@ -774,6 +755,20 @@ return array(
                     ),
                 ),
                 'name' => 'asian_handicap',
+            ),
+            4 => array(
+                'required' => false,
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '128',
+                        ),
+                    ),
+                ),
+                'filters' => array(),
+                'name' => 'name',
             ),
         ),
         'RiskMan\\V1\\Rest\\Single\\Validator' => array(
