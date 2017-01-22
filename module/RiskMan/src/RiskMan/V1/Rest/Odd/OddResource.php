@@ -26,15 +26,16 @@ class OddResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        //validate event exists
-        
+        //manual filter, it should be valid already (workaround)
+        if(isset($data->datetime)){
+           $data->datetime =  date("Y-m-d g:i:s", strtotime($data->datetime));
+        }
         //return response
         return $this->api->sendResponse(
             200,
             $this->do->create($data),
             'OK',
             'Success'
-            
         );
     }
 

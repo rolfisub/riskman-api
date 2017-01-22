@@ -45,13 +45,17 @@ class Odd extends DomainFeedObject
     {
         $arr = [];
         $id = $data->odd_id;
+        $e = $this->e->read($data->event_id);
+        if(!$e){
+           die("event_id = " . $data->event_id . " not found."); 
+        }
         $oddSqlArr = $this->toSqlArray($data);
-        $e = $this->o->read($id);
-        if ($e){
-            //update event
+        $o = $this->o->read($id);
+        if ($o){
+            //update odd
             $this->o->update($id, $oddSqlArr);
         } else {
-            //create event
+            //create odd
             $this->o->create($oddSqlArr);
         }
         return $this->returnOddArray($id);
@@ -101,7 +105,10 @@ class Odd extends DomainFeedObject
             $arr['datetime'] = $data->datetime;
         }
         if ($data->event_id) {
-            $arr['event_id'] = $data->event_id;
+            $e = $this->e->read($data->event_id);
+            if ($e){
+                $arr['event_id'] = $e['id'];
+            }
         }
         
         if (is_array($other)){
