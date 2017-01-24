@@ -6,6 +6,20 @@ use ZF\Rest\AbstractResourceListener;
 
 class OddSelectionResource extends AbstractResourceListener
 {
+    
+    protected $dos;
+    
+    public function __construct($s) { 
+        $dos = $s->get('RiskMan\\Domain\\Feed\\OddSelection');
+        $api = $s->get('ApiResponse');
+        if (null === $this->dos) {
+            $this->dos = $dos;
+        }
+        if (null === $this->api) {
+            $this->api = $api;
+        }
+    }
+    
     /**
      * Create a resource
      *
@@ -14,7 +28,15 @@ class OddSelectionResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $response = $this->dos->create($data);
+        //return response
+        return $this->api->sendResponse(
+            $response['code'],
+            $response['details'],
+            $response['type'],
+            $response['title'],
+            ['data' => $response['data']]
+        );
     }
 
     /**

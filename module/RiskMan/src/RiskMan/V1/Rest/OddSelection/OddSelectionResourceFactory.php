@@ -5,6 +5,6 @@ class OddSelectionResourceFactory
 {
     public function __invoke($services)
     {
-        return new OddSelectionResource();
+        return new OddSelectionResource($services);
     }
 }
