@@ -42,6 +42,9 @@ class ModelFeedFactory extends AbstractFactoryServiceClass implements AbstractFa
         $adapter = $serviceLocator->get('DatabaseService');
         $table = $this->getTableName($requestedName);
         $thisname = $this->getShortName($requestedName);
+        if($thisname == 'oddselection') {
+            $thisname = 'odd_selection';
+        }
         $book_id = 2;//TODO get the book id from current user (OAUTH2)
         return new $requestedName($adapter, $table, $thisname, $book_id);
     }
