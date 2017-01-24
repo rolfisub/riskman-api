@@ -49,20 +49,20 @@ class OddSelection extends DomainFeedObject
             return $problem;
         }
         $oddSqlArr = $this->toSqlArray($data);
-        $o = $this->o->read($id);
-        if ($o){
+        $os = $this->os->read($id);
+        if ($os){
             //update odd
-            $this->o->update($id, $oddSqlArr);
+            $this->os->update($id, $oddSqlArr);
         } else {
             //create odd
-            $this->o->create($oddSqlArr);
+            $this->os->create($oddSqlArr);
         }
         return [
             'code' => 200,
             'type' => 'OK',
             'title' => 'Success',
             'details' => "Odd succesfully created or updated.",
-            'data' => $this->returnOddArray($data->odd_id, $oddSqlArr)
+            'data' => $this->returnOddArray($data->odd_selection_id, $oddSqlArr)
         ];
     }
     
@@ -84,7 +84,7 @@ class OddSelection extends DomainFeedObject
     
     private function returnOddArray($odd_id)
     {
-        $o = $this->o->read($odd_id);
+        $o = $this->os->read($odd_id);
         $a = [];
         if($o){
             $a = $o;
@@ -105,7 +105,7 @@ class OddSelection extends DomainFeedObject
             }
             
             //add odd id  
-            $a['odd_id'] = $e['odd_id']; 
+            $a['odd_id'] = $o['odd_id']; 
             
             return $a;
         }
