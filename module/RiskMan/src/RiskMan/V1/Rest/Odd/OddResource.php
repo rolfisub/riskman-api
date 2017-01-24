@@ -30,12 +30,15 @@ class OddResource extends AbstractResourceListener
         if(isset($data->datetime)){
            $data->datetime =  date("Y-m-d g:i:s", strtotime($data->datetime));
         }
+        
+        $response = $this->do->create($data);
         //return response
         return $this->api->sendResponse(
-            200,
-            $this->do->create($data),
-            'OK',
-            'Success'
+            $response['code'],
+            $response['details'],
+            $response['type'],
+            $response['title'],
+            ['data' => $response['data']]
         );
     }
 

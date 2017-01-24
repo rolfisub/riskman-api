@@ -741,7 +741,15 @@ return array(
             ),
             2 => array(
                 'required' => true,
-                'validators' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                ),
                 'filters' => array(
                     0 => array(
                         'name' => 'Zend\\Filter\\StringTrim',

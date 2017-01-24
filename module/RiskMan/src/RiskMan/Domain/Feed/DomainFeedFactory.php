@@ -24,6 +24,7 @@ class DomainFeedFactory implements AbstractFactoryInterface
         $objects = array(
             0 => 'RiskMan\\Domain\\Feed\\Event',
             1 => 'RiskMan\\Domain\\Feed\\Odd',
+            2 => 'RiskMan\\Domain\\Feed\\OddSelection',
             
             
         );
@@ -53,6 +54,14 @@ class DomainFeedFactory implements AbstractFactoryInterface
                     $o = new $requestedName($e, $odd);
                     echo " ...done\n";
                     return $o;
+                    
+                case 'RiskMan\\Domain\\Feed\\OddSelection':
+                    echo "creating domain OddSelection\n";
+                    $o = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
+                    $os = $serviceLocator->get('RiskMan\\Model\\Feed\\OddSelection');
+                    $or = new $requestedName($o, $os);
+                    echo " ...done\n";
+                    return $or;
             }
         }
         else {
