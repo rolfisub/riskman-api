@@ -767,7 +767,7 @@ return array(
                 'required' => true,
                 'validators' => array(
                     0 => array(
-                        'name' => 'Zend\\I18n\\Validator\\IsInt',
+                        'name' => 'Zend\\I18n\\Validator\\IsFloat',
                         'options' => array(),
                     ),
                 ),
