@@ -15,10 +15,7 @@ class EventResource extends AbstractResourceListener
      */
     protected $api;
     
-    /*
-     * @var ApiResponse\ApiResponse
-     */
-    protected $api;
+   
     
     public function __construct($services) 
     {
@@ -44,12 +41,13 @@ class EventResource extends AbstractResourceListener
         if(isset($data->datetime)){
            $data->datetime =  date("Y-m-d g:i:s", strtotime($data->datetime));
         }
+        $response = $this->de->create($data);
         return $this->api->sendResponse(
-            200,
-            $this->de->create($data),
-            'OK',
-            'Success'
-            
+            $response['code'],
+            $response['details'],
+            $response['type'],
+            $response['title'],
+            ['data' => $response['data']]
         );
         //return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
