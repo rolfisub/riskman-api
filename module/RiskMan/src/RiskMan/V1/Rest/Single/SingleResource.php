@@ -7,13 +7,13 @@ use ZF\Rest\AbstractResourceListener;
 class SingleResource extends AbstractResourceListener
 {
     
-    protected $dos;
+    protected $ds;
     
     public function __construct($s) { 
-        $dos = $s->get('RiskMan\\Domain\\Feed\\OddSelection');
+        $ds = $s->get('RiskMan\\Domain\\Bet\\Single');
         $api = $s->get('ApiResponse');
-        if (null === $this->dos) {
-            $this->dos = $dos;
+        if (null === $this->ds) {
+            $this->ds = $ds;
         }
         if (null === $this->api) {
             $this->api = $api;
@@ -27,7 +27,14 @@ class SingleResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $response = $this->ds->create($data);
+        return $this->api->sendResponse(
+            $response['code'],
+            $response['details'],
+            $response['type'],
+            $response['title'],
+            ['data' => $response['data']]
+        );
     }
 
     /**
