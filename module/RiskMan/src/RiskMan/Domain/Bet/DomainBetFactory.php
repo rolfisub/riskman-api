@@ -35,8 +35,14 @@ class DomainBetFactory implements AbstractFactoryInterface
             switch ($requestedName){
                 case 'RiskMan\\Domain\\Bet\\Single':
                     echo "creating domain Single\n";
+                    
+                    //MS $ms, Event $e, Odd $o, OddSelection $os
+                    $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
+                    $o = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
+                    $os = $serviceLocator->get('RiskMan\\Model\\Feed\\OddSelection');
+                    
                     $single  = $serviceLocator->get('RiskMan\\Model\\Bet\\Single');
-                    $o = new $requestedName($single);
+                    $o = new $requestedName($single, $e, $o, $os);
                     echo " ...done\n";
                     return $o;
             }
