@@ -847,41 +847,13 @@ return array(
                 'name' => 'odd_selection_id',
             ),
             3 => array(
-                'required' => false,
-                'validators' => array(),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
-                'name' => 'approval',
-            ),
-            4 => array(
-                'required' => false,
-                'validators' => array(),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
-                'name' => 'odds',
-            ),
-            5 => array(
-                'required' => false,
-                'validators' => array(),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                        'options' => array(),
-                    ),
-                ),
-                'name' => 'points',
-            ),
-            6 => array(
                 'required' => true,
-                'validators' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\I18n\\Validator\\IsFloat',
+                        'options' => array(),
+                    ),
+                ),
                 'filters' => array(
                     0 => array(
                         'name' => 'Zend\\Filter\\StringTrim',
@@ -890,9 +862,14 @@ return array(
                 ),
                 'name' => 'risk',
             ),
-            7 => array(
+            4 => array(
                 'required' => false,
-                'validators' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\I18n\\Validator\\IsFloat',
+                        'options' => array(),
+                    ),
+                ),
                 'filters' => array(
                     0 => array(
                         'name' => 'Zend\\Filter\\StringTrim',
@@ -900,6 +877,38 @@ return array(
                     ),
                 ),
                 'name' => 'win',
+            ),
+            5 => array(
+                'required' => false,
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\I18n\\Validator\\IsFloat',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
+                'name' => 'odd',
+            ),
+            6 => array(
+                'required' => false,
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\I18n\\Validator\\IsFloat',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
+                'name' => 'points',
             ),
         ),
         'RiskMan\\V1\\Rest\\Multiple\\Validator' => array(
