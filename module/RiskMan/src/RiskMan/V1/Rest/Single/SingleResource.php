@@ -6,6 +6,19 @@ use ZF\Rest\AbstractResourceListener;
 
 class SingleResource extends AbstractResourceListener
 {
+    
+    protected $dos;
+    
+    public function __construct($s) { 
+        $dos = $s->get('RiskMan\\Domain\\Feed\\OddSelection');
+        $api = $s->get('ApiResponse');
+        if (null === $this->dos) {
+            $this->dos = $dos;
+        }
+        if (null === $this->api) {
+            $this->api = $api;
+        }
+    }
     /**
      * Create a resource
      *

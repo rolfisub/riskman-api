@@ -53,9 +53,14 @@ class ModelObject
         return $this->exec($i)->getGeneratedValue();
     }
     
-    public function read($id)
+    public function read($id, $where = null)
     {
         $r = $this->sql->select();
+        if(is_array($where)){
+            foreach ($where as $key => $value) {
+                $this->where[$key] = $value;
+            }
+        }
         $this->where[$this->name . '_id'] = $id;
         $r->where($this->where);
         $r->limit(1);
