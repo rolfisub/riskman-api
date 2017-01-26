@@ -821,7 +821,7 @@ return array(
                         'options' => array(),
                     ),
                 ),
-                'name' => 'odd_id',
+                'name' => 'event_id',
             ),
             2 => array(
                 'required' => true,
@@ -844,9 +844,32 @@ return array(
                         'options' => array(),
                     ),
                 ),
-                'name' => 'odd_selection_id',
+                'name' => 'odd_id',
             ),
             3 => array(
+                'required' => true,
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
+                'name' => 'odd_selection_id',
+            ),
+            4 => array(
                 'required' => true,
                 'validators' => array(
                     0 => array(
@@ -862,7 +885,7 @@ return array(
                 ),
                 'name' => 'risk',
             ),
-            4 => array(
+            5 => array(
                 'required' => false,
                 'validators' => array(
                     0 => array(
@@ -878,7 +901,7 @@ return array(
                 ),
                 'name' => 'win',
             ),
-            5 => array(
+            6 => array(
                 'required' => false,
                 'validators' => array(
                     0 => array(
@@ -894,7 +917,7 @@ return array(
                 ),
                 'name' => 'odd',
             ),
-            6 => array(
+            7 => array(
                 'required' => false,
                 'validators' => array(
                     0 => array(
@@ -910,6 +933,7 @@ return array(
                 ),
                 'name' => 'points',
             ),
+            
         ),
         'RiskMan\\V1\\Rest\\Multiple\\Validator' => array(
             0 => array(
