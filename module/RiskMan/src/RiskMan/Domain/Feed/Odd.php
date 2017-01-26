@@ -48,8 +48,10 @@ class Odd extends DomainFeedObject
         if($problem){
             return $problem;
         }
+        $e = $this->e->read($data->event_id);
+        $event_id = $e['id'];
         $oddSqlArr = $this->toSqlArray($data);
-        $o = $this->o->read($id);
+        $o = $this->o->read($id,['event_id' => $event_id]);
         if ($o){
             //update odd
             $this->o->update($id, $oddSqlArr);

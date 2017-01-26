@@ -6,10 +6,13 @@
  * and open the template in the editor.
  */
 
-namespace RiskMan\Domain\Feed;
-use RiskMan\Domain\Feed\DomainFeedObject;
-use RiskMan\Model\Feed\OddSelection as MOs;
+namespace RiskMan\Domain\Bet;
+use RiskMan\Model\Bet\Single as MS;
+
+use RiskMan\Model\Feed\Event;
 use RiskMan\Model\Feed\Odd;
+use RiskMan\Model\Feed\OddSelection;
+
 
 
 
@@ -19,64 +22,103 @@ use RiskMan\Model\Feed\Odd;
  *
  * @author rolf
  */
-class OddSelection extends DomainFeedObject
+class Single
 {
     /*
-     * @var RiskMan\Model\Feed\OddSelection
+     * @var RiskMan\Model\Bet\Single
      */
-    protected $os;
+    protected $ms;
+    
+    /*
+     * @var RiskMan\Model\Feed\Event
+     */
+    protected $e;
     
     /*
      * @var RiskMan\Model\Feed\Odd
      */
     protected $o;
+    
+    /*
+     * @var RiskMan\Model\Feed\OddSelection
+     */
+    protected $os;
 
     /*
      * constructor TODO: Annotations
      */
-    public function __construct(Odd $o, MOs $os) 
+    public function __construct(MS $ms, Event $e, Odd $o, OddSelection $os) 
     {
-        $this->os = $os;
+        $this->ms = $ms;
+        $this->e = $e;
         $this->o = $o;
+        $this->os = $os;
     }
     
     //POST
     public function create($data)
     {
-        $id = $data->odd_selection_id;
+        $id = $data->single_id;
         $problem = $this->validateData($data);
         if($problem){
             return $problem;
         }
-        $o = $this->o->read($data->odd_id);
-        $odd_id  = $o['id'];
-        $oddSqlArr = $this->toSqlArray($data);
-        $os = $this->os->read($id,['odd_id' => $odd_id]);
-        if ($os){
+        $SqlArr = $this->toSqlArray($data);
+        $e = $this->e->read($data->event_id);
+        $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
+        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id']]);
+        $ms = $this->ms->read($id, [
+            'event_id' => $e['id'],
+            'odd_id' => $o['id'],
+            'odd_selection_id' => $os['id'],
+        ]);
+        if ($ms){
             //update odd
-            $this->os->update($id, $oddSqlArr);
+            $this->ms->update($id, $SqlArr);
         } else {
             //create odd
-            $this->os->create($oddSqlArr);
+            $this->ms->create($SqlArr);
         }
         return [
             'code' => 200,
             'type' => 'OK',
             'title' => 'Success',
             'details' => "Odd succesfully created or updated.",
-            'data' => $this->returnOddArray($data->odd_selection_id, $oddSqlArr)
+            'data' => $this->returnOddArray($id, $SqlArr)
         ];
     }
     
     private function validateData($data)
     {
-        $o = $this->o->read($data->odd_id);
+        $e = $this->e->read($data->event_id);
+        if(!$e){
+            return [
+                'code' => 404,
+                'type' => 'Error',
+                'title' => 'Event Not Found',
+                'details'=> "event_id = " . $data->event_id . " not found, unable to create single = " . $data->single_id,
+                'data' => (array)$data
+                
+            ];
+        }
+        $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
         if(!$o){
             return [
                 'code' => 404,
                 'type' => 'Error',
                 'title' => 'Odd Not Found',
-                'details'=> "odd_id = " . $data->odd_id . " not found, unable to create odd_selection = " . $data->odd_selection_id ,
+                'details'=> "odd_id = " . $data->odd_id . " not found, unable to create create single = " . $data->single_id,
+                'data' => (array)$data
+                
+            ];
+        }
+        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id']]);
+        if(!$os){
+            return [
+                'code' => 404,
+                'type' => 'Error',
+                'title' => 'Odd Selection Not Found',
+                'details'=> "odd_selection_id = " . $data->odd_selection_id . " not found, unable to create create single = " . $data->single_id,
                 'data' => (array)$data
                 
             ];

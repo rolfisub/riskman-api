@@ -5,6 +5,6 @@ class SingleResourceFactory
 {
     public function __invoke($services)
     {
-        return new SingleResource();
+        return new SingleResource($services);
     }
 }

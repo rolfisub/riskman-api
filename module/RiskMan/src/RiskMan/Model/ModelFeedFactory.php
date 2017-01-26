@@ -27,6 +27,7 @@ class ModelFeedFactory extends AbstractFactoryServiceClass implements AbstractFa
             3 => 'RiskMan\Model\Feed\Region',
             4 => 'RiskMan\Model\Feed\Odd',
             5 => 'RiskMan\Model\Feed\OddSelection',
+            6 => 'RiskMan\Model\Bet\Single',
         );
         parent::__construct($objects);
     }
