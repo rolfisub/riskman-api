@@ -15,7 +15,8 @@ return array(
         ),
         'abstract_factories' => array(
             0 => 'RiskMan\\Domain\\Feed\\DomainFeedFactory',
-            1 => 'RiskMan\\Model\\ModelFeedFactory',
+            1 => 'RiskMan\\Domain\\Bet\\DomainBetFactory',
+            2 => 'RiskMan\\Model\\ModelFeedFactory',
         ),
     ),
     'router' => array(
