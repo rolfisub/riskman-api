@@ -63,14 +63,12 @@ class Single
         if($problem){
             return $problem;
         }
-        $SqlArr = $this->toSqlArray($data);
-        $e = $this->e->read($data->event_id);
-        $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
-        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id']]);
+        $objects = $this->getObjects($data);
+        $SqlArr = $this->toSqlArray($data, null, $objects);
         $ms = $this->ms->read($id, [
-            'event_id' => $e['id'],
-            'odd_id' => $o['id'],
-            'odd_selection_id' => $os['id'],
+            'event_id' => $objects['e']['id'],
+            'odd_id' => $objects['o']['id'],
+            'odd_selection_id' => $objects['os']['id'],
         ]);
         if ($ms){
             //update odd
@@ -87,6 +85,8 @@ class Single
             'data' => $this->returnOddArray($id, $SqlArr)
         ];
     }
+    
+    
     
     private function validateData($data)
     {
@@ -126,6 +126,63 @@ class Single
         return false;
     }
     
+    private function getObjects($data) 
+    {
+        $e = $this->e->read($data->event_id);
+        $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
+        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id']]);
+        $objects = [
+            'e' => $e,
+            'o' => $o,
+            'os' => $os
+        ];
+        return $objects;
+    }
+
+    private function toSqlArray ($data, $other = false, $objects = null) 
+    {   
+        $e = null;
+        $o = null;
+        $os = null;
+        if($objects){
+            $e = $objects['e'];
+            $o = $objects['o'];
+            $os = $objects['os'];
+        } else {
+            die('objects required for this operation');
+        }
+        $arr = [];
+        if ($data->single_id){
+            $arr['single_id'] = $data->single_id;
+        }
+        if ($data->event_id){
+            $arr['event_id'] = $e['id'];
+        }
+        if ($data->odd_id){
+            $arr['odd_id'] = $o['id'];
+        }
+        if ($data->odd_selection_id){
+            $arr['odd_selection_id'] = $os['id'];
+        }
+        if ($data->odd) {
+            $arr['odd'] = $data->odd;
+        }
+        if ($data->points) {
+            $arr['points'] = $data->points;
+        }
+        if ($data->risk) {
+            $arr['risk'] = $data->risk;
+        }
+        if ($data->win) {
+            $arr['win'] = $data->win;
+        }
+        
+        if (is_array($other)){
+            $arr = array_merge($arr, $other);
+        }
+        return $arr;
+    }
+    
     private function returnOddArray($odd_id)
     {
         $o = $this->os->read($odd_id);
@@ -156,32 +213,4 @@ class Single
         return false;
     }
     
-    
-    private function toSqlArray ($data, $other = false) 
-    {   
-        $arr = [];
-        if ($data->odd_selection_id){
-            $arr['odd_selection_id'] = $data->odd_selection_id;
-        }
-        if ($data->odd_selection_name) {
-            $arr['name'] = $data->odd_selection_name;
-        }
-        if ($data->odd_id){
-            $o = $this->o->read($data->odd_id);
-            if($o) {
-                $arr['odd_id'] = $o['id'];
-            }
-        }
-        if ($data->odd) {
-            $arr['odd'] = $data->odd;
-        }
-        if ($data->points) {
-            $arr['points'] = $data->points;
-        }
-        
-        if (is_array($other)){
-            $arr = array_merge($arr, $other);
-        }
-        return $arr;
-    }
 }
