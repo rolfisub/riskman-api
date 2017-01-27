@@ -77,12 +77,19 @@ class Single
             //create odd
             $this->ms->create($SqlArr);
         }
+        $objectsnew = $this->getObjects($data);
+        $msnew = $this->ms->read($id, [
+            'event_id' => $objectsnew['e']['id'],
+            'odd_id' => $objectsnew['o']['id'],
+            'odd_selection_id' => $objectsnew['os']['id'],
+        ]);
+        
         return [
             'code' => 200,
             'type' => 'OK',
             'title' => 'Success',
             'details' => "Odd succesfully created or updated.",
-            'data' => $this->returnOddArray($id, $SqlArr)
+            'data' => $this->returnOddArray($msnew, $objectsnew )
         ];
     }
     
@@ -183,12 +190,10 @@ class Single
         return $arr;
     }
     
-    private function returnOddArray($odd_id)
+    private function returnOddArray($ms, $o)
     {
-        $o = $this->os->read($odd_id);
-        $a = [];
-        if($o){
-            $a = $o;
+        if($ms){
+            $a = $ms;
             //delete private data
             if(isset($a['id'])) {
                 unset($a['id']);
@@ -196,17 +201,20 @@ class Single
             if(isset($a['book_id'])) {
                 unset($a['book_id']);
             }
-            
-            //get before unset
-            $o = $this->o->readInternalId($a['odd_id']);
-            
-            //unset odd
-            if(isset($a['odd_id'])) {
+            if(isset($a['event_id'])){
+                unset($a['event_id']);
+            }
+            if(isset($a['odd_id'])){
                 unset($a['odd_id']);
             }
+            if(isset($a['odd_selection_id'])){
+                unset($a['odd_selection_id']);
+            }
             
-            //add odd id  
-            $a['odd_id'] = $o['odd_id']; 
+            $a['event_id'] = $o['e']['event_id'];
+            $a['event_name'] = $o['e']['name'];
+            $a['odd_id'] = $o['o']['odd_id'];
+            $a['odd_selection_id'] = $o['os']['odd_selection_id'];
             
             return $a;
         }
