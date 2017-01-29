@@ -78,7 +78,6 @@ class OddSelection extends DomainFeedObject
                 'title' => 'Odd Not Found',
                 'details'=> "odd_id = " . $data->odd_id . " not found, unable to create odd_selection = " . $data->odd_selection_id ,
                 'data' => (array)$data
-                
             ];
         }
         return false;
