@@ -31,6 +31,11 @@ class Multiple
     protected $mm;
     
     /*
+     * @var RiskMan\Model\Bet\MultipleSelection
+     */
+    protected $ms;
+    
+    /*
      * @var RiskMan\Model\Feed\Event
      */
     protected $e;
@@ -60,7 +65,7 @@ class Multiple
     //POST
     public function create($data)
     {
-        $id = $data->single_id;
+        $id = $data->multiple_id;
         $problem = $this->validateData($data);
         if($problem){
             return $problem;
@@ -99,6 +104,13 @@ class Multiple
     
     private function validateData($data)
     {
+        //validate multiple inputs
+        
+        
+        
+        //validate optional pick inputs
+        
+        
         $e = $this->e->read($data->event_id);
         if(!$e){
             return [

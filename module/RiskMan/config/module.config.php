@@ -934,7 +934,6 @@ return array(
                 ),
                 'name' => 'points',
             ),
-            
         ),
         'RiskMan\\V1\\Rest\\Multiple\\Validator' => array(
             0 => array(
@@ -963,27 +962,31 @@ return array(
             ),
             1 => array(
                 'required' => true,
-                'validators' => array(),
-                'filters' => array(),
-                'name' => 'selections',
-            ),
-            2 => array(
-                'required' => false,
-                'validators' => array(),
-                'filters' => array(),
-                'name' => 'approval',
-            ),
-            3 => array(
-                'required' => true,
-                'validators' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\I18n\\Validator\\IsFloat',
+                        'options' => array(),
+                    ),
+                ),
                 'filters' => array(),
                 'name' => 'risk',
             ),
-            4 => array(
+            2 => array(
+                'required' => false,
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\I18n\\Validator\\IsFloat',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(),
+                'name' => 'win',
+            ),
+            3 => array(
                 'required' => false,
                 'validators' => array(),
                 'filters' => array(),
-                'name' => 'win',
+                'name' => 'picks',
             ),
         ),
     ),
