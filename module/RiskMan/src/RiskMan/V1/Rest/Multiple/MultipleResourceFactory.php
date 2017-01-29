@@ -5,6 +5,6 @@ class MultipleResourceFactory
 {
     public function __invoke($services)
     {
-        return new MultipleResource();
+        return new MultipleResource($services);
     }
 }

@@ -968,7 +968,12 @@ return array(
                         'options' => array(),
                     ),
                 ),
-                'filters' => array(),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'risk',
             ),
             2 => array(
@@ -979,13 +984,28 @@ return array(
                         'options' => array(),
                     ),
                 ),
-                'filters' => array(),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'win',
             ),
             3 => array(
                 'required' => false,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'RiskMan\\Validator\\ValidatePicksArray',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'picks',
             ),
         ),
