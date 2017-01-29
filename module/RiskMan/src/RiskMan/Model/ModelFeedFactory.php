@@ -28,6 +28,8 @@ class ModelFeedFactory extends AbstractFactoryServiceClass implements AbstractFa
             4 => 'RiskMan\Model\Feed\Odd',
             5 => 'RiskMan\Model\Feed\OddSelection',
             6 => 'RiskMan\Model\Bet\Single',
+            7 => 'RiskMan\Model\Bet\Multiple',
+            8 => 'RiskMan\Model\Bet\MultipleSelection',
         );
         parent::__construct($objects);
     }
@@ -45,6 +47,9 @@ class ModelFeedFactory extends AbstractFactoryServiceClass implements AbstractFa
         $thisname = $this->getShortName($requestedName);
         if($thisname == 'oddselection') {
             $thisname = 'odd_selection';
+        }
+        if($thisname == 'multipleselection') {
+            $thisname = 'multiple_selection';
         }
         $book_id = 2;//TODO get the book id from current user (OAUTH2)
         return new $requestedName($adapter, $table, $thisname, $book_id);
