@@ -6,6 +6,18 @@ use ZF\Rest\AbstractResourceListener;
 
 class MultipleResource extends AbstractResourceListener
 {
+    protected $dm;
+    
+    public function __construct($s) { 
+        $dm = $s->get('RiskMan\\Domain\\Bet\\Multiple');
+        $api = $s->get('ApiResponse');
+        if (null === $this->dm) {
+            $this->dm = $dm;
+        }
+        if (null === $this->api) {
+            $this->api = $api;
+        }
+    }
     /**
      * Create a resource
      *
@@ -14,7 +26,14 @@ class MultipleResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $response = $this->dm->create($data);
+        return $this->api->sendResponse(
+            $response['code'],
+            $response['details'],
+            $response['type'],
+            $response['title'],
+            ['data' => $response['data']]
+        );
     }
 
     /**

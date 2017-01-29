@@ -67,6 +67,7 @@ class Multiple
     {
         $id = $data->multiple_id;
         $problem = $this->validateData($data);
+        die();
         if($problem){
             return $problem;
         }
@@ -106,7 +107,7 @@ class Multiple
     {
         //validate multiple inputs
         
-        
+        die('this is how far Im');
         
         //validate optional pick inputs
         
