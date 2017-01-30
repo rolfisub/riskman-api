@@ -19,7 +19,23 @@ class ValidatePicksArray extends AbstractValidator
     const MSG_MINPICKS = 'MinPicks';
     const MSG_MAXPICKS = 'MaxPicks';
     
+    const MSG_ARRAYINVALIDSTRUCT = 'InvalidArray';
     
+    const MSG_PICKFIELDREQUIRED = 'FieldRequired';
+    const MSG_PICKALNUM = 'AlphaNumeric';
+    const MSG_PICKFIELDLENGHT = 'StringLenght';
+    const MSG_PICKISFLOAT = 'IsFloat';
+    
+    public $current_pick = 0;
+    public $field_name = '';
+    public $pick_value = '';
+    
+    
+    protected $messageVariables = array(
+        'pick' => 'current_pick',
+        'name' => 'field_name',
+        'value1' => 'pick_value'
+    );
     
     protected $messageTemplates = array(
         self::MSG_ERRORVAL => 'Picks value received is not an Array',
@@ -71,7 +87,7 @@ class ValidatePicksArray extends AbstractValidator
         * points (optional, isfloat)
         */
         for ($x = 0; $x < sizeof($value); $x++){
-            if(isset($value[$x])){
+            if (isset($value[$x])) {
                 
                 $p = $value[$x];
                 
@@ -93,11 +109,12 @@ class ValidatePicksArray extends AbstractValidator
                 }
                 
                 //validate odds and points
-                if(isset($p['odd'])){
+                if (isset($p['odd'])) {
                     //is float number?
                     $v = $p['odd'];
-                    $isFloat = new Zend\I18n\Validator\IsFloat();
-                    if(!$isFloat->isValid($v)) {
+                    $isFloat = new \Zend\I18n\Validator\IsFloat();
+                    if (!$isFloat->isValid($v)) {
+                        $this->_setMsgVals('odd', $x, $v);
                         $this->error(self::MSG_PICKISFLOAT,[
                             'name' => 'odd',
                             'pick' => $x
@@ -105,11 +122,12 @@ class ValidatePicksArray extends AbstractValidator
                         return false;
                     }
                 }
-                if(isset($p['points'])){
+                if (isset($p['points'])) {
                     //is float number?
                     $v = $p['points'];
-                    $isFloat = new Zend\I18n\Validator\IsFloat();
-                    if(!$isFloat->isValid($v)) {
+                    $isFloat = new \Zend\I18n\Validator\IsFloat();
+                    if (!$isFloat->isValid($v)) {
+                        $this->_setMsgVals('points', $x, $v);
                         $this->error(self::MSG_PICKISFLOAT,[
                             'name' => 'points',
                             'pick' => $x
@@ -128,39 +146,37 @@ class ValidatePicksArray extends AbstractValidator
         
         
         return true;
-    }  
+    } 
+    
+    private function _setMsgVals ($name = '', $pick = false, $value1 = '') 
+    {
+        $this->field_name = $name;
+        $this->current_pick = $pick;
+        $this->pick_value = $value1;
+    }
     
     
     private function _ValidateReqAlnMax($fields, $data, $pick) 
     {
         foreach ($fields as $key => $field) {
+            $this->_setMsgVals($field, $pick);
             //required
             if(!isset($data[$field])){
-                $this->error(self::MSG_PICKFIELDREQUIRED, [
-                    'name' => $field,
-                    'pick' => $pick
-                ]);
+                $this->error(self::MSG_PICKFIELDREQUIRED);
                 return false;
             } else {
                 $v = $data[$field];
+                $this->_setMsgVals($field, $pick, $v);
                 //alphanumeric
-                $alnum = new Zend\I18n\Validator\Alnum();
+                $alnum = new \Zend\I18n\Validator\Alnum();
                 if(!$alnum->isValid($v)){
-                    $this->error(self::MSG_PICKALNUM,[
-                        'name' => $field,
-                        'pick' => $pick,
-                        'value1' => $v
-                    ]);
+                    $this->error(self::MSG_PICKALNUM);
                     return false;
                 }
                 //string lenght 32
-                $strlen = new Zend\Validator\StringLength(['min' => 1, 'max' => 32]);
+                $strlen = new \Zend\Validator\StringLength(['min' => 1, 'max' => 32]);
                 if(!$strlen->isValid($v)){
-                    $this->error(self::MSG_PICKFIELDLENGHT,[
-                        'name' => $field,
-                        'pick' => $pick,
-                        'value1' => $v
-                    ]);
+                    $this->error(self::MSG_PICKFIELDLENGHT);
                     return false;
                 }
             }
