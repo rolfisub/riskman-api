@@ -77,6 +77,12 @@ class Multiple
     {
         $id = $data->multiple_id;
         
+        //check picks data
+        $problem = $this->validateData($data);
+        if($problem){
+            return $problem;
+        }
+        
         //create multiple object
         $SqlArr = $this->toSqlArray($data, null, $objects);
         $ms = $this->mm->read($id);
@@ -89,7 +95,7 @@ class Multiple
         }
         $msnew = $this->mm->read($id);
         
-        //run only if picks have been specified
+        //create only if picks have been specified
         if(isset($data->picks)) {
             //create each multiple selection id
             foreach($data->picks as $key => $pick) {
