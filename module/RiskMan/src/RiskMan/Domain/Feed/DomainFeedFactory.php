@@ -57,9 +57,10 @@ class DomainFeedFactory implements AbstractFactoryInterface
                     
                 case 'RiskMan\\Domain\\Feed\\OddSelection':
                     echo "creating domain OddSelection\n";
+                    $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
                     $o = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
                     $os = $serviceLocator->get('RiskMan\\Model\\Feed\\OddSelection');
-                    $or = new $requestedName($o, $os);
+                    $or = new $requestedName($o, $os, $e);
                     echo " ...done\n";
                     return $or;
             }

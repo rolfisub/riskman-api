@@ -7,12 +7,7 @@
  */
 
 namespace RiskMan\Domain\Bet;
-
-use RiskMan\Domain\Bet\MultipleSelection as DMS;
-
-use RiskMan\Model\Bet\Multiple as MM;
 use RiskMan\Model\Bet\MultipleSelection as MS;
-
 
 use RiskMan\Model\Feed\Event;
 use RiskMan\Model\Feed\Odd;
@@ -27,22 +22,12 @@ use RiskMan\Model\Feed\OddSelection;
  *
  * @author rolf
  */
-class Multiple
+class MultipleSelection
 {
-    /*
-     * @var RiskMan\Model\Bet\Multiple
-     */
-    protected $mm;
-    
     /*
      * @var RiskMan\Model\Bet\MultipleSelection
      */
     protected $ms;
-    
-    /*
-     * @var RiskMan\Domain\Bet\MultipleSelection
-     */
-    protected $dms;
     
     /*
      * @var RiskMan\Model\Feed\Event
@@ -62,11 +47,9 @@ class Multiple
     /*
      * constructor TODO: Annotations
      */
-    public function __construct(MM $mm, MS $ms, DMS $dms, Event $e, Odd $o, OddSelection $os) 
+    public function __construct(MS $ms, Event $e, Odd $o, OddSelection $os) 
     {
-        $this->mm = $mm;
         $this->ms = $ms;
-        $this->dms = $dms;
         $this->e = $e;
         $this->o = $o;
         $this->os = $os;
@@ -75,21 +58,12 @@ class Multiple
     //POST
     public function create($data)
     {
-        $id = $data->multiple_id;
+        var_dump($data);die();
+        $id = $data->single_id;
         $problem = $this->validateData($data);
         if($problem){
             return $problem;
         }
-        
-        //run only if picks have been specified
-        if(isset($data->picks)) {
-            //create each multiple selection id
-            foreach($data->picks as $key => $pick) {
-                $this->dms->create($pick);
-            }
-        }
-        
-        //create multiple object
         $objects = $this->getObjects($data);
         $SqlArr = $this->toSqlArray($data, null, $objects);
         $ms = $this->ms->read($id, [
@@ -115,7 +89,7 @@ class Multiple
             'code' => 200,
             'type' => 'OK',
             'title' => 'Success',
-            'details' => "Odd succesfully created or updated.",
+            'details' => "Bet succesfully created or updated.",
             'data' => $this->returnOddArray($msnew, $objectsnew )
         ];
     }
@@ -123,46 +97,40 @@ class Multiple
     
     
     private function validateData($data)
-    {   
-        //validate optional pick inputs
-        foreach($data->picks as $key => $pick) {
-            $e = $this->e->read($pick['event_id']);
-            if(!$e){
-                return [
-                    'code' => 404,
-                    'type' => 'Error',
-                    'title' => 'Event Not Found',
-                    'details'=> "event_id = " . $pick['event_id'] . " not found, unable to create multiple = " . $data->multiple_id,
-                    'data' => (array)$data
-
-                ];
-            }
-            $o = $this->o->read($pick['odd_id'], ['event_id' => $e['id']]);
-            if(!$o){
-                return [
-                    'code' => 404,
-                    'type' => 'Error',
-                    'title' => 'Odd Not Found',
-                    'details'=> "odd_id = " . $pick['odd_id'] . " not found, unable to create create multiple = " . $data->multiple_id,
-                    'data' => (array)$data
-
-                ];
-            }
-            $os = $this->os->read($pick['odd_selection_id'], ['odd_id' => $o['id'], 'event_id' => $e['id']]);
-            if(!$os){
-                return [
-                    'code' => 404,
-                    'type' => 'Error',
-                    'title' => 'Odd Selection Not Found',
-                    'details'=> "odd_selection_id = " . $pick['odd_selection_id'] . " not found, unable to create create multiple = " . $data->multiple_id,
-                    'data' => (array)$data
-
-                ];
-            }
+    {
+        $e = $this->e->read($data->event_id);
+        if(!$e){
+            return [
+                'code' => 404,
+                'type' => 'Error',
+                'title' => 'Event Not Found',
+                'details'=> "event_id = " . $data->event_id . " not found, unable to create single = " . $data->single_id,
+                'data' => (array)$data
+                
+            ];
         }
-        
-        
-        
+        $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
+        if(!$o){
+            return [
+                'code' => 404,
+                'type' => 'Error',
+                'title' => 'Odd Not Found',
+                'details'=> "odd_id = " . $data->odd_id . " not found, unable to create create single = " . $data->single_id,
+                'data' => (array)$data
+                
+            ];
+        }
+        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id']]);
+        if(!$os){
+            return [
+                'code' => 404,
+                'type' => 'Error',
+                'title' => 'Odd Selection Not Found',
+                'details'=> "odd_selection_id = " . $data->odd_selection_id . " not found, unable to create create single = " . $data->single_id,
+                'data' => (array)$data
+                
+            ];
+        }
         return false;
     }
     

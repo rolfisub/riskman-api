@@ -119,7 +119,7 @@ class Single
                 
             ];
         }
-        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id']]);
+        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id'], 'event_id' => $e['id']]);
         if(!$os){
             return [
                 'code' => 404,
