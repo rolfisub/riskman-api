@@ -51,17 +51,17 @@ class ValidatePicksArray extends AbstractValidator
         self::MSG_PICKALNUM => 'Field %name% must only contain alphanumeric characters, value = %value1%. Pick = %pick%',
         self::MSG_PICKFIELDLENGHT => 'Field %name% lenght value (%value1%) cannot be less than 1 or greater than 32 characters. Pick = %pick%',
         self::MSG_PICKISFLOAT => 'Field %name% must be a float. Pick = %pick%',
-        self::MSG_PICKISDUPLICATE => 'Duplicate pick found, Pick = %pick% contains duplicate odd selection or mltiple selection id within the other picks received.',
+        self::MSG_PICKISDUPLICATE => 'Duplicate pick found, Pick = %pick% contains duplicate odd selection or multiple selection id within the other picks received.',
     );
     
     
     
     public function isValid($value) 
     {
-        
+        $errorCount = 0;
         if (!is_array($value)) {
             $this->error(self::MSG_ERRORVAL);
-            return false;
+            $errorCount++;
         }
         
         $size = sizeof($value);
@@ -70,12 +70,12 @@ class ValidatePicksArray extends AbstractValidator
         
         if($size < $minPicks){
             $this->error(self::MSG_MINPICKS, $size);
-            return false;
+            $errorCount++;
         }
         
         if($size > $maxPicks){
             $this->error(self::MSG_MAXPICKS, $size);
-            return false;
+            $errorCount++;
         }
         
         
@@ -93,12 +93,6 @@ class ValidatePicksArray extends AbstractValidator
                 
                 $p = $value[$x];
                 
-                //find duplicate picks
-                $isdup = $this->_val_duplicate($p, $value);
-                if($isdup) {
-                    return false;
-                }
-                
                 //validate fields that are IDs
                 $vids = $this->_ValidateReqAlnMax(
                     [
@@ -112,7 +106,7 @@ class ValidatePicksArray extends AbstractValidator
                 );
                 
                 if(!$vids){
-                    return false;
+                    $errorCount++;
                 }
                 
                 //validate odds and points
@@ -126,7 +120,7 @@ class ValidatePicksArray extends AbstractValidator
                             'name' => 'odd',
                             'pick' => $x
                         ]);
-                        return false;
+                        $errorCount++;
                     }
                 }
                 if (isset($p['points'])) {
@@ -139,19 +133,24 @@ class ValidatePicksArray extends AbstractValidator
                             'name' => 'points',
                             'pick' => $x
                         ]);
-                        return false;
+                        $errorCount++;
                     }
                 }
                 
+                //find duplicate picks
+                $isdup = $this->_val_duplicate($p, $value);
+                if($isdup) {
+                    $errorCount++;
+                }
                 
-                
-
             } else {
                 $this->error(self::MSG_ARRAYINVALIDSTRUCT);
-                return false;
+                $errorCount++;
             }    
         }        
-        //die("test");
+        if($errorCount > 0) {
+            return false;
+        }
         return true;
     } 
     
