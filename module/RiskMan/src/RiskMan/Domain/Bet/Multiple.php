@@ -109,7 +109,7 @@ class Multiple
             'code' => 200,
             'type' => 'OK',
             'title' => 'Success',
-            'details' => "Odd succesfully created or updated.",
+            'details' => "Multiple succesfully created or updated.",
             'data' => $this->returnOddArray($msnew)
         ];
     }

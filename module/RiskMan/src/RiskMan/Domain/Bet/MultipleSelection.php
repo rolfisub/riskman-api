@@ -58,6 +58,7 @@ class MultipleSelection
     //POST
     public function create($data)
     {
+        return ['code'=>200];
         var_dump($data);die();
         $id = $data->single_id;
         $problem = $this->validateData($data);
