@@ -33,10 +33,10 @@ class DomainBetFactory implements AbstractFactoryInterface
     {
         
         if (class_exists($requestedName)) {
-            echo "requested name = " . $requestedName . "\n";
+            //echo "requested name = " . $requestedName . "\n";
             switch ($requestedName){
                 case 'RiskMan\\Domain\\Bet\\Single':
-                    echo "creating domain Single\n";
+                    //echo "creating domain Single\n";
                     
                     //MS $ms, Event $e, Odd $o, OddSelection $os
                     $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
@@ -45,10 +45,10 @@ class DomainBetFactory implements AbstractFactoryInterface
                     
                     $single  = $serviceLocator->get('RiskMan\\Model\\Bet\\Single');
                     $o = new $requestedName($single, $e, $o, $os);
-                    echo " ...done\n";
+                    //echo " ...done\n";
                     return $o;
                 case 'RiskMan\\Domain\\Bet\\Multiple':
-                    echo "creating domain Multiple\n";
+                    //echo "creating domain Multiple\n";
                     
                     //MS $ms, Event $e, Odd $o, OddSelection $os
                     $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
@@ -59,10 +59,10 @@ class DomainBetFactory implements AbstractFactoryInterface
                     $multipleselection  = $serviceLocator->get('RiskMan\\Model\\Bet\\MultipleSelection');
                     $domainmultipleselection  = $serviceLocator->get('RiskMan\\Domain\\Bet\\MultipleSelection');
                     $o = new $requestedName($multiple, $multipleselection, $domainmultipleselection, $e, $o, $os);
-                    echo " ...done\n";
+                    //echo " ...done\n";
                     return $o;
                 case 'RiskMan\\Domain\\Bet\\MultipleSelection':
-                    echo "creating domain MultipleSelection\n";
+                    //echo "creating domain MultipleSelection\n";
                     
                     //MS $ms, Event $e, Odd $o, OddSelection $os
                     $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
@@ -73,7 +73,7 @@ class DomainBetFactory implements AbstractFactoryInterface
                     $multipleselection  = $serviceLocator->get('RiskMan\\Model\\Bet\\MultipleSelection');
                     
                     $o = new $requestedName($multipleselection, $multiple, $e, $o, $os);
-                    echo " ...done\n";
+                    //echo " ...done\n";
                     return $o;
             }
         }

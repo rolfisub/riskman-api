@@ -35,33 +35,33 @@ class DomainFeedFactory implements AbstractFactoryInterface
     {
         
         if (class_exists($requestedName)) {
-            echo "requested name = " . $requestedName . "\n";
+            //echo "requested name = " . $requestedName . "\n";
             switch ($requestedName){
                 case 'RiskMan\\Domain\\Feed\\Event':
-                    echo "creating domain Event\n";
+              //      echo "creating domain Event\n";
                     $sport  = $serviceLocator->get('RiskMan\\Model\\Feed\\Sport');
                     $league = $serviceLocator->get('RiskMan\\Model\\Feed\\League');
                     $region = $serviceLocator->get('RiskMan\\Model\\Feed\\Region');
                     $event  = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
                     $o = new $requestedName($event, $sport, $league, $region);
-                    echo " ...done\n";
+                //    echo " ...done\n";
                     return $o;
                     
                 case 'RiskMan\\Domain\\Feed\\Odd':
-                    echo "creating domain Odd\n";
+                  //  echo "creating domain Odd\n";
                     $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
                     $odd = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
                     $o = new $requestedName($e, $odd);
-                    echo " ...done\n";
+                    //echo " ...done\n";
                     return $o;
                     
                 case 'RiskMan\\Domain\\Feed\\OddSelection':
-                    echo "creating domain OddSelection\n";
+                   // echo "creating domain OddSelection\n";
                     $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
                     $o = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
                     $os = $serviceLocator->get('RiskMan\\Model\\Feed\\OddSelection');
                     $or = new $requestedName($o, $os, $e);
-                    echo " ...done\n";
+                   // echo " ...done\n";
                     return $or;
             }
         }
