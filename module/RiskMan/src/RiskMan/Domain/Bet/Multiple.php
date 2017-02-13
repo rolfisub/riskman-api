@@ -81,42 +81,36 @@ class Multiple
             return $problem;
         }
         
+        //create multiple object
+        $SqlArr = $this->toSqlArray($data, null, $objects);
+        $ms = $this->mm->read($id);
+        if ($ms){
+            //update odd
+            $this->mm->update($id, $SqlArr);
+        } else {
+            //create odd
+            $this->mm->create($SqlArr);
+        }
+        $msnew = $this->mm->read($id);
+        
         //run only if picks have been specified
         if(isset($data->picks)) {
             //create each multiple selection id
             foreach($data->picks as $key => $pick) {
-                $this->dms->create($pick);
+                $pick['multiple_id'] = $id;
+                $response = $this->dms->create($pick);
+                if($response['code'] != 200) {
+                    return $response;
+                }
             }
         }
-        
-        //create multiple object
-        $objects = $this->getObjects($data);
-        $SqlArr = $this->toSqlArray($data, null, $objects);
-        $ms = $this->ms->read($id, [
-            'event_id' => $objects['e']['id'],
-            'odd_id' => $objects['o']['id'],
-            'odd_selection_id' => $objects['os']['id'],
-        ]);
-        if ($ms){
-            //update odd
-            $this->ms->update($id, $SqlArr);
-        } else {
-            //create odd
-            $this->ms->create($SqlArr);
-        }
-        $objectsnew = $this->getObjects($data);
-        $msnew = $this->ms->read($id, [
-            'event_id' => $objectsnew['e']['id'],
-            'odd_id' => $objectsnew['o']['id'],
-            'odd_selection_id' => $objectsnew['os']['id'],
-        ]);
         
         return [
             'code' => 200,
             'type' => 'OK',
             'title' => 'Success',
             'details' => "Odd succesfully created or updated.",
-            'data' => $this->returnOddArray($msnew, $objectsnew )
+            'data' => $this->returnOddArray($msnew)
         ];
     }
     
@@ -165,50 +159,13 @@ class Multiple
         
         return false;
     }
-    
-    private function getObjects($data) 
-    {
-        $e = $this->e->read($data->event_id);
-        $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
-        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id']]);
-        $objects = [
-            'e' => $e,
-            'o' => $o,
-            'os' => $os
-        ];
-        return $objects;
-    }
 
     private function toSqlArray ($data, $other = false, $objects = null) 
     {   
-        $e = null;
-        $o = null;
-        $os = null;
-        if($objects){
-            $e = $objects['e'];
-            $o = $objects['o'];
-            $os = $objects['os'];
-        } else {
-            die('objects required for this operation');
-        }
+        
         $arr = [];
-        if ($data->single_id){
-            $arr['single_id'] = $data->single_id;
-        }
-        if ($data->event_id){
-            $arr['event_id'] = $e['id'];
-        }
-        if ($data->odd_id){
-            $arr['odd_id'] = $o['id'];
-        }
-        if ($data->odd_selection_id){
-            $arr['odd_selection_id'] = $os['id'];
-        }
-        if ($data->odd) {
-            $arr['odd'] = $data->odd;
-        }
-        if ($data->points) {
-            $arr['points'] = $data->points;
+        if ($data->multiple_id){
+            $arr['multiple_id'] = $data->multiple_id;
         }
         if ($data->risk) {
             $arr['risk'] = $data->risk;
@@ -216,14 +173,13 @@ class Multiple
         if ($data->win) {
             $arr['win'] = $data->win;
         }
-        
         if (is_array($other)){
             $arr = array_merge($arr, $other);
         }
         return $arr;
     }
     
-    private function returnOddArray($ms, $o)
+    private function returnOddArray($ms)
     {
         if($ms){
             $a = $ms;
@@ -234,20 +190,6 @@ class Multiple
             if(isset($a['book_id'])) {
                 unset($a['book_id']);
             }
-            if(isset($a['event_id'])){
-                unset($a['event_id']);
-            }
-            if(isset($a['odd_id'])){
-                unset($a['odd_id']);
-            }
-            if(isset($a['odd_selection_id'])){
-                unset($a['odd_selection_id']);
-            }
-            
-            $a['event_id'] = $o['e']['event_id'];
-            $a['event_name'] = $o['e']['name'];
-            $a['odd_id'] = $o['o']['odd_id'];
-            $a['odd_selection_id'] = $o['os']['odd_selection_id'];
             
             return $a;
         }
