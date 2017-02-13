@@ -72,7 +72,7 @@ class DomainBetFactory implements AbstractFactoryInterface
                     $multiple  = $serviceLocator->get('RiskMan\\Model\\Bet\\Multiple');
                     $multipleselection  = $serviceLocator->get('RiskMan\\Model\\Bet\\MultipleSelection');
                     
-                    $o = new $requestedName($multipleselection, $e, $o, $os);
+                    $o = new $requestedName($multipleselection, $multiple, $e, $o, $os);
                     echo " ...done\n";
                     return $o;
             }

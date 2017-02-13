@@ -8,6 +8,7 @@
 
 namespace RiskMan\Domain\Bet;
 use RiskMan\Model\Bet\MultipleSelection as MS;
+use RiskMan\Model\Bet\Multiple as M;
 
 use RiskMan\Model\Feed\Event;
 use RiskMan\Model\Feed\Odd;
@@ -30,6 +31,11 @@ class MultipleSelection
     protected $ms;
     
     /*
+     * @var RiskMan\Model\Bet\Multiple
+     */
+    protected $m;
+    
+    /*
      * @var RiskMan\Model\Feed\Event
      */
     protected $e;
@@ -47,9 +53,10 @@ class MultipleSelection
     /*
      * constructor TODO: Annotations
      */
-    public function __construct(MS $ms, Event $e, Odd $o, OddSelection $os) 
+    public function __construct(MS $ms, M $m, Event $e, Odd $o, OddSelection $os) 
     {
         $this->ms = $ms;
+        $this->m = $m;
         $this->e = $e;
         $this->o = $o;
         $this->os = $os;
@@ -66,6 +73,7 @@ class MultipleSelection
         $objects = $this->getObjects($data);
         $SqlArr = $this->toSqlArray($data, null, $objects);
         $ms = $this->ms->read($id, [
+            'multiple_id' => $objects['m']['id'],
             'event_id' => $objects['e']['id'],
             'odd_id' => $objects['o']['id'],
             'odd_selection_id' => $objects['os']['id'],
@@ -79,6 +87,7 @@ class MultipleSelection
         }
         $objectsnew = $this->getObjects($data);
         $msnew = $this->ms->read($id, [
+            'multiple_id' => $objects['m']['id'],
             'event_id' => $objectsnew['e']['id'],
             'odd_id' => $objectsnew['o']['id'],
             'odd_selection_id' => $objectsnew['os']['id'],
@@ -97,6 +106,17 @@ class MultipleSelection
     
     private function validateData($data)
     {
+        $m = $this->m->read($data->multiple_id);
+        if(!$m){
+            return [
+                'code' => 404,
+                'type' => 'Error',
+                'title' => 'Event Not Found',
+                'details'=> "multiple_id = " . $data->multiple_id . " not found, unable to create multiple_selection = " . $data->multiple_selection_id,
+                'data' => (array)$data
+
+            ];
+        }
         $e = $this->e->read($data->event_id);
         if(!$e){
             return [
@@ -130,15 +150,28 @@ class MultipleSelection
 
             ];
         }
+        //need to check if any other pick already has the same pick
+        $mres = $this->ms->checkForExistingPick($data->multiple_selection_id, $m['id'], $e['id'], $o['id'], $os['id']);
+        if($mres) {
+            return [
+                'code' => 422,
+                'type' => 'Error',
+                'title' => 'Pick Already exists',
+                'details'=> 'Existing multiple selection detected using different id. Abort.',
+                'data' => (array)$data
+            ];
+        }
         return false;
     }
     
     private function getObjects($data) 
     {
+        $m = $this->m->read($data->multiple_id);
         $e = $this->e->read($data->event_id);
         $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
         $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id'], 'event_id' => $e['id']]);
         $objects = [
+            'm' => $m,
             'e' => $e,
             'o' => $o,
             'os' => $os
@@ -148,10 +181,12 @@ class MultipleSelection
 
     private function toSqlArray ($data, $other = false, $objects = null) 
     {   
+        $m = null;
         $e = null;
         $o = null;
         $os = null;
         if($objects){
+            $m = $objects['m'];
             $e = $objects['e'];
             $o = $objects['o'];
             $os = $objects['os'];
@@ -162,6 +197,9 @@ class MultipleSelection
         if ($data->multiple_selection_id){
             $arr['multiple_selection_id'] = $data->multiple_selection_id;
         }
+        if ($data->multiple_id){
+            $arr['multiple_id'] = $m['id'];
+        }
         if ($data->event_id){
             $arr['event_id'] = $e['id'];
         }
@@ -171,6 +209,7 @@ class MultipleSelection
         if ($data->odd_selection_id){
             $arr['odd_selection_id'] = $os['id'];
         }
+        
         if ($data->odd) {
             $arr['odd'] = $data->odd;
         }
@@ -201,6 +240,9 @@ class MultipleSelection
             if(isset($a['book_id'])) {
                 unset($a['book_id']);
             }
+            if(isset($a['multiple_id'])){
+                unset($a['multiple_id']);
+            }
             if(isset($a['event_id'])){
                 unset($a['event_id']);
             }
@@ -211,6 +253,7 @@ class MultipleSelection
                 unset($a['odd_selection_id']);
             }
             
+            $a['multiple_id'] = $o['m']['multiple_id'];
             $a['event_id'] = $o['e']['event_id'];
             $a['event_name'] = $o['e']['name'];
             $a['odd_id'] = $o['o']['odd_id'];
