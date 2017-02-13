@@ -58,9 +58,7 @@ class MultipleSelection
     //POST
     public function create($data)
     {
-        return ['code'=>200];
-        var_dump($data);die();
-        $id = $data->single_id;
+        $id = $data->multiple_selection_id;
         $problem = $this->validateData($data);
         if($problem){
             return $problem;
@@ -105,9 +103,9 @@ class MultipleSelection
                 'code' => 404,
                 'type' => 'Error',
                 'title' => 'Event Not Found',
-                'details'=> "event_id = " . $data->event_id . " not found, unable to create single = " . $data->single_id,
+                'details'=> "event_id = " . $data->event_id . " not found, unable to create multiple_selection = " . $data->multiple_selection_id,
                 'data' => (array)$data
-                
+
             ];
         }
         $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
@@ -116,20 +114,20 @@ class MultipleSelection
                 'code' => 404,
                 'type' => 'Error',
                 'title' => 'Odd Not Found',
-                'details'=> "odd_id = " . $data->odd_id . " not found, unable to create create single = " . $data->single_id,
+                'details'=> "odd_id = " . $data->odd_id . " not found, unable to create create multiple_selection = " . $data->multiple_selection_id,
                 'data' => (array)$data
-                
+
             ];
         }
-        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id']]);
+        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id'], 'event_id' => $e['id']]);
         if(!$os){
             return [
                 'code' => 404,
                 'type' => 'Error',
                 'title' => 'Odd Selection Not Found',
-                'details'=> "odd_selection_id = " . $data->odd_selection_id . " not found, unable to create create single = " . $data->single_id,
+                'details'=> "odd_selection_id = " . $data->odd_selection_id . " not found, unable to create create multiple_selection = " . $data->multiple_selection_id,
                 'data' => (array)$data
-                
+
             ];
         }
         return false;
@@ -139,7 +137,7 @@ class MultipleSelection
     {
         $e = $this->e->read($data->event_id);
         $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
-        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id']]);
+        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id'], 'event_id' => $e['id']]);
         $objects = [
             'e' => $e,
             'o' => $o,
@@ -161,8 +159,8 @@ class MultipleSelection
             die('objects required for this operation');
         }
         $arr = [];
-        if ($data->single_id){
-            $arr['single_id'] = $data->single_id;
+        if ($data->multiple_selection_id){
+            $arr['multiple_selection_id'] = $data->multiple_selection_id;
         }
         if ($data->event_id){
             $arr['event_id'] = $e['id'];
