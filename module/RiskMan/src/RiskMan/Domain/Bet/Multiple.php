@@ -67,8 +67,6 @@ class Multiple
     {
         $id = $data->multiple_id;
         $problem = $this->validateData($data);
-//        var_dump($problem);
-//        die();
         if($problem){
             return $problem;
         }
