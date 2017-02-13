@@ -749,6 +749,25 @@ return array(
                 'name' => 'odd_id',
             ),
             3 => array(
+                'required' => true,
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
+                'name' => 'event_id',
+            ),
+            4 => array(
                 'required' => false,
                 'validators' => array(
                     0 => array(
@@ -764,7 +783,7 @@ return array(
                 ),
                 'name' => 'points',
             ),
-            4 => array(
+            5 => array(
                 'required' => true,
                 'validators' => array(
                     0 => array(

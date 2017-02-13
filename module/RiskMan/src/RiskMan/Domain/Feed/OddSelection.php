@@ -8,10 +8,9 @@
 
 namespace RiskMan\Domain\Feed;
 use RiskMan\Domain\Feed\DomainFeedObject;
+use RiskMan\Model\Feed\Event;
 use RiskMan\Model\Feed\OddSelection as MOs;
 use RiskMan\Model\Feed\Odd;
-
-
 
 
 /**
@@ -30,14 +29,19 @@ class OddSelection extends DomainFeedObject
      * @var RiskMan\Model\Feed\Odd
      */
     protected $o;
+    /*
+     * @var RiskMan\Model\Feed\Event
+     */
+    protected $e;
 
     /*
      * constructor TODO: Annotations
      */
-    public function __construct(Odd $o, MOs $os) 
+    public function __construct(Odd $o, MOs $os, Event $e) 
     {
         $this->os = $os;
         $this->o = $o;
+        $this->e = $e;
     }
     
     //POST
@@ -50,8 +54,10 @@ class OddSelection extends DomainFeedObject
         }
         $o = $this->o->read($data->odd_id);
         $odd_id  = $o['id'];
+        $e = $this->e->read($data->event_id);
+        $event_id  = $e['id'];
         $oddSqlArr = $this->toSqlArray($data);
-        $os = $this->os->read($id,['odd_id' => $odd_id]);
+        $os = $this->os->read($id,['odd_id' => $odd_id, 'event_id' => $event_id]);
         if ($os){
             //update odd
             $this->os->update($id, $oddSqlArr);
@@ -70,6 +76,16 @@ class OddSelection extends DomainFeedObject
     
     private function validateData($data)
     {
+        $e = $this->e->read($data->event_id);
+        if(!$e){
+            return [
+                'code' => 404,
+                'type' => 'Error',
+                'title' => 'Event Not Found',
+                'details'=> "event_id = " . $data->event_id . " not found, unable to create odd_selection = " . $data->odd_selection_id ,
+                'data' => (array)$data
+            ];
+        }
         $o = $this->o->read($data->odd_id);
         if(!$o){
             return [
@@ -79,7 +95,7 @@ class OddSelection extends DomainFeedObject
                 'details'=> "odd_id = " . $data->odd_id . " not found, unable to create odd_selection = " . $data->odd_selection_id ,
                 'data' => (array)$data
             ];
-        }
+        }        
         return false;
     }
     
@@ -99,14 +115,21 @@ class OddSelection extends DomainFeedObject
             
             //get before unset
             $o = $this->o->readInternalId($a['odd_id']);
+            $e = $this->e->readInternalId($a['event_id']);
             
             //unset odd
             if(isset($a['odd_id'])) {
                 unset($a['odd_id']);
             }
             
+            //unset event
+            if(isset($a['event_id'])) {
+                unset($a['event_id']);
+            }
+            
             //add odd id  
             $a['odd_id'] = $o['odd_id']; 
+            $a['event_id'] = $e['event_id']; 
             
             return $a;
         }
@@ -127,6 +150,12 @@ class OddSelection extends DomainFeedObject
             $o = $this->o->read($data->odd_id);
             if($o) {
                 $arr['odd_id'] = $o['id'];
+            }
+        }
+        if ($data->event_id){
+            $e = $this->e->read($data->event_id);
+            if($e) {
+                $arr['event_id'] = $e['id'];
             }
         }
         if ($data->odd) {

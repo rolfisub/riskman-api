@@ -24,6 +24,7 @@ class DomainBetFactory implements AbstractFactoryInterface
         $objects = array(
             0 => 'RiskMan\\Domain\\Bet\\Single',
             1 => 'RiskMan\\Domain\\Bet\\Multiple',
+            2 => 'RiskMan\\Domain\\Bet\\MultipleSelection',
         );
         return in_array($requestedName, $objects);
     }
@@ -56,7 +57,22 @@ class DomainBetFactory implements AbstractFactoryInterface
                     
                     $multiple  = $serviceLocator->get('RiskMan\\Model\\Bet\\Multiple');
                     $multipleselection  = $serviceLocator->get('RiskMan\\Model\\Bet\\MultipleSelection');
-                    $o = new $requestedName($multiple, $multipleselection, $e, $o, $os);
+                    $domainmultipleselection  = $serviceLocator->get('RiskMan\\Domain\\Bet\\MultipleSelection');
+                    $o = new $requestedName($multiple, $multipleselection, $domainmultipleselection, $e, $o, $os);
+                    echo " ...done\n";
+                    return $o;
+                case 'RiskMan\\Domain\\Bet\\MultipleSelection':
+                    echo "creating domain MultipleSelection\n";
+                    
+                    //MS $ms, Event $e, Odd $o, OddSelection $os
+                    $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
+                    $o = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
+                    $os = $serviceLocator->get('RiskMan\\Model\\Feed\\OddSelection');
+                    
+                    $multiple  = $serviceLocator->get('RiskMan\\Model\\Bet\\Multiple');
+                    $multipleselection  = $serviceLocator->get('RiskMan\\Model\\Bet\\MultipleSelection');
+                    
+                    $o = new $requestedName($multipleselection, $e, $o, $os);
                     echo " ...done\n";
                     return $o;
             }
