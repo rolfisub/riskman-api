@@ -67,7 +67,8 @@ class Multiple
     {
         $id = $data->multiple_id;
         $problem = $this->validateData($data);
-        die();
+//        var_dump($problem);
+//        die();
         if($problem){
             return $problem;
         }
@@ -106,45 +107,48 @@ class Multiple
     private function validateData($data)
     {
         //validate multiple inputs
-        
-        die('this is how far Im');
+        //var_dump($data);
+        //die('this is how far Im');
         
         //validate optional pick inputs
+        foreach($data->picks as $key => $pick) {
+            $e = $this->e->read($pick['event_id']);
+            if(!$e){
+                return [
+                    'code' => 404,
+                    'type' => 'Error',
+                    'title' => 'Event Not Found',
+                    'details'=> "event_id = " . $pick['event_id'] . " not found, unable to create multiple = " . $data->multiple_id,
+                    'data' => (array)$data
+
+                ];
+            }
+            $o = $this->o->read($pick['odd_id'], ['event_id' => $e['id']]);
+            if(!$o){
+                return [
+                    'code' => 404,
+                    'type' => 'Error',
+                    'title' => 'Odd Not Found',
+                    'details'=> "odd_id = " . $pick['odd_id'] . " not found, unable to create create multiple = " . $data->multiple_id,
+                    'data' => (array)$data
+
+                ];
+            }
+            $os = $this->os->read($pick['odd_selection_id'], ['odd_id' => $o['id']]);
+            if(!$os){
+                return [
+                    'code' => 404,
+                    'type' => 'Error',
+                    'title' => 'Odd Selection Not Found',
+                    'details'=> "odd_selection_id = " . $pick['odd_selection_id'] . " not found, unable to create create multiple = " . $data->multiple_id,
+                    'data' => (array)$data
+
+                ];
+            }
+        }
         
         
-        $e = $this->e->read($data->event_id);
-        if(!$e){
-            return [
-                'code' => 404,
-                'type' => 'Error',
-                'title' => 'Event Not Found',
-                'details'=> "event_id = " . $data->event_id . " not found, unable to create single = " . $data->single_id,
-                'data' => (array)$data
-                
-            ];
-        }
-        $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
-        if(!$o){
-            return [
-                'code' => 404,
-                'type' => 'Error',
-                'title' => 'Odd Not Found',
-                'details'=> "odd_id = " . $data->odd_id . " not found, unable to create create single = " . $data->single_id,
-                'data' => (array)$data
-                
-            ];
-        }
-        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id']]);
-        if(!$os){
-            return [
-                'code' => 404,
-                'type' => 'Error',
-                'title' => 'Odd Selection Not Found',
-                'details'=> "odd_selection_id = " . $data->odd_selection_id . " not found, unable to create create single = " . $data->single_id,
-                'data' => (array)$data
-                
-            ];
-        }
+        
         return false;
     }
     

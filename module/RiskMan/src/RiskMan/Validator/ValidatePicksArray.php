@@ -25,6 +25,7 @@ class ValidatePicksArray extends AbstractValidator
     const MSG_PICKALNUM = 'AlphaNumeric';
     const MSG_PICKFIELDLENGHT = 'StringLenght';
     const MSG_PICKISFLOAT = 'IsFloat';
+    const MSG_PICKISDUPLICATE = 'IsDuplicate';
     
     public $current_pick = 0;
     public $field_name = '';
@@ -50,6 +51,7 @@ class ValidatePicksArray extends AbstractValidator
         self::MSG_PICKALNUM => 'Field %name% must only contain alphanumeric characters, value = %value1%. Pick = %pick%',
         self::MSG_PICKFIELDLENGHT => 'Field %name% lenght value (%value1%) cannot be less than 1 or greater than 32 characters. Pick = %pick%',
         self::MSG_PICKISFLOAT => 'Field %name% must be a float. Pick = %pick%',
+        self::MSG_PICKISDUPLICATE => 'Duplicate pick found, Pick = %pick% contains duplicate odd selection or mltiple selection id within the other picks received.',
     );
     
     
@@ -91,6 +93,11 @@ class ValidatePicksArray extends AbstractValidator
                 
                 $p = $value[$x];
                 
+                //find duplicate picks
+                $isdup = $this->_val_duplicate($p, $value);
+                if($isdup) {
+                    return false;
+                }
                 
                 //validate fields that are IDs
                 $vids = $this->_ValidateReqAlnMax(
@@ -136,15 +143,15 @@ class ValidatePicksArray extends AbstractValidator
                     }
                 }
                 
+                
+                
 
             } else {
                 $this->error(self::MSG_ARRAYINVALIDSTRUCT);
                 return false;
             }    
-        }
-        var_dump($value);die();
-        
-        
+        }        
+        //die("test");
         return true;
     } 
     
@@ -182,6 +189,36 @@ class ValidatePicksArray extends AbstractValidator
             }
         }
         return true;
+    }
+    
+    private function _val_duplicate($pick, $array)
+    {
+        $mis = $pick['multiple_selection_id'];
+        $oi = $pick['odd_id'];
+        $osi = $pick['odd_selection_id'];
+        //set up fields
+        $this->_setMsgVals(null, $mis, null);
+        
+        $count = 0;
+        //same pick id
+        foreach($array as $key => $data) {
+            if($data['multiple_selection_id'] == $mis) {
+                $count++;
+            }
+        }
+        $count2 = 0;
+        //same odd selection
+        foreach($array as $key => $data) {
+            if($data['odd_id'] == $oi && $data['odd_selection_id'] == $osi) {
+                $count2++;
+            }
+        }
+        if ($count > 1 || $count2 > 1){
+            //duplicate found
+            $this->error(self::MSG_PICKISDUPLICATE);
+            return true;
+        }
+        return false;
     }
     
 }
