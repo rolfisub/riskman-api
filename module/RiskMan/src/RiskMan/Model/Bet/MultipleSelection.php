@@ -8,9 +8,7 @@
 
 namespace RiskMan\Model\Bet;
 use RiskMan\Model\ModelObject;
-/**
- * SELECT `multipleselection`.* FROM `multipleselection` WHERE `book_id` = '2' AND `multiple_id` = '1' AND `event_id` = '3' AND `odd_id` = '3' AND `odd_selection_id` = '6' AND `multiple_selection_id` = 'ms2' AND `multiple_selection_id` != 'ms3'
- */
+
 
 /**
  * Description of Event
