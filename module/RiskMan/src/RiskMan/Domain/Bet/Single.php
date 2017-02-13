@@ -137,7 +137,7 @@ class Single
     {
         $e = $this->e->read($data->event_id);
         $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
-        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id']]);
+        $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id'], 'event_id' => $e['id']]);
         $objects = [
             'e' => $e,
             'o' => $o,

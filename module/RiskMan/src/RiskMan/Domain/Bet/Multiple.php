@@ -76,10 +76,6 @@ class Multiple
     public function create($data)
     {
         $id = $data->multiple_id;
-        $problem = $this->validateData($data);
-        if($problem){
-            return $problem;
-        }
         
         //create multiple object
         $SqlArr = $this->toSqlArray($data, null, $objects);
@@ -98,7 +94,8 @@ class Multiple
             //create each multiple selection id
             foreach($data->picks as $key => $pick) {
                 $pick['multiple_id'] = $id;
-                $response = $this->dms->create($pick);
+                $pickO = (object)$pick;
+                $response = $this->dms->create($pickO);
                 if($response['code'] != 200) {
                     return $response;
                 }
