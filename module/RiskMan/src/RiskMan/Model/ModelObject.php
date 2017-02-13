@@ -24,6 +24,7 @@ class ModelObject
     protected $table;
     protected $name;
     protected $where;
+    protected $book_id;
     
     public function __construct(Adapter $za, $table, $name, $bookId)
     {
@@ -37,9 +38,12 @@ class ModelObject
         if(null === $this->name){
             $this->name = $name;
         }
+        if(null === $this->book_id){
+            $this->book_id = $bookId;
+        }
         if(null === $this->where){
             $this->where = [
-                'book_id' => $bookId
+                'book_id' => $this->book_id
             ];
         }
         $this->sql->setTable($this->table);
