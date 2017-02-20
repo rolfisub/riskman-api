@@ -50,6 +50,17 @@ class Event extends DomainFeedObject
         $this->s = $sport;
         $this->l = $league;
         $this->r = $region;
+        $this->setFields([
+            'event_id',
+            'event_name',
+            'sport_id',
+            'sport_name',
+            'region_id',
+            'region_name',
+            'league_id',
+            'league_name',
+            'datetime'
+        ]);
     }
     
     //POST
@@ -57,6 +68,10 @@ class Event extends DomainFeedObject
     {
         $arr = [];
         $id = $data->event_id;
+        $problem = $this->validateFields($data);
+        if($problem){
+            return $problem;
+        }
         $otherArr = $this->createOtherFeedObjects($data);
         $eventSqlArr = $this->toSqlArray($data, $otherArr);
         $e = $this->e->read($id);

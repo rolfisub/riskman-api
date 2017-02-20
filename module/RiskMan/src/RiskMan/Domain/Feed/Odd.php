@@ -38,12 +38,22 @@ class Odd extends DomainFeedObject
     {
         $this->o = $odd;
         $this->e = $e;
+        $this->setFields([
+            'odd_id',
+            'odd_name',
+            'event_id',
+            'datetime',
+        ]);
     }
     
     //POST
     public function create($data)
     {
         $id = $data->odd_id;
+        $problem = $this->validateFields($data);
+        if($problem){
+            return $problem;
+        }
         $problem = $this->validateData($data);
         if($problem){
             return $problem;
