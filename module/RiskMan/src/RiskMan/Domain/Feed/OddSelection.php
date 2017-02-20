@@ -42,12 +42,24 @@ class OddSelection extends DomainFeedObject
         $this->os = $os;
         $this->o = $o;
         $this->e = $e;
+        $this->setFields([
+            'odd_selection_id',
+            'odd_selection_name',
+            'odd_id',
+            'event_id',
+            'points',
+            'odd',
+        ]);
     }
     
     //POST
     public function create($data)
     {
         $id = $data->odd_selection_id;
+        $problem = $this->validateFields($data);
+        if($problem){
+            return $problem;
+        }
         $problem = $this->validateData($data);
         if($problem){
             return $problem;

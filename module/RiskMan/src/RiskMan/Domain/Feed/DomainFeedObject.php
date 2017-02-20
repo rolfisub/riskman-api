@@ -7,13 +7,14 @@
  */
 
 namespace RiskMan\Domain\Feed;
+use RiskMan\Domain\DomainObject;
 
 /**
  * Description of DomainFeedObject
  *
  * @author rolf
  */
-abstract class DomainFeedObject 
+abstract class DomainFeedObject extends DomainObject
 {
     
 }

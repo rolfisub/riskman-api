@@ -336,10 +336,10 @@ return array(
                             'max' => '32',
                         ),
                     ),
-                    1 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
+//                    1 => array(
+//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+//                        'options' => array(),
+//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -369,10 +369,10 @@ return array(
                             'max' => '32',
                         ),
                     ),
-                    1 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
+//                    1 => array(
+//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+//                        'options' => array(),
+//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -412,10 +412,10 @@ return array(
                             'max' => '32',
                         ),
                     ),
-                    1 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
+//                    1 => array(
+//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+//                        'options' => array(),
+//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -454,10 +454,10 @@ return array(
                             'max' => '32',
                         ),
                     ),
-                    1 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
+//                    1 => array(
+//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+//                        'options' => array(),
+//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -496,10 +496,10 @@ return array(
                             'max' => '32',
                         ),
                     ),
-                    1 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
+//                    1 => array(
+//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+//                        'options' => array(),
+//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -539,10 +539,10 @@ return array(
                             'max' => '32',
                         ),
                     ),
-                    1 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
+//                    1 => array(
+//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+//                        'options' => array(),
+//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -606,10 +606,10 @@ return array(
                             'max' => '32',
                         ),
                     ),
-                    1 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
+//                    1 => array(
+//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+//                        'options' => array(),
+//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -649,10 +649,10 @@ return array(
                             'max' => '32',
                         ),
                     ),
-                    1 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
+//                    1 => array(
+//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+//                        'options' => array(),
+//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -697,10 +697,10 @@ return array(
                             'max' => '32',
                         ),
                     ),
-                    1 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
+//                    1 => array(
+//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+//                        'options' => array(),
+//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -806,10 +806,10 @@ return array(
                             'max' => '32',
                         ),
                     ),
-                    1 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
+//                    1 => array(
+//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+//                        'options' => array(),
+//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -830,10 +830,10 @@ return array(
                             'max' => '32',
                         ),
                     ),
-                    1 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
+//                    1 => array(
+//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+//                        'options' => array(),
+//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -853,10 +853,10 @@ return array(
                             'max' => '32',
                         ),
                     ),
-                    1 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
+//                    1 => array(
+//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+//                        'options' => array(),
+//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -876,10 +876,10 @@ return array(
                             'max' => '32',
                         ),
                     ),
-                    1 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
+//                    1 => array(
+//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+//                        'options' => array(),
+//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -965,10 +965,10 @@ return array(
                             'max' => '32',
                         ),
                     ),
-                    1 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
+//                    1 => array(
+//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+//                        'options' => array(),
+//                    ),
                 ),
                 'filters' => array(
                     0 => array(

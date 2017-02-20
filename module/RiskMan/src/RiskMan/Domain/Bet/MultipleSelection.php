@@ -7,6 +7,7 @@
  */
 
 namespace RiskMan\Domain\Bet;
+use RiskMan\Domain\Bet\DomainBetObject;
 use RiskMan\Model\Bet\MultipleSelection as MS;
 use RiskMan\Model\Bet\Multiple as M;
 
@@ -23,7 +24,7 @@ use RiskMan\Model\Feed\OddSelection;
  *
  * @author rolf
  */
-class MultipleSelection
+class MultipleSelection extends DomainBetObject
 {
     /*
      * @var RiskMan\Model\Bet\MultipleSelection
@@ -60,12 +61,24 @@ class MultipleSelection
         $this->e = $e;
         $this->o = $o;
         $this->os = $os;
+        $this->setFields([
+            'multiple_selection_id',
+            'event_id',
+            'odd_id',
+            'odd_selection_id',
+            'odd',
+            'points',
+        ]);
     }
     
     //POST
     public function create($data)
     {
         $id = $data->multiple_selection_id;
+        $problem = $this->validateFields($data);
+        if($problem){
+            return $problem;
+        }
         $problem = $this->validateData($data);
         if($problem){
             return $problem;

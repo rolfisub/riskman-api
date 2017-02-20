@@ -7,6 +7,7 @@
  */
 
 namespace RiskMan\Domain\Bet;
+use RiskMan\Domain\Bet\DomainBetObject;
 use RiskMan\Model\Bet\Single as MS;
 
 use RiskMan\Model\Feed\Event;
@@ -22,7 +23,7 @@ use RiskMan\Model\Feed\OddSelection;
  *
  * @author rolf
  */
-class Single
+class Single extends DomainBetObject
 {
     /*
      * @var RiskMan\Model\Bet\Single
@@ -53,12 +54,28 @@ class Single
         $this->e = $e;
         $this->o = $o;
         $this->os = $os;
+        $this->setFields([
+            'single_id',
+            'event_id',
+            'odd_id',
+            'odd_selection_id',
+            'risk',
+            'win',
+            'odd',
+            'points'
+        ]);
     }
     
     //POST
     public function create($data)
     {
         $id = $data->single_id;
+        
+        $problem = $this->validateFields($data);
+        if($problem){
+            return $problem;
+        }
+        
         $problem = $this->validateData($data);
         if($problem){
             return $problem;
