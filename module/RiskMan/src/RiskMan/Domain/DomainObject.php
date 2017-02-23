@@ -64,7 +64,6 @@ class DomainObject
             $count = 0;
             foreach ($this->fields as $fkey => $fvalue) {
                 if($key == $fvalue) {   
-                    
                     $count++;
                 }
             }
