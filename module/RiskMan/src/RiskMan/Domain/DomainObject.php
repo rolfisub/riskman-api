@@ -30,7 +30,7 @@ class DomainObject
     public function setData($data)
     {
         if(is_object($data)) {
-            $data = (array)$data;
+            $data = json_decode(json_encode($data), true);
         }
         if(is_array($data) && sizeof($data) > 0) {
             $this->data = $data;
@@ -55,8 +55,23 @@ class DomainObject
         $this->setFields($fields);
         if (null === $this->fields) {
             $problem['details'] = 'Error';
-            $problem['data']['error'] = 'Fields not set';
+            $problem['data']['error'] = 'Fields not set, Please contact Support';
             return $problem;
+        }
+        
+        foreach($data as $key => $value) {
+            //validate level 1 fields
+            $count = 0;
+            foreach ($this->fields as $fkey => $fvalue) {
+                if($key == $fvalue) {   
+                    
+                    $count++;
+                }
+            }
+            if($count <= 0) {
+                $problem['data']['field_name'] = $key;
+                return $problem;
+            }
         }
         
         //if data not set set data
@@ -67,19 +82,7 @@ class DomainObject
             return $problem;
         }
         
-        foreach($this->data as $key => $value) {
-            //validate level 1 fields
-            $count = 0;
-            foreach ($this->fields as $fkey => $fvalue) {
-                if($key == $fvalue) {   
-                    $count++;
-                }
-            }
-            if($count <= 0) {
-                $problem['data']['field_name'] = $key;
-                return $problem;
-            }
-        }
+        
         //default return  invalid
         return false;
     }

@@ -148,7 +148,7 @@ class Event extends DomainFeedObject
             $arr['name'] = $data->event_name;
         }
         if ($data->datetime) {
-            $arr['datetime'] = $data->datetime;
+            $arr['datetime'] = date("Y-m-d g:i:s", strtotime($data->datetime));
         }
         if (is_array($other)){
             $arr = array_merge($arr, $other);

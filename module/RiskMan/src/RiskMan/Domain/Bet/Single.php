@@ -14,8 +14,11 @@ use RiskMan\Model\Feed\Event;
 use RiskMan\Model\Feed\Odd;
 use RiskMan\Model\Feed\OddSelection;
 
+use RiskMan\Domain\Feed\Event as DEvent;
+use RiskMan\Domain\Feed\Odd as DOdd;
+use RiskMan\Domain\Feed\OddSelection as DOSelection;
 
-
+use Zend\ServiceManager\ServiceLocatorInterface as SM;
 
 
 /**
@@ -48,8 +51,18 @@ class Single extends DomainBetObject
     /*
      * constructor TODO: Annotations
      */
-    public function __construct(MS $ms, Event $e, Odd $o, OddSelection $os) 
+    public function __construct(
+        SM $sm,
+        DEvent $de,
+        DOdd $do,
+        DOSelection $dos,
+        MS $ms, 
+        Event $e, 
+        Odd $o, 
+        OddSelection $os
+    ) 
     {
+        parent::__construct($sm, $de, $do, $dos);
         $this->ms = $ms;
         $this->e = $e;
         $this->o = $o;
@@ -57,8 +70,11 @@ class Single extends DomainBetObject
         $this->setFields([
             'single_id',
             'event_id',
+            'event_data',
             'odd_id',
+            'odd_data',
             'odd_selection_id',
+            'odd_selection_data',
             'risk',
             'win',
             'odd',
@@ -70,7 +86,10 @@ class Single extends DomainBetObject
     public function create($data)
     {
         $id = $data->single_id;
-        
+        $problem = $this->createOtherFeedObjects($data);
+        if($problem){
+            return $problem;
+        }
         $problem = $this->validateFields($data);
         if($problem){
             return $problem;
@@ -125,6 +144,7 @@ class Single extends DomainBetObject
                 
             ];
         }
+        //var_dump($data->odd_id, ['event_id' => $e['id']]);die();
         $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
         if(!$o){
             return [
@@ -136,6 +156,7 @@ class Single extends DomainBetObject
                 
             ];
         }
+        //var_dump($data->odd_selection_id, ['odd_id' => $o['id'], 'event_id' => $e['id']]);die();    
         $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id'], 'event_id' => $e['id']]);
         if(!$os){
             return [
