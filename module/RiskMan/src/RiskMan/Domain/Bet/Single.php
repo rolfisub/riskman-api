@@ -124,7 +124,7 @@ class Single extends DomainBetObject
             'code' => 200,
             'type' => 'OK',
             'title' => 'Success',
-            'details' => "Odd succesfully created or updated.",
+            'details' => "Single succesfully created or updated.",
             'data' => $this->returnOddArray($msnew, $objectsnew )
         ];
     }
