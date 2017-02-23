@@ -16,7 +16,11 @@ use RiskMan\Model\Feed\Odd;
 use RiskMan\Model\Feed\OddSelection;
 
 
+use RiskMan\Domain\Feed\Event as DEvent;
+use RiskMan\Domain\Feed\Odd as DOdd;
+use RiskMan\Domain\Feed\OddSelection as DOSelection;
 
+use Zend\ServiceManager\ServiceLocatorInterface as SM;
 
 
 /**
@@ -54,8 +58,19 @@ class MultipleSelection extends DomainBetObject
     /*
      * constructor TODO: Annotations
      */
-    public function __construct(MS $ms, M $m, Event $e, Odd $o, OddSelection $os) 
+    public function __construct(
+        SM $sm,
+        DEvent $de,
+        DOdd $do,
+        DOSelection $dos,
+        MS $ms, 
+        M $m, 
+        Event $e, 
+        Odd $o, 
+        OddSelection $os
+    ) 
     {
+        parent::__construct($sm, $de, $do, $dos);   
         $this->ms = $ms;
         $this->m = $m;
         $this->e = $e;
