@@ -77,10 +77,14 @@ class MultipleSelection extends DomainBetObject
         $this->o = $o;
         $this->os = $os;
         $this->setFields([
+            'multiple_id',
             'multiple_selection_id',
             'event_id',
+            'event_data',
             'odd_id',
+            'odd_data',
             'odd_selection_id',
+            'odd_selection_data',
             'odd',
             'points',
         ]);

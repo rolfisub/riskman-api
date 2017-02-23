@@ -131,6 +131,10 @@ class Multiple extends DomainBetObject
         if(isset($data->picks)) {
             //create each multiple selection id
             foreach($data->picks as $key => $pick) {
+                $problem = $this->createOtherFeedObjects($pick);
+                if($problem){
+                    return $problem;
+                }
                 $pick['multiple_id'] = $id;
                 $pickO = (object)$pick;
                 $response = $this->dms->create($pickO);
