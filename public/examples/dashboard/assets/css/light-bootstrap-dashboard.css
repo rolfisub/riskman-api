@@ -431,7 +431,7 @@ body > .navbar-collapse[data-color="green"]:after {
   background: -webkit-linear-gradient(top, #87CB16 0%, #6dc030 100%);
   background: -o-linear-gradient(top, #87CB16 0%, #6dc030 100%);
   background: -ms-linear-gradient(top, #87CB16 0%, #6dc030 100%);
-  background: linear-gradient(to bottom, #87CB16 0%, #6dc030 100%);
+  background: linear-gradient(to bottom, #86B940 0%, #86B940 100%);
   background-size: 150% 150%;
 }
 .sidebar[data-color="orange"]:after,
