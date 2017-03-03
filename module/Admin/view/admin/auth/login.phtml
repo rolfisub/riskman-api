@@ -15,17 +15,16 @@ $form->prepare();
     <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
     <p id="profile-name" class="profile-name-card"></p>
     <?php
-    echo $this->form()->openTag($form);
-    echo $this->formCollection($form);
-    echo $this->form()->closeTag();
-    if ($this->messages){
-    echo '<ul>';
-    foreach($this->messages as $message)
-    {
-        echo '<li>'.$message.'</li>';
-    }
-        echo '</ul>';
-    }    
-?>
+        echo $this->form()->openTag($form);
+        echo $this->formCollection($form);
+        echo $this->form()->closeTag();
+
+        if ($this->messages){
+            foreach($this->messages as $message)
+            {
+                echo '<div class="alert alert-danger"><strong>'.$message.'</strong></div>';
+            }
+        }    
+    ?>
  </div>
 
