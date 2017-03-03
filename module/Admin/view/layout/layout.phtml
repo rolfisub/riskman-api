@@ -9,15 +9,15 @@
             //change this to set an icon for the admin page
             array('rel' => 'icon', 'type' => 'image/png', 'href' => $this->basePath('/img/favicon.png'))
             )
-        ->prependStylesheet('examples/dashboard/assets/css/bootstrap.min.css')
-        ->prependStylesheet('examples/dashboard/assets/css/animate.min.css')
-        ->prependStylesheet('examples/dashboard/assets/css/light-bootstrap-dashboard.css')
-        ->prependStylesheet('app/css/main.css');
+        ->prependStylesheet('/examples/dashboard/assets/css/bootstrap.min.css')
+        ->prependStylesheet('/examples/dashboard/assets/css/animate.min.css')
+        ->prependStylesheet('/examples/dashboard/assets/css/light-bootstrap-dashboard.css')
+        ->prependStylesheet('/app/css/main.css');
 ?>
         <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <link href="examples/dashboard/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <link href="/examples/dashboard/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
     </head>
     <body>
         <div class="wrapper">
@@ -29,53 +29,29 @@
                         </a>
                     </div>
 
-                    <ul class="nav">
+                    <ul class="nav nav-stacked">
                         <li class="active">
-                            <a href="dashboard.html">
+                            <a href="/Admin">
                                 <i class="pe-7s-graph"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li>
-                            <a href="user.html">
+                            <a href="/Admin/Users">
                                 <i class="pe-7s-user"></i>
-                                <p>User Management</p>
+                                <p>Users</p>
                             </a>
                         </li>
                         <li>
-                            <a href="table.html">
+                            <a href="/Admin/Books">
                                 <i class="pe-7s-note2"></i>
-                                <p>Table List</p>
+                                <p>Books</p>
                             </a>
                         </li>
                         <li>
-                            <a href="typography.html">
+                            <a href="/Admin/Reports">
                                 <i class="pe-7s-news-paper"></i>
-                                <p>Typography</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="icons.html">
-                                <i class="pe-7s-science"></i>
-                                <p>Icons</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="maps.html">
-                                <i class="pe-7s-map-marker"></i>
-                                <p>Maps</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="notifications.html">
-                                <i class="pe-7s-bell"></i>
-                                <p>Notifications</p>
-                            </a>
-                        </li>
-                                        <li class="active-pro">
-                            <a href="upgrade.html">
-                                <i class="pe-7s-rocket"></i>
-                                <p>Upgrade to PRO</p>
+                                <p>Reports</p>
                             </a>
                         </li>
                     </ul>
@@ -172,7 +148,7 @@
               </div>
             </div>
         </footer>
-        <script data-main="app/js/require.config" src="app/js/lib/requirejs/require.js"></script>
+        <script data-main="/app/js/require.config" src="/app/js/lib/requirejs/require.js"></script>
         <?php echo $this->inlineScript() ?>
     </body>
 </html>
