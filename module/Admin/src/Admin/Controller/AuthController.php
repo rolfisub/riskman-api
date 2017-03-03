@@ -14,10 +14,14 @@ class AuthController extends AbstractActionController
     protected $storage;
     protected $authservice;
     protected $sm;
+    protected $viewModel;
     public function __construct($sm) {
         if($this->sm === null){
             $this->sm = $sm;
         }
+       
+        
+        
     }
     
     public function getAuthService()
@@ -53,12 +57,13 @@ class AuthController extends AbstractActionController
      
     public function loginAction()
     {
-        
+        $this->layout('layout/auth');
         //if already login, redirect to success page 
         if ($this->getAuthService()->hasIdentity()){
             return $this->redirect()->toRoute('Home');
         }
-             
+        
+        
         $form = $this->getForm();
          
         return new ViewModel([
