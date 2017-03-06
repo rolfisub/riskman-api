@@ -31,7 +31,7 @@ class AuthServiceFactory
         
         $dbTableAuthAdapter = new DbTableAuthAdapter(
             $dbAdapter, 
-            'users','user_name','pass_word', $credentialCallBack
+            'admins','user_name','pass_word', $credentialCallBack
         );
         
 
