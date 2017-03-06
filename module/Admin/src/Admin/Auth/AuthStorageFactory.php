@@ -7,7 +7,7 @@
  */
 
 namespace Admin\Auth;
-
+use Admin\Auth\RiskManAuthStorage;
 /**
  * Description of AuthStorageFactory
  *
@@ -17,7 +17,6 @@ class AuthStorageFactory
 {
     public function __invoke($sm) 
     {
-        
-        return new \Admin\Auth\RiskManAuthStorage('admin_riskman');
+        return new RiskManAuthStorage('admin_riskman');
     }
 }
