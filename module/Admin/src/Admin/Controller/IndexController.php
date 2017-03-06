@@ -26,6 +26,11 @@ class IndexController extends ProtectedController
         return new ViewModel();
     }
     
+    public function adminsAction()
+    {
+        return new ViewModel();
+    }
+    
     public function reportsAction()
     {
         return new ViewModel();
