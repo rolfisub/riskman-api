@@ -17,7 +17,7 @@ class AuthController extends AbstractActionController
     protected $viewModel;
     public function __construct($sm) {
         if($this->sm === null){
-            $this->sm = $sm;
+            $this->sm = $sm->getServiceLocator();
         }
        
         
@@ -29,7 +29,7 @@ class AuthController extends AbstractActionController
         
         if (! $this->authservice) {
             
-            $this->authservice = $this->sm->getServiceLocator()->get('myAuthService');
+            $this->authservice = $this->sm->get('myAuthService');
         }
          
         return $this->authservice;
