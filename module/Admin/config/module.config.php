@@ -16,6 +16,16 @@ return array(
                     ),
                 ),
             ),
+            'Admins' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route'    => '/Admin/Admins',
+                    'defaults' => array(
+                        'controller' => 'Admin\Controller\IndexController',
+                        'action'     => 'admins',
+                    ),
+                ),
+            ),
             'Users' => array(
                 'type' => 'Literal',
                 'options' => array(
@@ -105,6 +115,7 @@ return array(
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'admin/index/index' => __DIR__ . '/../view/admin/index/index.phtml',
+            'admin/index/admins' => __DIR__ . '/../view/admin/index/admins.phtml',
             'admin/index/users' => __DIR__ . '/../view/admin/index/users.phtml',
             'admin/index/books' => __DIR__ . '/../view/admin/index/books.phtml',
             'admin/index/reports' => __DIR__ . '/../view/admin/index/reports.phtml',
