@@ -22,6 +22,6 @@ class StatsRestController extends ProtectedRestfulController
     
     public function getList() 
     {
-       var_dump($this->stats->testMe());die();
+       var_dump($this->stats->getAllStats());die();
     }
 }

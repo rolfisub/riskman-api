@@ -28,4 +28,50 @@ class Stats
        return $this->stats->testMeMapper();   
     }
     
+    public function getAllStats()
+    {
+        $generalApiStats = $this->getApiGeneralStats();
+        $bookApiStats = $this->getBookApiStats();
+        $last24Stats = $this->get24HrsGraphData();
+        $monthlyStats = $this->getMonthlyGraphData();
+        $usersStats = $this->getUsersStats();
+        $result = array_merge($generalApiStats, $bookApiStats, $last24Stats, $monthlyStats, $usersStats);
+        return $result;
+    }
+    
+    public function getApiGeneralStats()
+    {
+        return [
+            'general-api-stats' => $this->stats->getApiGeneralStats()
+        ];
+    }
+    
+    public function getBookApiStats()
+    {
+        return[
+            'book-api-stats' => []
+        ];
+    }
+    
+    public function get24HrsGraphData()
+    {
+        return[
+            'last24-activity' => []
+        ];
+    }
+    
+    public function getMonthlyGraphData()
+    {
+        return[
+            'monthly-activity' => []
+        ];
+    }
+    
+    public function getUsersStats()
+    {
+        return[
+            'users-stats' => []
+        ];
+    }
+    
 }
