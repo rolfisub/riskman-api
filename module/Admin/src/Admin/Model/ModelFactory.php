@@ -6,40 +6,33 @@
  * and open the template in the editor.
  */
 
-namespace Admin\Controller;
+namespace Admin\Model;
+
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+
 /**
- * Description of ControllersFactory
+ * Description of ModelFactory
  *
  * @author rolf
  */
-class ControllersFactory implements AbstractFactoryInterface
+class ModelFactory implements AbstractFactoryInterface
 {
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName) 
     {
         $objects = array(
-            0 => 'Admin\\Controller\\IndexController',
-            1 => 'Admin\\Controller\\AuthController',
-            2 => 'Admin\\Controller\\StatsRestController',
+            0 => 'Admin\\Model\\Stats',
         );
         return in_array($requestedName, $objects);
     }
     
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName) 
     {
-        $services = $serviceLocator->getServiceLocator();
         if (class_exists($requestedName)) {
             switch ($requestedName){
-                case 'Admin\\Controller\\IndexController':
-                    $o = new $requestedName($serviceLocator);
-                    return $o;
-                case 'Admin\\Controller\\AuthController':
-                    $o = new $requestedName($serviceLocator);
-                    return $o;
-                case 'Admin\\Controller\\StatsRestController':
-                    $stats = $services->get('Admin\\Model\\Stats'); 
-                    $o = new $requestedName($serviceLocator, $stats);
+                case 'Admin\\Model\\Stats':
+                    $statsMapper = $serviceLocator->get('Admin\\Mapper\\StatsMapper');
+                    $o = new $requestedName($statsMapper);
                     return $o;
             }
         }

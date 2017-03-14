@@ -81,6 +81,18 @@ return array(
                     ),
                 ),
             ),
+            'StatsRest' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/rest/stats[/:id]',
+                    'constraints' => array(
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Admin\Controller\StatsRestController',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -88,7 +100,9 @@ return array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Db\Adapter\AdapterAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
-            'Admin\Controller\ControllersFactory'
+            'Admin\Controller\ControllersFactory',
+            'Admin\Mapper\MapperFactory',
+            'Admin\Model\ModelFactory',
         ),
         'factories' => [
             'myAuthService' => 'Admin\Auth\AuthServiceFactory',
