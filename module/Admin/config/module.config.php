@@ -16,7 +16,7 @@ return array(
                     ),
                 ),
             ),
-            'Admins' => array(
+            /*'Admins' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route'    => '/Admin/Admins',
@@ -55,7 +55,7 @@ return array(
                         'action'     => 'reports',
                     ),
                 ),
-            ),
+            ),*/
             'Login' => array(
                 'type' => 'Literal',
                 'options' => array(
