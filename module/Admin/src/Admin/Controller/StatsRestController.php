@@ -7,7 +7,7 @@
 namespace Admin\Controller;
 
 use Admin\Controller\ProtectedRestfulController;
-use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 
 use Admin\Model\Stats;
 
@@ -22,6 +22,6 @@ class StatsRestController extends ProtectedRestfulController
     
     public function getList() 
     {
-       var_dump($this->stats->getAllStats());die();
+       return new JsonModel($this->stats->getAllStats());
     }
 }
