@@ -13,11 +13,6 @@ class IndexController extends ProtectedController
 {
     public function indexAction()
     {
-        // need to get last 24 hrs of activity data
-        // need to get last 12 months of data 
-        // need to get Book Api Stats
-        // need to get Api General Stats
-        
         return new ViewModel();
     }
     

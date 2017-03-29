@@ -109,6 +109,11 @@ class StatsMapper extends AbstractMapper
         return $total;
     }
     
+    /**
+     * gets the bet count for the specified table
+     * @param string $table
+     * @return int
+     */
     private function getBetsCount($table)
     {
         $s = $this->sql->select($table);

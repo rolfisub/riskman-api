@@ -22,17 +22,24 @@ define('home',[
     function ($scope, $sce, api, spinnerService,$timeout) {
         
         $scope.config = {
-            last24Loading:true,
-            monthlyLoading:true
+            generalLoading:true,
+            last24Loading:false,
+            monthlyLoading:false
+        };
+        $scope.data = {
+            general_api_stats:{}
         };
         var init = function(){
-            $timeout(function(){
-                spinnerService.hide('last24Spinner');
-            }, 2000);
             
-            $timeout(function(){
-                spinnerService.hide('monthlySpinner');
-            }, 1000);
+            var rg = api.read('/stats/general_api_stats');
+            rg.then(function(response){
+                console.log(response);
+                $scope.data.general_api_stats = response.data.general_api_stats;
+                spinnerService.hide('generalSpinner');  
+            },function(){
+                console.log(response);
+                spinnerService.hide('generalSpinner');
+            });
         };
         init();
     }]);
