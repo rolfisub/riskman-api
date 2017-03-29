@@ -15,6 +15,7 @@ define('admin',[
     'ngRoute', 
     'ui.bootstrap', 
     'click.outside',
+    'angular-spinners',
 ], function(angularAMD){
     //Angular Code Start
     /*
@@ -25,6 +26,7 @@ define('admin',[
         'ngRoute',
         'ui.bootstrap',
         'angular-click-outside',
+        'angularSpinners'
     ]);
 
     /**
@@ -36,7 +38,8 @@ define('admin',[
     admin.config(function ($routeProvider, $locationProvider, $controllerProvider, $compileProvider, $provide, $filterProvider) { 
         $routeProvider
             .otherwise({
-                redirectTo: '/Admin/404'
+               // redirectTo: '/Admin/404',
+                
         });
         //csrf
         $locationProvider.html5Mode({enabled: true, requireBase: false});
@@ -105,17 +108,20 @@ define('admin',[
    /**
      * Create new routes here 
      */
-    //landing page, routes to /market/home
+    //landing page, routes to /Admin/home
     admin.addUserRoute('home');
-    //top ndc page
-    //admin.addUserRoute('topndc');
+    //landing page, routes to /Admin/admins
+    admin.addUserRoute('admins');
+    //landing page, routes to /Admin/users
+    admin.addUserRoute('users');
+    //landing page, routes to /Admin/books
+    admin.addUserRoute('books');
+    //landing page, routes to /Admin/reports
+    admin.addUserRoute('reports');
+    //404 page, routes to /Admin/404
+    admin.addUserRoute('404');
     
-    //hello page, routes to /market/hello
-    //admin.addUserRoute('hello');
-    //hello page, routes to /market/hello2
-    //admin.addUserRoute('hello2');
-    //404 page, routes to /market/404
-    //admin.addUserRoute('404');
+    
     //hello page, routes to /market/admin/hello
     //admin.addAdminRoute('hello');
     //other routes

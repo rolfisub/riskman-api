@@ -23,6 +23,7 @@ require.config({
         'ui.bootstrap': 'lib/bootstrap-3.3.7-dist/js/ui-bootstrap-tpls.min',
         'click.outside': 'lib/angular-click-outside/angular.click.outside',
         'string': 'lib/ng-string/ng-string.min',
+        'angular-spinners': 'lib/angular-spinners/angular-spinners',
         
         //main application module
         'admin': 'app/admin',
@@ -32,6 +33,10 @@ require.config({
         
         //user controllers
         'home': 'app/user/home/home',
+        'admins': 'app/user/admins/admins',
+        'users': 'app/user/users/users',
+        'books': 'app/user/books/books',
+        'reports': 'app/user/reports/reports',
         
         //shared controllers
         '404': 'app/user/404/404',
@@ -79,6 +84,9 @@ require.config({
             deps:['angular'],
         },
         'string':{
+            deps:['angular']
+        },
+        'angular-spinners':{
             deps:['angular']
         }
         

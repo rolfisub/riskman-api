@@ -24,4 +24,22 @@ class StatsRestController extends ProtectedRestfulController
     {
        return new JsonModel($this->stats->getAllStats());
     }
+    
+    public function get($name)
+    {
+        switch ($name) 
+        {
+            case 'general_api_stats':
+                return new JsonModel($this->stats->getApiGeneralStats());
+            case 'book_api_stats':
+                return new JsonModel($this->stats->getBookApiStats());            
+            case 'last24_activity':
+                return new JsonModel($this->stats->get24HrsGraphData());
+            case 'monthly_activity':
+                return new JsonModel($this->stats->getMonthlyGraphData());
+            case 'users_stats':
+                return new JsonModel($this->stats->getUsersStats());
+        }
+        return;
+    }
 }

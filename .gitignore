@@ -12,3 +12,5 @@ public/vendor/
 data/cache/*
 !data/cache/.gitkeep
 .vagrant
+rep/
+data/

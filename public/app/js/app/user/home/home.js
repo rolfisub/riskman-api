@@ -1,7 +1,7 @@
 /**
  * Landing page main controller
  *
- * @package   Nova
+ * @package   RiskMan Admin
  * @author    Rolf Bansbach
  * @copyright Copyright 2017 Trxadegroup, Inc.
  */
@@ -10,13 +10,30 @@ define('home',[
     'admin',
     'header',
     'footer',
-    'mainpanel'
+    'mainpanel',
+    'api'
 ], function(admin){
     admin.cp.register('home',[
         '$scope', 
         '$sce', 
-    function ($scope, $sce) {
+        'api',
+        'spinnerService',
+        '$timeout',
+    function ($scope, $sce, api, spinnerService,$timeout) {
         
-        $scope.msg = 'test controller';
+        $scope.config = {
+            last24Loading:true,
+            monthlyLoading:true
+        };
+        var init = function(){
+            $timeout(function(){
+                spinnerService.hide('last24Spinner');
+            }, 2000);
+            
+            $timeout(function(){
+                spinnerService.hide('monthlySpinner');
+            }, 1000);
+        };
+        init();
     }]);
 });
