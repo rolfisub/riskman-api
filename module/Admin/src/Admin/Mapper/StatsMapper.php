@@ -30,9 +30,9 @@ class StatsMapper extends AbstractMapper
     {
         
         return [
-            'api-requests' => $this->getApiRequestsCount(),
-            'api-errors' => $this->getApiErrorsCount(),
-            'server-exceptions' => $this->getApiServerErrorsCount(),
+            'api_requests' => $this->getApiRequestsCount(),
+            'api_errors' => $this->getApiErrorsCount(),
+            'server_exceptions' => $this->getApiServerErrorsCount(),
             'bets' => $this->getApiBetsCount(),
             'suggestions' => 0,
             'admins' => 1,

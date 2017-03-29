@@ -474,7 +474,7 @@ body > .navbar-collapse[data-color="purple"]:after {
   z-index: 2;
   float: right;
   width: calc(100% - 260px);
-  min-height: 100%;
+  min-height: 100vh;
 }
 .main-panel > .content {
   padding: 30px 15px;

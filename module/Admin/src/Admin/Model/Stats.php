@@ -42,35 +42,35 @@ class Stats
     public function getApiGeneralStats()
     {
         return [
-            'general-api-stats' => $this->stats->getApiGeneralStats()
+            'general_api_stats' => $this->stats->getApiGeneralStats()
         ];
     }
     
     public function getBookApiStats()
     {
         return[
-            'book-api-stats' => []
+            'book_api_stats' => []
         ];
     }
     
     public function get24HrsGraphData()
     {
         return[
-            'last24-activity' => []
+            'last24_activity' => []
         ];
     }
     
     public function getMonthlyGraphData()
     {
         return[
-            'monthly-activity' => []
+            'monthly_activity' => []
         ];
     }
     
     public function getUsersStats()
     {
         return[
-            'users-stats' => []
+            'users_stats' => []
         ];
     }
     

@@ -9,7 +9,7 @@ return array(
             'Home' => array(
                 'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/Admin',
+                    'route'    => '/Admin/home',
                     'defaults' => array(
                         'controller' => 'Admin\Controller\IndexController',
                         'action'     => 'index',
@@ -86,7 +86,7 @@ return array(
                 'options' => array(
                     'route'    => '/rest/stats[/:id]',
                     'constraints' => array(
-                        'id'     => '[0-9]+',
+                        'id'     => '[a-zA-Z][a-zA-Z0-9_-]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Admin\Controller\StatsRestController',
