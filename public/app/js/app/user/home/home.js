@@ -30,17 +30,21 @@ define('home',[
             general_api_stats:{}
         };
         var init = function(){
-            
+            getGeneralStats();
+        };
+        
+        var getGeneralStats = function(){
             var rg = api.read('/stats/general_api_stats');
             rg.then(function(response){
                 console.log(response);
                 $scope.data.general_api_stats = response.data.general_api_stats;
                 spinnerService.hide('generalSpinner');  
-            },function(){
+            }, function(){
                 console.log(response);
                 spinnerService.hide('generalSpinner');
             });
         };
+        
         init();
     }]);
 });

@@ -22,6 +22,7 @@ class ModelFactory implements AbstractFactoryInterface
     {
         $objects = array(
             0 => 'Admin\\Model\\Stats',
+            1 => 'Admin\\Model\\Admins',
         );
         return in_array($requestedName, $objects);
     }
@@ -31,8 +32,12 @@ class ModelFactory implements AbstractFactoryInterface
         if (class_exists($requestedName)) {
             switch ($requestedName){
                 case 'Admin\\Model\\Stats':
-                    $statsMapper = $serviceLocator->get('Admin\\Mapper\\StatsMapper');
-                    $o = new $requestedName($statsMapper);
+                    $mapper = $serviceLocator->get('Admin\\Mapper\\StatsMapper');
+                    $o = new $requestedName($mapper);
+                    return $o;
+                case 'Admin\\Model\\Admins':
+                    $mapper = $serviceLocator->get('Admin\\Mapper\\AdminsMapper');
+                    $o = new $requestedName($mapper);
                     return $o;
             }
         }

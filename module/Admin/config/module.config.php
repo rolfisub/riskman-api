@@ -93,6 +93,18 @@ return array(
                     ),
                 ),
             ),
+            'AdminsRest' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/rest/admins[/:id]',
+                    'constraints' => array(
+                        'id'     => '[a-zA-Z][a-zA-Z0-9_-]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Admin\Controller\AdminsRestController',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
