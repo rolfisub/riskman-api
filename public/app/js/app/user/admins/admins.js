@@ -11,13 +11,13 @@ define('admins',[
     'header',
     'footer',
     'mainpanel',
-    'api'
+    'admins/service'
 ], function(admin){
     admin.cp.register('admins',[
         '$scope', 
         '$sce',
-        'api',
-    function ($scope, $sce, api) {
+        'adminsSrv',
+    function ($scope, $sce, adminsSrv) {
         
         $scope.data = [
             {
@@ -30,13 +30,10 @@ define('admins',[
         ];
         
         var init = function() {
-            var r = api.read('/admins');
+            var r = adminsSrv.getAdminsList()
             r.then(function(response){
                 $scope.data = response.data.admins_data;
-                console.log(response);
-            },function(response){
-                console.log(response);
-            });
+            },adminsSrv.errorCallBack);
         };
         
         init();

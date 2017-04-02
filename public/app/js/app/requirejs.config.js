@@ -30,6 +30,7 @@ require.config({
         
         //services:
         'api':'app/shared/services/api/api.service',
+        'admins/service':'app/shared/services/admins/admins',
         
         //user controllers
         'home': 'app/user/home/home',
