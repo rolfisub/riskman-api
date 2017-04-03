@@ -13,6 +13,8 @@ use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Where;
 use Zend\Db\Sql\Expression as SqlExpression;
 
+use Admin\Error\Error400;
+
 /**
  * Description of StatsMapper
  *
@@ -54,6 +56,11 @@ class AdminsMapper extends AbstractMapper
         $result = $this->queryObject($s);
         $data = $result->toArray();
         return $data;
+    }
+    
+    public function createAdmin($data)
+    {
+        throw new Error400("this is a test 400");
     }
     
     

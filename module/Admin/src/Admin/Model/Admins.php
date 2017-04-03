@@ -28,4 +28,9 @@ class Admins
         return $this->mapper->getAdminsData();
     }
     
+    public function createAdmin($data)
+    {
+        return $this->mapper->createAdmin($data);
+    }
+    
 }

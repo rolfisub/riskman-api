@@ -19,7 +19,9 @@ class AdminsRestController extends ProtectedRestfulController
        $this->model = $model;
        parent::__construct($cn);
     }
-    
+    /**
+     * Get a list of the admin data
+     */
     public function getList() 
     {
        return new JsonModel($this->model->getAdminsData());
@@ -42,4 +44,15 @@ class AdminsRestController extends ProtectedRestfulController
 //        }
         return;
     }
+    
+    /**
+     * Creates an admin
+     * @param JsonModel $data
+     */
+    public function create($data)
+    {
+        return new JsonModel($this->model->createAdmin($data));
+    }
+    
+    
 }
