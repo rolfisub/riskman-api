@@ -121,7 +121,7 @@ return array(
             'myAuthStorage' => 'Admin\Auth\AuthStorageFactory',
         ],
         'invokables' => [
-            
+            Admin\Error\ErrorHandlerListener::class => Admin\Error\ErrorHandlerListener::class,
         ]
     ),
     'controllers' => array(
@@ -132,6 +132,9 @@ return array(
             
         ),
     ),
+    'listeners' => [
+       Admin\Error\ErrorHandlerListener::class,
+    ],
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
@@ -152,5 +155,8 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+        'strategies' => [
+            'ViewJsonStrategy',
+        ],
     ),
 );
