@@ -9,6 +9,7 @@
 namespace Admin\Model;
 
 use Admin\Mapper\AdminsMapper;
+use Admin\Entity\Admin;
 /**
  * Description of Admins
  *
@@ -28,9 +29,19 @@ class Admins
         return $this->mapper->getAdminsData();
     }
     
+    /**
+     * creates an admin if valid
+     * @param type $data
+     * @return JsonModel
+     * @throws Error400
+     */
     public function createAdmin($data)
     {
-        return $this->mapper->createAdmin($data);
+        $admin = new Admin($data);
+        if ($admin->isCreateStructValid()) {
+            return $this->mapper->createAdmin($data);
+        }
     }
+    
     
 }

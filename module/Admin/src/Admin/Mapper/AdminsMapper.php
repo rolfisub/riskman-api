@@ -60,8 +60,7 @@ class AdminsMapper extends AbstractMapper
     
     public function createAdmin($data)
     {
-        throw new Error400("this is a test 400");
+        
     }
-    
     
 }
