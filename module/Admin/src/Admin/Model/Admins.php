@@ -38,8 +38,8 @@ class Admins
     public function createAdmin($data)
     {
         $admin = new Admin($data);
-        if ($admin->isCreateStructValid()) {
-            return $this->mapper->createAdmin($data);
+        if ($admin->checkCreateValid()) {
+            return $this->mapper->createAdmin($admin);
         }
     }
     
