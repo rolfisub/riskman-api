@@ -1,9 +1,8 @@
 /**
- * Main angular module for trxade
+ * Main angular module for admin
  *
- * @package   Nova
+ * @package   RiskMan
  * @author    Rolf Bansbach
- * @copyright Copyright 2017 Trxadegroup, Inc.
  */
 
 /*
@@ -16,6 +15,8 @@ define('admin',[
     'ui.bootstrap', 
     'click.outside',
     'angular-spinners',
+    'angular-strap',
+    'angular-strap/tpl'
 ], function(angularAMD){
     //Angular Code Start
     /*
@@ -26,7 +27,8 @@ define('admin',[
         'ngRoute',
         'ui.bootstrap',
         'angular-click-outside',
-        'angularSpinners'
+        'angularSpinners',
+        'mgcrea.ngStrap'
     ]);
 
     /**

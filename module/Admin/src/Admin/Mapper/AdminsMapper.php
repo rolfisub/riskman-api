@@ -139,7 +139,7 @@ class AdminsMapper extends AbstractMapper
         $admin = $this->createAdminInfo($admin);
 
         return [
-            'admin'
+            'admin' => $admin
         ];
     }
     

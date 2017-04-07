@@ -20,10 +20,13 @@ require.config({
         'angularAMD': 'lib/angularAMD/angularAMD.min',
         'angular-animate': 'lib/angular/angular-animate.min',
         'angular-touch': 'lib/angular/angular-touch.min',
+        'angular-sanitize':'lib/angular/angular-sanitize.min',
         'ui.bootstrap': 'lib/bootstrap-3.3.7-dist/js/ui-bootstrap-tpls.min',
         'click.outside': 'lib/angular-click-outside/angular.click.outside',
         'string': 'lib/ng-string/ng-string.min',
         'angular-spinners': 'lib/angular-spinners/angular-spinners',
+        'angular-strap':'lib/angular-strap/dist/angular-strap',
+        'angular-strap/tpl':'lib/angular-strap/dist/angular-strap.tpl',
         
         //main application module
         'admin': 'app/admin',
@@ -31,6 +34,7 @@ require.config({
         //services:
         'api':'app/shared/services/api/api.service',
         'admins/service':'app/shared/services/admins/admins',
+        'adminsCreate/validator' : 'app/shared/services/validators/admins/adminsCreate',
         
         //user controllers
         'home': 'app/user/home/home',
@@ -47,7 +51,7 @@ require.config({
         'footer': 'app/shared/directives/footer/footer',
         'mainpanel': 'app/shared/directives/mainpanel/mainpanel',
         'navbar': 'app/shared/directives/navbar/navbar',
-        'sidebar': 'app/shared/directives/sidebar/sidebar',
+        'sidebar': 'app/shared/directives/sidebar/sidebar'
         
         //admin controllers
         //'admin/hello': 'app/admin/hello/hello',
@@ -60,13 +64,13 @@ require.config({
     //wrapper for compatibility and lib dependencies
     shim: {
         'angular':{
-            exports:'angular',
+            exports:'angular'
         },
         'ngRoute':{
-            deps:['angular'],
+            deps:['angular']
         },
         'angularAMD':{
-            deps:['angular'],
+            deps:['angular']
         },
         'ui.bootstrap':{
             deps:[
@@ -76,22 +80,31 @@ require.config({
             ]
         },
         'angular-touch':{
-            deps:['angular'],
+            deps:['angular']
         },
         'angular-animate':{
-            deps:['angular'],
+            deps:['angular']
         },
         'click.outside': {
-            deps:['angular'],
+            deps:['angular']
         },
         'string':{
             deps:['angular']
         },
         'angular-spinners':{
             deps:['angular']
+        },
+        'angular-sanitize':{
+            deps:['angular']
+        },
+        'angular-strap':{
+            deps:['angular','angular-animate', 'angular-sanitize']
+        },
+        'angular-strap/tpl':{
+            deps:['angular-strap']
         }
         
-    },
+    }
     
 });
 

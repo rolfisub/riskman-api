@@ -10,23 +10,65 @@ define('admins/service',['admin'], function(admin){
     /**
      * API service wrapper to make Ajax calls for Trxade
      */
-    admin.sp.factory('adminsSrv', ['api', function (api) {
+    admin.sp.service('adminsSrv', ['api', function (api) {
         
-        var admins = {
+        /*
+         * data for actions
+         */
+        var admin = {
+            create_data: {
+                username:'',
+                password:'',
+                email:'',
+                firstname:'',
+                lastname:''
+            }
         };
         
+        this.setUserName = function(username) {
+            admin.create_data.username = username;
+        };
+        this.setPassword = function(password) {
+            admin.create_data.password = password;
+        };
+        this.setEmail = function(email) {
+            admin.create_data.email = email;
+        };
+        this.setFirstName = function(firstname) {
+            admin.create_data.firstname = firstname;
+        };
+        this.setLastName = function(lastname) {
+            admin.create_data.lastname = lastname;
+        };
+        
+        this.resetCreateData = function(){
+            admin.create_data = {
+                username:'',
+                password:'',
+                email:'',
+                firstname:'',
+                lastname:''
+            };
+        };
+        
+        
+        this.createAdmin = function()
+        {
+            return api.create('/admins', admin.create_data);
+        };
+        
+        
+        
         //private functions
-        admins.getAdminsList = function()
-        {   
+        this.getAdminsList = function() {   
             return api.read('/admins');
-        }
+        };
         
         
-        admins.errorCallBack = function(response) {
+        this.errorCallBack = function(response) {
             api.errorCallback(response);
         };
         
-        return admins;
 
     }]);
 });
