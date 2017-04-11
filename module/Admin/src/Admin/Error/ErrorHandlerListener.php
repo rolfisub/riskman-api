@@ -21,7 +21,7 @@ class ErrorHandlerListener extends AbstractListenerAggregate
      * @param EventManagerInterface $events Events manager to attach to
      * @param int|null $priority Priority level for the listener
      */
-    public function attach(EventManagerInterface $events, $priority = -200)
+    public function attach(EventManagerInterface $events, $priority = 100)
     {
         $this->listeners[] = $events->attach(MvcEvent::EVENT_DISPATCH_ERROR, $this, $priority);
         $this->listeners[] = $events->attach(MvcEvent::EVENT_RENDER_ERROR, $this, $priority);
@@ -76,6 +76,7 @@ class ErrorHandlerListener extends AbstractListenerAggregate
         $model->setTerminal(true);
         $event->setResult($model);
         $event->setViewModel($model);
+        //$event->stopPropagation(true);
     }
 
     /**
