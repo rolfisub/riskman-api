@@ -77,7 +77,7 @@ define('admins',[
             lastname:{
                 msg:'',
                 valid:true
-            },
+            }
             
         };
         $scope.createForm = {
