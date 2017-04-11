@@ -66,7 +66,9 @@ abstract class AbstractEntity
         foreach($this->create_req_fields as $key => $value) 
         {
             if(!isset($this->data[$value])) {
-                throw new Error400('required field: ' . $value . ' is missing from request');
+                $e = new Error400('required field: ? is missing from request', $value);
+                //var_dump($e);die();
+                throw $e;
             }
         }
         return true;
@@ -82,7 +84,7 @@ abstract class AbstractEntity
         foreach($this->data as $key => $value) 
         {
             if(!$this->isCreateFieldOptField($key) && !$this->isCreateFieldReqField($key)) {
-                throw new Error400('field: ' . $key . ' is not part of this API');
+                throw new Error400('field: ? is not part of this API', $key);
             }
         }
         return true;
