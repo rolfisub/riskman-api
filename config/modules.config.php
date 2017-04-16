@@ -27,5 +27,5 @@ return array(
 //    'DoctrineORMModule',
     'RiskMan',
     'ApiResponse',
-    'Admin',
+    //'Admin',
 );
