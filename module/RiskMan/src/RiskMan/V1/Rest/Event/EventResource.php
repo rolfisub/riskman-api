@@ -2,6 +2,8 @@
 namespace RiskMan\V1\Rest\Event;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use RiskMan\Domain\Feed\Event;
+use ApiResponse\ApiResponse;
 
 class EventResource extends AbstractResourceListener
 {
@@ -17,11 +19,8 @@ class EventResource extends AbstractResourceListener
     
    
     
-    public function __construct($services) 
-    {
-        $de = $services->get('RiskMan\Domain\Feed\Event');
-        $api = $services->get('ApiResponse');
-        
+    public function __construct(Event $de, ApiResponse $api) 
+    {   
         if (null === $this->de) {
             $this->de = $de;
         }
@@ -37,6 +36,7 @@ class EventResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $this->de->setBookId($this->getIdentity()->getRoleId());
         //manual filter, it should be valid already (workaround)
         if(isset($data->datetime)){
            $data->datetime =  date("Y-m-d g:i:s", strtotime($data->datetime));

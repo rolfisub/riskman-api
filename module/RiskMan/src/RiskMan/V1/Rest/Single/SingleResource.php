@@ -4,14 +4,16 @@ namespace RiskMan\V1\Rest\Single;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
+use RiskMan\Domain\Bet\Single;
+use ApiResponse\ApiResponse;
+
 class SingleResource extends AbstractResourceListener
 {
     
     protected $ds;
     
-    public function __construct($s) { 
-        $ds = $s->get('RiskMan\\Domain\\Bet\\Single');
-        $api = $s->get('ApiResponse');
+    public function __construct(Single $ds, ApiResponse $api) { 
+        
         if (null === $this->ds) {
             $this->ds = $ds;
         }
@@ -27,6 +29,7 @@ class SingleResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $this->ds->setBookId($this->getIdentity()->getRoleId());
         $response = $this->ds->create($data);
         return $this->api->sendResponse(
             $response['code'],
