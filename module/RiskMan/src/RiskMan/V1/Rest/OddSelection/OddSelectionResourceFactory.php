@@ -5,6 +5,8 @@ class OddSelectionResourceFactory
 {
     public function __invoke($services)
     {
-        return new OddSelectionResource($services);
+        $dos = $services->get('RiskMan\\Domain\\Feed\\OddSelection');
+        $api = $services->get('ApiResponse');
+        return new OddSelectionResource($dos, $api);
     }
 }

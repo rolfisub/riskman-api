@@ -4,13 +4,16 @@ namespace RiskMan\V1\Rest\Odd;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
+use RiskMan\Domain\Feed\Odd;
+use ApiResponse\ApiResponse;
+
 class OddResource extends AbstractResourceListener
 {
     protected $do;
+    protected $api;
     
-    public function __construct($s) { 
-        $do = $s->get('RiskMan\\Domain\\Feed\\Odd');
-        $api = $s->get('ApiResponse');
+    public function __construct(Odd $do, ApiResponse $api) { 
+        
         if (null === $this->do) {
             $this->do = $do;
         }

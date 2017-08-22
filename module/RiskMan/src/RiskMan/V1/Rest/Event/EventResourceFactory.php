@@ -5,6 +5,8 @@ class EventResourceFactory
 {
     public function __invoke($services)
     {
-        return new EventResource($services);
+        $de = $services->get('RiskMan\Domain\Feed\Event');
+        $api = $services->get('ApiResponse');
+        return new EventResource($services, $de, $api);
     }
 }

@@ -4,13 +4,16 @@ namespace RiskMan\V1\Rest\Multiple;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
+use RiskMan\Domain\Bet\Multiple;
+use ApiResponse\ApiResponse;
+
 class MultipleResource extends AbstractResourceListener
 {
     protected $dm;
     
-    public function __construct($s) { 
-        $dm = $s->get('RiskMan\\Domain\\Bet\\Multiple');
-        $api = $s->get('ApiResponse');
+    protected $api;
+    
+    public function __construct(Multiple $dm, ApiResponse $api) { 
         if (null === $this->dm) {
             $this->dm = $dm;
         }
