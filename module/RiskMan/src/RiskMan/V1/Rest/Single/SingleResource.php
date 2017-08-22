@@ -29,6 +29,7 @@ class SingleResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $this->ds->setBookId($this->getIdentity()->getRoleId());
         $response = $this->ds->create($data);
         return $this->api->sendResponse(
             $response['code'],

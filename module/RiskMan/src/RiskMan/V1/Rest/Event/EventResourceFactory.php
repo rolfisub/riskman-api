@@ -7,6 +7,6 @@ class EventResourceFactory
     {
         $de = $services->get('RiskMan\Domain\Feed\Event');
         $api = $services->get('ApiResponse');
-        return new EventResource($services, $de, $api);
+        return new EventResource($de, $api);
     }
 }
