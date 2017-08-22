@@ -19,7 +19,7 @@ class EventResource extends AbstractResourceListener
     
    
     
-    public function __construct($services, Event $de, ApiResponse $api) 
+    public function __construct(Event $de, ApiResponse $api) 
     {   
         if (null === $this->de) {
             $this->de = $de;
@@ -36,6 +36,7 @@ class EventResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $this->de->setBookId($this->getIdentity()->getRoleId());
         //manual filter, it should be valid already (workaround)
         if(isset($data->datetime)){
            $data->datetime =  date("Y-m-d g:i:s", strtotime($data->datetime));

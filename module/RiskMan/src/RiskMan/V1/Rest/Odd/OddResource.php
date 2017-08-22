@@ -29,6 +29,7 @@ class OddResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $this->do->setBookId($this->getIdentity()->getRoleId());
         //manual filter, it should be valid already (workaround)
         if(isset($data->datetime)){
            $data->datetime =  date("Y-m-d g:i:s", strtotime($data->datetime));

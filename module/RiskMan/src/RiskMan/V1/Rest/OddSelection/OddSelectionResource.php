@@ -30,6 +30,7 @@ class OddSelectionResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $this->dos->setBookId($this->getIdentity()->getRoleId());
         $response = $this->dos->create($data);
         //return response
         return $this->api->sendResponse(

@@ -62,11 +62,17 @@ class Event extends DomainFeedObject
             'datetime'
         ]);
     }
-    
+   
     //POST
     public function create($data)
     {
-        $arr = [];
+        $this->setModelsBookId([
+            $this->e,
+            $this->s,
+            $this->l,
+            $this->r
+        ]);
+        
         $id = $data->event_id;
         $problem = $this->validateFields($data);
         if($problem){

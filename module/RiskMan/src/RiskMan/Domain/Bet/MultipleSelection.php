@@ -93,14 +93,22 @@ class MultipleSelection extends DomainBetObject
     //POST
     public function create($data)
     {
+        $this->setModelsBookId([
+            $this->ms,
+            $this->m,
+            $this->e,
+            $this->o,
+            $this->os
+        ]);
+        
         $id = $data->multiple_selection_id;
         $problem = $this->validateFields($data);
         if($problem){
             return $problem;
         }
-        $problem = $this->validateData($data);
-        if($problem){
-            return $problem;
+        $problem2 = $this->validateData($data);
+        if($problem2){
+            return $problem2;
         }
         $objects = $this->getObjects($data);
         $SqlArr = $this->toSqlArray($data, null, $objects);
