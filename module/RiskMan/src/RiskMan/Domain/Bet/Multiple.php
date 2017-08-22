@@ -102,6 +102,15 @@ class Multiple extends DomainBetObject
     //POST
     public function create($data)
     {
+        $this->setModelsBookId([
+            $this->mm,
+            $this->ms,
+            $this->dms,
+            $this->e,
+            $this->o,
+            $this->os
+        ]);
+        
         $id = $data->multiple_id;
         
         $problem = $this->validateFields($data);
@@ -110,9 +119,9 @@ class Multiple extends DomainBetObject
         }
         
         //check picks data
-        $problem = $this->validateData($data);
-        if($problem){
-            return $problem;
+        $problem2 = $this->validateData($data);
+        if($problem2){
+            return $problem2;
         }
         
         //create multiple object

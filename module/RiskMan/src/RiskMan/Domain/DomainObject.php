@@ -15,6 +15,7 @@ namespace RiskMan\Domain;
  */
 class DomainObject 
 {
+    protected $bookId;
     protected $fields;
     protected $data;
     
@@ -43,12 +44,12 @@ class DomainObject
     public function validateFields($data = null, $fields = null) 
     {
         $problem = [
-            'code' => 422,
-            'type' => 'ValidationError',
-            'title' => 'InvalidData',
-            'details' => 'Field received not found part of this endpoint.',
-            'data' => [
-                'field_name' => ''
+                'code' => 422,
+                'type' => 'ValidationError',
+                'title' => 'InvalidData',
+                'details' => 'Field received not found part of this endpoint.',
+                'data' => [
+                    'field_name' => ''
             ]
         ];
         //if fields not set return invalid
@@ -84,5 +85,23 @@ class DomainObject
         
         //default return  invalid
         return false;
+    }
+    
+    public function setBookId($bookId)
+    {
+        $this->bookId = $bookId;
+        return $this;
+    }
+    
+    public function getBookId()
+    {
+        return $this->bookId;
+    }
+    
+    public function setModelsBookId(array $models)
+    {
+        foreach($models as $model) {
+            $model->setBookId($this->bookId);
+        }
     }
 }

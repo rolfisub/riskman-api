@@ -336,10 +336,6 @@ return array(
                             'max' => '32',
                         ),
                     ),
-//                    1 => array(
-//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-//                        'options' => array(),
-//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -369,10 +365,6 @@ return array(
                             'max' => '32',
                         ),
                     ),
-//                    1 => array(
-//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-//                        'options' => array(),
-//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -412,10 +404,6 @@ return array(
                             'max' => '32',
                         ),
                     ),
-//                    1 => array(
-//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-//                        'options' => array(),
-//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -454,10 +442,6 @@ return array(
                             'max' => '32',
                         ),
                     ),
-//                    1 => array(
-//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-//                        'options' => array(),
-//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -496,10 +480,6 @@ return array(
                             'max' => '32',
                         ),
                     ),
-//                    1 => array(
-//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-//                        'options' => array(),
-//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -539,10 +519,6 @@ return array(
                             'max' => '32',
                         ),
                     ),
-//                    1 => array(
-//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-//                        'options' => array(),
-//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -606,10 +582,6 @@ return array(
                             'max' => '32',
                         ),
                     ),
-//                    1 => array(
-//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-//                        'options' => array(),
-//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -649,10 +621,6 @@ return array(
                             'max' => '32',
                         ),
                     ),
-//                    1 => array(
-//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-//                        'options' => array(),
-//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -697,10 +665,6 @@ return array(
                             'max' => '32',
                         ),
                     ),
-//                    1 => array(
-//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-//                        'options' => array(),
-//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -806,10 +770,6 @@ return array(
                             'max' => '32',
                         ),
                     ),
-//                    1 => array(
-//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-//                        'options' => array(),
-//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -830,10 +790,6 @@ return array(
                             'max' => '32',
                         ),
                     ),
-//                    1 => array(
-//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-//                        'options' => array(),
-//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -853,10 +809,6 @@ return array(
                             'max' => '32',
                         ),
                     ),
-//                    1 => array(
-//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-//                        'options' => array(),
-//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -876,10 +828,6 @@ return array(
                             'max' => '32',
                         ),
                     ),
-//                    1 => array(
-//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-//                        'options' => array(),
-//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -965,10 +913,6 @@ return array(
                             'max' => '32',
                         ),
                     ),
-//                    1 => array(
-//                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-//                        'options' => array(),
-//                    ),
                 ),
                 'filters' => array(
                     0 => array(
@@ -1026,6 +970,90 @@ return array(
                     ),
                 ),
                 'name' => 'picks',
+            ),
+        ),
+    ),
+    'zf-mvc-auth' => array(
+        'authorization' => array(
+            'RiskMan\\V1\\Rest\\Event\\Controller' => array(
+                'collection' => array(
+                    'GET' => true,
+                    'POST' => true,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+                'entity' => array(
+                    'GET' => true,
+                    'POST' => false,
+                    'PUT' => true,
+                    'PATCH' => true,
+                    'DELETE' => false,
+                ),
+            ),
+            'RiskMan\\V1\\Rest\\Multiple\\Controller' => array(
+                'collection' => array(
+                    'GET' => true,
+                    'POST' => true,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+                'entity' => array(
+                    'GET' => true,
+                    'POST' => false,
+                    'PUT' => true,
+                    'PATCH' => true,
+                    'DELETE' => false,
+                ),
+            ),
+            'RiskMan\\V1\\Rest\\Odd\\Controller' => array(
+                'collection' => array(
+                    'GET' => true,
+                    'POST' => true,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+                'entity' => array(
+                    'GET' => true,
+                    'POST' => false,
+                    'PUT' => true,
+                    'PATCH' => true,
+                    'DELETE' => false,
+                ),
+            ),
+            'RiskMan\\V1\\Rest\\OddSelection\\Controller' => array(
+                'collection' => array(
+                    'GET' => true,
+                    'POST' => true,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+                'entity' => array(
+                    'GET' => true,
+                    'POST' => false,
+                    'PUT' => true,
+                    'PATCH' => true,
+                    'DELETE' => true,
+                ),
+            ),
+            'RiskMan\\V1\\Rest\\Single\\Controller' => array(
+                'collection' => array(
+                    'GET' => true,
+                    'POST' => true,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+                'entity' => array(
+                    'GET' => true,
+                    'POST' => false,
+                    'PUT' => true,
+                    'PATCH' => true,
+                    'DELETE' => false,
+                ),
             ),
         ),
     ),

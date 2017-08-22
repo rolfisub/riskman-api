@@ -85,19 +85,26 @@ class Single extends DomainBetObject
     //POST
     public function create($data)
     {
+        $this->setModelsBookId([
+            $this->ms,
+            $this->e,
+            $this->o,
+            $this->os
+        ]);
+        
         $id = $data->single_id;
         $problem = $this->createOtherFeedObjects($data);
         if($problem){
             return $problem;
         }
-        $problem = $this->validateFields($data);
-        if($problem){
-            return $problem;
+        $problem2 = $this->validateFields($data);
+        if($problem2){
+            return $problem2;
         }
         
-        $problem = $this->validateData($data);
-        if($problem){
-            return $problem;
+        $problem3 = $this->validateData($data);
+        if($problem3){
+            return $problem3;
         }
         $objects = $this->getObjects($data);
         $SqlArr = $this->toSqlArray($data, null, $objects);

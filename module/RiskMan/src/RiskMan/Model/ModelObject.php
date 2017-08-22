@@ -26,7 +26,7 @@ class ModelObject
     protected $where;
     protected $book_id;
     
-    public function __construct(Adapter $za, $table, $name, $bookId)
+    public function __construct(Adapter $za, $table, $name)
     {
         if(null === $this->za){   
             $this->za = $za;
@@ -38,15 +38,16 @@ class ModelObject
         if(null === $this->name){
             $this->name = $name;
         }
-        if(null === $this->book_id){
-            $this->book_id = $bookId;
-        }
-        if(null === $this->where){
-            $this->where = [
-                'book_id' => $this->book_id
-            ];
-        }
         $this->sql->setTable($this->table);
+    }
+    
+    public function setBookId($bookId)
+    {
+        $this->book_id = $bookId;
+        $this->where = [
+            'book_id' => $this->book_id
+        ];
+        return $this;
     }
     
     public function create($data)

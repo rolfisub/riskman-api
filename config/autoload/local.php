@@ -12,4 +12,20 @@ return array(
             ),
         ),
     ),
+    'zf-mvc-auth' => array(
+        'authentication' => array(
+            'adapters' => array(
+                'oauth2riskman' => array(
+                    'adapter' => 'ZF\\MvcAuth\\Authentication\\OAuth2Adapter',
+                    'storage' => array(
+                        'adapter' => 'pdo',
+                        'dsn' => 'mysql:host=192.168.1.53;dbname=riskman',
+                        'route' => '/oauth',
+                        'username' => 'oauth2User',
+                        'password' => 'KxTeeZE2kZLoCkBb',
+                    ),
+                ),
+            ),
+        ),
+    ),
 );

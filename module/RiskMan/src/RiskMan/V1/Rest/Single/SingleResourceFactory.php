@@ -5,6 +5,8 @@ class SingleResourceFactory
 {
     public function __invoke($services)
     {
-        return new SingleResource($services);
+        $ds = $services->get('RiskMan\\Domain\\Bet\\Single');
+        $api = $services->get('ApiResponse');
+        return new SingleResource($ds, $api);
     }
 }

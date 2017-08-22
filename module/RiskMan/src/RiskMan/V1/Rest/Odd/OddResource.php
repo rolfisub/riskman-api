@@ -4,13 +4,16 @@ namespace RiskMan\V1\Rest\Odd;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
+use RiskMan\Domain\Feed\Odd;
+use ApiResponse\ApiResponse;
+
 class OddResource extends AbstractResourceListener
 {
     protected $do;
+    protected $api;
     
-    public function __construct($s) { 
-        $do = $s->get('RiskMan\\Domain\\Feed\\Odd');
-        $api = $s->get('ApiResponse');
+    public function __construct(Odd $do, ApiResponse $api) { 
+        
         if (null === $this->do) {
             $this->do = $do;
         }
@@ -26,6 +29,7 @@ class OddResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $this->do->setBookId($this->getIdentity()->getRoleId());
         //manual filter, it should be valid already (workaround)
         if(isset($data->datetime)){
            $data->datetime =  date("Y-m-d g:i:s", strtotime($data->datetime));

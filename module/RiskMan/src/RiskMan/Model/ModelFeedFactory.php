@@ -51,8 +51,7 @@ class ModelFeedFactory extends AbstractFactoryServiceClass implements AbstractFa
         if($thisname == 'multipleselection') {
             $thisname = 'multiple_selection';
         }
-        $book_id = 2;//TODO get the book id from current user (OAUTH2)
-        return new $requestedName($adapter, $table, $thisname, $book_id);
+        return new $requestedName($adapter, $table, $thisname);
     }
     
      
