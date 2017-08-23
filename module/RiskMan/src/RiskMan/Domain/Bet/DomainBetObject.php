@@ -13,6 +13,8 @@ use RiskMan\Domain\Feed\Event;
 use RiskMan\Domain\Feed\Odd;
 use RiskMan\Domain\Feed\OddSelection;
 
+use RiskMan\Domain\Player;
+
 use Zend\ServiceManager\ServiceLocatorInterface as SM;
 
 /**
@@ -41,6 +43,11 @@ class DomainBetObject extends DomainObject
      */
     protected $dos;
     
+    /*
+     * @var RiskMan\Domain\Player
+     */
+    protected $dp;
+    
     /**
      * 
      * @var validationResponse
@@ -52,12 +59,19 @@ class DomainBetObject extends DomainObject
     //create feed objects if necessary
     //optimisation for http requests
     
-    public function __construct(SM $sm, Event $de, Odd $do, OddSelection $dos) 
+    public function __construct(
+        SM $sm,
+        Event $de,
+        Odd $do,
+        OddSelection $dos,
+        Player $dp
+    ) 
     {
         $this->sm = $sm;
         $this->de = $de;
         $this->do = $do;
         $this->dos = $dos;
+        $this->dp = $dp;
         $this->validationResponse = [
             'code' => 422,
             'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',

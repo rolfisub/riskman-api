@@ -37,40 +37,31 @@ class DomainBetFactory implements AbstractFactoryInterface
             $de = $serviceLocator->get('RiskMan\\Domain\\Feed\\Event');
             $do = $serviceLocator->get('RiskMan\\Domain\\Feed\\Odd');
             $dos = $serviceLocator->get('RiskMan\\Domain\\Feed\\OddSelection');
+            $dp = $serviceLocator->get('RiskMan\\Domain\\Player');
+            $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
+            $od = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
+            $os = $serviceLocator->get('RiskMan\\Model\\Feed\\OddSelection');
             switch ($requestedName){
                 case 'RiskMan\\Domain\\Bet\\Single':
                     //echo "creating domain Single\n";
-                    
-                    
-                    //MS $ms, Event $e, Odd $o, OddSelection $os
-                    $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
-                    $o = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
-                    $os = $serviceLocator->get('RiskMan\\Model\\Feed\\OddSelection');
-                    
                     $single  = $serviceLocator->get('RiskMan\\Model\\Bet\\Single');
-                    $player  = $serviceLocator->get('RiskMan\\Domain\\Player');
                     $o = new $requestedName(
                         $serviceLocator,
                         $de,
                         $do,
                         $dos,
+                        $dp,
                         $single, 
                         $e, 
-                        $o, 
-                        $os,
-                        $player
+                        $od, 
+                        $os                        
                     );
                     
                     //echo " ...done\n";
                     return $o;
                 case 'RiskMan\\Domain\\Bet\\Multiple':
                     //echo "creating domain Multiple\n";
-                    
-                    //MS $ms, Event $e, Odd $o, OddSelection $os
-                    $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
-                    $o = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
-                    $os = $serviceLocator->get('RiskMan\\Model\\Feed\\OddSelection');
-                    
+                  
                     $multiple  = $serviceLocator->get('RiskMan\\Model\\Bet\\Multiple');
                     $multipleselection  = $serviceLocator->get('RiskMan\\Model\\Bet\\MultipleSelection');
                     $domainmultipleselection  = $serviceLocator->get('RiskMan\\Domain\\Bet\\MultipleSelection');
@@ -79,23 +70,18 @@ class DomainBetFactory implements AbstractFactoryInterface
                         $de,
                         $do,
                         $dos,
+                        $dp,
                         $multiple, 
                         $multipleselection, 
                         $domainmultipleselection, 
                         $e, 
-                        $o, 
+                        $od, 
                         $os
                     );
                     //echo " ...done\n";
                     return $o;
                 case 'RiskMan\\Domain\\Bet\\MultipleSelection':
                     //echo "creating domain MultipleSelection\n";
-                    
-                    //MS $ms, Event $e, Odd $o, OddSelection $os
-                    $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
-                    $o = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
-                    $os = $serviceLocator->get('RiskMan\\Model\\Feed\\OddSelection');
-                    
                     $multiple  = $serviceLocator->get('RiskMan\\Model\\Bet\\Multiple');
                     $multipleselection  = $serviceLocator->get('RiskMan\\Model\\Bet\\MultipleSelection');
                     
@@ -104,10 +90,11 @@ class DomainBetFactory implements AbstractFactoryInterface
                         $de,
                         $do,
                         $dos,
+                        $dp,
                         $multipleselection, 
                         $multiple, 
                         $e, 
-                        $o, 
+                        $od, 
                         $os
                     );
                     //echo " ...done\n";

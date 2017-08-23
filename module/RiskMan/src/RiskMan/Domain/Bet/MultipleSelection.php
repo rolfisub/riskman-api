@@ -19,6 +19,7 @@ use RiskMan\Model\Feed\OddSelection;
 use RiskMan\Domain\Feed\Event as DEvent;
 use RiskMan\Domain\Feed\Odd as DOdd;
 use RiskMan\Domain\Feed\OddSelection as DOSelection;
+use RiskMan\Domain\Player as DP;
 
 use Zend\ServiceManager\ServiceLocatorInterface as SM;
 
@@ -63,6 +64,7 @@ class MultipleSelection extends DomainBetObject
         DEvent $de,
         DOdd $do,
         DOSelection $dos,
+        DP $dp,
         MS $ms, 
         M $m, 
         Event $e, 
@@ -70,7 +72,7 @@ class MultipleSelection extends DomainBetObject
         OddSelection $os
     ) 
     {
-        parent::__construct($sm, $de, $do, $dos);   
+        parent::__construct($sm, $de, $do, $dos, $dp);   
         $this->ms = $ms;
         $this->m = $m;
         $this->e = $e;

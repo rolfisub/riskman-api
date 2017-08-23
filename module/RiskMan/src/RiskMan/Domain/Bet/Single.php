@@ -36,11 +36,6 @@ class Single extends DomainBetObject
     protected $ms;
     
     /*
-     * @var RiskMan\Domain\Bet\Player
-     */
-    protected $dp;
-    
-    /*
      * @var RiskMan\Model\Feed\Event
      */
     protected $e;
@@ -63,16 +58,15 @@ class Single extends DomainBetObject
         DEvent $de,
         DOdd $do,
         DOSelection $dos,
+        DP $dp,
         MS $ms, 
         Event $e, 
         Odd $o, 
-        OddSelection $os,
-        DP $dp    
+        OddSelection $os
     ) 
     {
-        parent::__construct($sm, $de, $do, $dos);
+        parent::__construct($sm, $de, $do, $dos, $dp);
         $this->ms = $ms;
-        $this->dp = $dp;
         $this->e = $e;
         $this->o = $o;
         $this->os = $os;
