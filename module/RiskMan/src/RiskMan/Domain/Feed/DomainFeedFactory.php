@@ -24,9 +24,7 @@ class DomainFeedFactory implements AbstractFactoryInterface
         $objects = array(
             0 => 'RiskMan\\Domain\\Feed\\Event',
             1 => 'RiskMan\\Domain\\Feed\\Odd',
-            2 => 'RiskMan\\Domain\\Feed\\OddSelection',
-            
-            
+            2 => 'RiskMan\\Domain\\Feed\\OddSelection'
         );
         return in_array($requestedName, $objects);
     }

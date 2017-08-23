@@ -96,6 +96,7 @@ class Multiple extends DomainBetObject
             'risk',
             'win',
             'picks',
+            'player_id'
         ]);
     }
     

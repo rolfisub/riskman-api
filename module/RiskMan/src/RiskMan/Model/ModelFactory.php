@@ -16,7 +16,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  *
  * @author rolf
  */
-class ModelFeedFactory extends AbstractFactoryServiceClass implements AbstractFactoryInterface 
+class ModelFactory extends AbstractFactoryServiceClass implements AbstractFactoryInterface 
 {
     public function __construct() 
     {
@@ -30,6 +30,7 @@ class ModelFeedFactory extends AbstractFactoryServiceClass implements AbstractFa
             6 => 'RiskMan\Model\Bet\Single',
             7 => 'RiskMan\Model\Bet\Multiple',
             8 => 'RiskMan\Model\Bet\MultipleSelection',
+            9 => 'RiskMan\Model\Player',
         );
         parent::__construct($objects);
     }

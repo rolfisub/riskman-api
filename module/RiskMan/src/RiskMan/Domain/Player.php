@@ -6,90 +6,34 @@
  * and open the template in the editor.
  */
 
-namespace RiskMan\Domain\Bet;
-use RiskMan\Domain\Bet\DomainBetObject;
-use RiskMan\Model\Bet\Single as MS;
+namespace RiskMan\Domain;
 
-
-use RiskMan\Model\Feed\Event;
-use RiskMan\Model\Feed\Odd;
-use RiskMan\Model\Feed\OddSelection;
-
-use RiskMan\Domain\Feed\Event as DEvent;
-use RiskMan\Domain\Feed\Odd as DOdd;
-use RiskMan\Domain\Feed\OddSelection as DOSelection;
-use RiskMan\Domain\Player as DP;
-
-use Zend\ServiceManager\ServiceLocatorInterface as SM;
-
+use RiskMan\Domain\DomainObject;
+use RiskMan\Model\Player as MP;
 
 /**
  * Description of Event
  *
  * @author rolf
  */
-class Single extends DomainBetObject
+class Player extends DomainObject
 {
     /*
-     * @var RiskMan\Model\Bet\Single
+     * @var RiskMan\Model\Bet\Player
      */
-    protected $ms;
+    protected $mp;
     
-    /*
-     * @var RiskMan\Domain\Bet\Player
-     */
-    protected $dp;
-    
-    /*
-     * @var RiskMan\Model\Feed\Event
-     */
-    protected $e;
-    
-    /*
-     * @var RiskMan\Model\Feed\Odd
-     */
-    protected $o;
-    
-    /*
-     * @var RiskMan\Model\Feed\OddSelection
-     */
-    protected $os;
-
     /*
      * constructor TODO: Annotations
      */
     public function __construct(
-        SM $sm,
-        DEvent $de,
-        DOdd $do,
-        DOSelection $dos,
-        MS $ms, 
-        Event $e, 
-        Odd $o, 
-        OddSelection $os,
-        DP $dp    
+        MP $mp
     ) 
     {
-        parent::__construct($sm, $de, $do, $dos);
-        $this->ms = $ms;
-        $this->dp = $dp;
-        $this->e = $e;
-        $this->o = $o;
-        $this->os = $os;
+        $this->mp = $mp;
         $this->setFields([
-            'single_id',
-            'event_id',
-            'event_data',
-            'odd_id',
-            'odd_data',
-            'odd_selection_id',
-            'odd_selection_data',
-            'risk',
-            'win',
-            'odd',
-            'points',
             'player_id',
-            'player_data'
+            'name'
         ]);
     }
     
@@ -97,17 +41,11 @@ class Single extends DomainBetObject
     public function create($data)
     {
         $this->setModelsBookId([
-            $this->ms,
-            $this->e,
-            $this->o,
-            $this->os
+            $this->mp
         ]);
         
-        $id = $data->single_id;
-        $problem = $this->createOtherFeedObjects($data);
-        if($problem){
-            return $problem;
-        }
+        $id = $data->player_id;
+        
         $problem2 = $this->validateFields($data);
         if($problem2){
             return $problem2;
@@ -239,10 +177,10 @@ class Single extends DomainBetObject
         if ($data->win) {
             $arr['win'] = $data->win;
         }
-//        if ($data->player_id) {
-//            $arr['player_id'] = $data->player_id;
-//        }
-//        
+        if ($data->player_id) {
+            $arr['player_id'] = $data->player_id;
+        }
+        
         if (is_array($other)){
             $arr = array_merge($arr, $other);
         }

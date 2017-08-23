@@ -53,7 +53,9 @@ class DomainObject
             ]
         ];
         //if fields not set return invalid
-        $this->setFields($fields);
+        if($fields !== null && is_array($fields)) {
+            $this->setFields($fields);
+        }
         if (null === $this->fields) {
             $problem['details'] = 'Error';
             $problem['data']['error'] = 'Fields not set, Please contact Support';

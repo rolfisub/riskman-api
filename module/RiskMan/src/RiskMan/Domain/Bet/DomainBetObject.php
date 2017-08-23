@@ -120,6 +120,12 @@ class DomainBetObject extends DomainObject
             }
         }
         
+        
+        //player data
+        if(isset($data['player_data'])) {
+            
+        }
+        
         return false;
     }
     
