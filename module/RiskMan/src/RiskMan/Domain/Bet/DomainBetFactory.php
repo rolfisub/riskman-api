@@ -78,7 +78,8 @@ class DomainBetFactory implements AbstractFactoryInterface
                         $domainmultipleselection, 
                         $e, 
                         $od, 
-                        $os
+                        $os,
+                        $p
                     );
                     //echo " ...done\n";
                     return $o;

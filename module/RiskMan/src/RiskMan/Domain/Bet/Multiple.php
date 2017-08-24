@@ -18,6 +18,7 @@ use RiskMan\Model\Bet\MultipleSelection as MS;
 use RiskMan\Model\Feed\Event;
 use RiskMan\Model\Feed\Odd;
 use RiskMan\Model\Feed\OddSelection;
+use RiskMan\Model\Player;
 
 use RiskMan\Domain\Feed\Event as DEvent;
 use RiskMan\Domain\Feed\Odd as DOdd;
@@ -68,6 +69,11 @@ class Multiple extends DomainBetObject
      * @var RiskMan\Model\Feed\OddSelection
      */
     protected $os;
+    
+    /*
+     * @var RiskMan\Model\Player
+     */
+    protected $p;
 
     /*
      * constructor TODO: Annotations
@@ -83,7 +89,8 @@ class Multiple extends DomainBetObject
         DMS $dms, 
         Event $e, 
         Odd $o, 
-        OddSelection $os
+        OddSelection $os,
+        Player $p
     ) 
     {
         parent::__construct($sm, $de, $do, $dos, $dp);
@@ -93,12 +100,14 @@ class Multiple extends DomainBetObject
         $this->e = $e;
         $this->o = $o;
         $this->os = $os;
+        $this->p = $p;
         $this->setFields([
             'multiple_id',
             'risk',
             'win',
             'picks',
-            'player_id'
+            'player_id',
+            'player_data'
         ]);
     }
     
@@ -111,10 +120,16 @@ class Multiple extends DomainBetObject
             $this->dms,
             $this->e,
             $this->o,
-            $this->os
+            $this->os,
+            $this->p
         ]);
         
         $id = $data->multiple_id;
+        
+        $problem4 = $this->createPlayerObject($data, $this->getBookId());
+        if($problem4['code'] !== 200){
+            return $problem4;
+        }
         
         $problem = $this->validateFields($data);
         if($problem){
@@ -128,6 +143,7 @@ class Multiple extends DomainBetObject
         }
         
         //create multiple object
+        $objects = $this->getObjects($data);
         $SqlArr = $this->toSqlArray($data, null, $objects);
         $ms = $this->mm->read($id);
         if ($ms){
@@ -161,11 +177,18 @@ class Multiple extends DomainBetObject
             'type' => 'OK',
             'title' => 'Success',
             'details' => "Multiple succesfully created or updated.",
-            'data' => $this->returnOddArray($msnew)
+            'data' => $this->returnOddArray($msnew, $objects)
         ];
     }
     
-    
+     private function getObjects($data) 
+    {
+        $p = $this->p->read($this->dp->getPlayerId($data));
+        $objects = [
+            'p' => $p
+        ];
+        return $objects;
+    }
     
     private function validateData($data)
     {   
@@ -201,7 +224,6 @@ class Multiple extends DomainBetObject
                     'title' => 'Odd Selection Not Found',
                     'details'=> "odd_selection_id = " . $pick['odd_selection_id'] . " not found, unable to create create multiple = " . $data->multiple_id,
                     'data' => (array)$data
-
                 ];
             }
         }
@@ -213,6 +235,12 @@ class Multiple extends DomainBetObject
 
     private function toSqlArray ($data, $other = false, $objects = null) 
     {   
+        $p = null;
+        if($objects){
+            $p = $objects['p'];
+        } else {
+            die('objects required for this operation');
+        }
         
         $arr = [];
         if ($data->multiple_id){
@@ -224,13 +252,16 @@ class Multiple extends DomainBetObject
         if ($data->win) {
             $arr['win'] = $data->win;
         }
+        if ($data->player_id || $data->player_data['player_id']) {
+            $arr['player_id'] = $p['id'];
+        }
         if (is_array($other)){
             $arr = array_merge($arr, $other);
         }
         return $arr;
     }
     
-    private function returnOddArray($ms)
+    private function returnOddArray($ms, $o)
     {
         if($ms){
             $a = $ms;
@@ -241,6 +272,11 @@ class Multiple extends DomainBetObject
             if(isset($a['book_id'])) {
                 unset($a['book_id']);
             }
+            if(isset($a['player_id'])){
+                unset($a['player_id']);
+            }
+            
+            $a['player_id'] = $o['p']['player_id'];
             
             return $a;
         }
