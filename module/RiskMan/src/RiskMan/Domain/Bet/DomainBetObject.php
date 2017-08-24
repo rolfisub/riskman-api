@@ -81,6 +81,11 @@ class DomainBetObject extends DomainObject
         ];
     }
     
+    public function createPlayerObject($data, $bookId)
+    {
+        return $this->dp->create($data, $bookId);
+    }
+    
     public function createOtherFeedObjects($data)
     {
         

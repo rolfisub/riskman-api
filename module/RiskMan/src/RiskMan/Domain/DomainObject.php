@@ -100,10 +100,16 @@ class DomainObject
         return $this->bookId;
     }
     
-    public function setModelsBookId(array $models)
+    public function setModelsBookId(array $models, $bookId = null)
     {
-        foreach($models as $model) {
-            $model->setBookId($this->bookId);
+        if($bookId === null) {
+            foreach($models as $model) {
+                $model->setBookId($this->bookId);
+            }
+        } else {
+            foreach($models as $model) {
+                $model->setBookId($bookId);
+            }
         }
     }
 }

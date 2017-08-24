@@ -14,6 +14,7 @@ use RiskMan\Model\Bet\Single as MS;
 use RiskMan\Model\Feed\Event;
 use RiskMan\Model\Feed\Odd;
 use RiskMan\Model\Feed\OddSelection;
+use RiskMan\Model\Player;
 
 use RiskMan\Domain\Feed\Event as DEvent;
 use RiskMan\Domain\Feed\Odd as DOdd;
@@ -49,6 +50,11 @@ class Single extends DomainBetObject
      * @var RiskMan\Model\Feed\OddSelection
      */
     protected $os;
+    
+    /*
+     * @var RiskMan\Model\Player
+     */
+    protected $p;
 
     /*
      * constructor TODO: Annotations
@@ -62,7 +68,8 @@ class Single extends DomainBetObject
         MS $ms, 
         Event $e, 
         Odd $o, 
-        OddSelection $os
+        OddSelection $os,
+        Player $p
     ) 
     {
         parent::__construct($sm, $de, $do, $dos, $dp);
@@ -70,6 +77,7 @@ class Single extends DomainBetObject
         $this->e = $e;
         $this->o = $o;
         $this->os = $os;
+        $this->p = $p;
         $this->setFields([
             'single_id',
             'event_id',
@@ -94,7 +102,8 @@ class Single extends DomainBetObject
             $this->ms,
             $this->e,
             $this->o,
-            $this->os
+            $this->os,
+            $this->p
         ]);
         
         $id = $data->single_id;
@@ -102,6 +111,12 @@ class Single extends DomainBetObject
         if($problem){
             return $problem;
         }
+        
+        $problem4 = $this->createPlayerObject($data, $this->getBookId());
+        if($problem4['code'] !== 200){
+            return $problem4;
+        }
+        
         $problem2 = $this->validateFields($data);
         if($problem2){
             return $problem2;
@@ -188,10 +203,12 @@ class Single extends DomainBetObject
         $e = $this->e->read($data->event_id);
         $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
         $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id'], 'event_id' => $e['id']]);
+        $p = $this->p->read($this->dp->getPlayerId($data));
         $objects = [
             'e' => $e,
             'o' => $o,
-            'os' => $os
+            'os' => $os,
+            'p' => $p
         ];
         return $objects;
     }
@@ -201,10 +218,12 @@ class Single extends DomainBetObject
         $e = null;
         $o = null;
         $os = null;
+        $p = null;
         if($objects){
             $e = $objects['e'];
             $o = $objects['o'];
             $os = $objects['os'];
+            $p = $objects['p'];
         } else {
             die('objects required for this operation');
         }
@@ -233,10 +252,10 @@ class Single extends DomainBetObject
         if ($data->win) {
             $arr['win'] = $data->win;
         }
-//        if ($data->player_id) {
-//            $arr['player_id'] = $data->player_id;
-//        }
-//        
+        if ($data->player_id || $data->player_data['player_id']) {
+            $arr['player_id'] = $p['id'];
+        }      
+        
         if (is_array($other)){
             $arr = array_merge($arr, $other);
         }
@@ -263,11 +282,15 @@ class Single extends DomainBetObject
             if(isset($a['odd_selection_id'])){
                 unset($a['odd_selection_id']);
             }
+            if(isset($a['player_id'])){
+                unset($a['player_id']);
+            }
             
             $a['event_id'] = $o['e']['event_id'];
             $a['event_name'] = $o['e']['name'];
             $a['odd_id'] = $o['o']['odd_id'];
             $a['odd_selection_id'] = $o['os']['odd_selection_id'];
+            $a['player_id'] = $o['p']['player_id'];
             
             return $a;
         }

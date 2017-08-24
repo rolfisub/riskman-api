@@ -37,33 +37,52 @@ class Player extends DomainObject
         ]);
     }
     
+    public function getPlayerId($data)
+    {
+        $id = null;
+        if (isset($data->player_data['player_id'])) {
+            $id = $data->player_data['player_id'];
+        } else if(isset($data->player_id)) {
+            $id = $data->player_id;
+        }
+        return $id;
+    }
+    
     //POST
-    public function create($data)
+    public function create($data, $bookId)
     {
         $this->setModelsBookId([
             $this->mp
-        ]);
+        ], $bookId);
+        $player_data = [];
         
-        $id = $data->player_id;
+        $id = $this->getPlayerId($data);
+        $player_data['player_id'] = $id;
         
-        $problem2 = $this->validateFields($data);
+        if(isset($data->player_data)) {
+            $player_data = array_merge($player_data, $data->player_data);
+        }
+        
+        $problem2 = $this->validateFields($player_data);
         if($problem2){
             return $problem2;
         }
         
-        $problem3 = $this->validateData($data);
+        $problem3 = $this->validateData($player_data);
         if($problem3){
             return $problem3;
         }
         
-        $SqlArr = $this->toSqlArray($data);
+        //when we add additional fields this needs to change
+        $SqlArr = $player_data;
+        
         $ms = $this->mp->read($id);
         if ($ms){
             //update odd
-            $this->ms->update($id, $SqlArr);
+            $this->mp->update($id, $SqlArr);
         } else {
             //create odd
-            $this->ms->create($SqlArr);
+            $this->mp->create($SqlArr);
         }
         $msnew = $this->mp->read($id);
         
@@ -80,28 +99,28 @@ class Player extends DomainObject
     
     private function validateData($data)
     {
+        $problem = [
+            'code' => 422,
+            'type' => 'ValidationError',
+            'title' => 'InvalidData',
+            'details' => '',
+            'data' => []
+        ];
         
-        if(isset($data['player_data'])) {
-            $data = $data['player_data'];
+        
+        //minimum requirement for player creation
+        if(!isset($data['player_id'])) {
+            $problem['details'] = 'Unable to create player, player_id missing.';
+            return $problem;
         }
-
+        
+        //cannot be empty either
+        if(empty($data['player_id'])) {
+            $problem['details'] = 'Unable to create player, player_id is empty';
+            return $problem;
+        }
+       
         return false;
-    }
-
-    private function toSqlArray ($data, $other = false) 
-    {   
-        $arr = [];
-        if ($data->player_id){
-            $arr['player_id'] = $data->player_id;
-        }
-        if ($data->name){
-            $arr['name'] = $data->name;
-        }
-        
-        if (is_array($other)){
-            $arr = array_merge($arr, $other);
-        }
-        return $arr;
     }
     
     private function returnArray($dp)

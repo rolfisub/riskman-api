@@ -41,6 +41,7 @@ class DomainBetFactory implements AbstractFactoryInterface
             $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
             $od = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
             $os = $serviceLocator->get('RiskMan\\Model\\Feed\\OddSelection');
+            $p = $serviceLocator->get('RiskMan\\Model\\Player');
             switch ($requestedName){
                 case 'RiskMan\\Domain\\Bet\\Single':
                     //echo "creating domain Single\n";
@@ -54,7 +55,8 @@ class DomainBetFactory implements AbstractFactoryInterface
                         $single, 
                         $e, 
                         $od, 
-                        $os                        
+                        $os,
+                        $p
                     );
                     
                     //echo " ...done\n";
