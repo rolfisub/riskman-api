@@ -12,6 +12,7 @@ return array(
             'RiskMan\\V1\\Rest\\Event\\EventResource' => 'RiskMan\\V1\\Rest\\Event\\EventResourceFactory',
             'RiskMan\\V1\\Rest\\Odd\\OddResource' => 'RiskMan\\V1\\Rest\\Odd\\OddResourceFactory',
             'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResource' => 'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResourceFactory',
+            'RiskMan\\V1\\Rest\\BetRadar\\BetRadarResource' => 'RiskMan\\V1\\Rest\\BetRadar\\BetRadarResourceFactory',
         ),
         'abstract_factories' => array(
             0 => 'RiskMan\\Domain\\Feed\\DomainFeedFactory',
@@ -66,6 +67,15 @@ return array(
                     ),
                 ),
             ),
+            'risk-man.rest.bet-radar' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/feed/bet-radar[/:bet_radar_id]',
+                    'defaults' => array(
+                        'controller' => 'RiskMan\\V1\\Rest\\BetRadar\\Controller',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
@@ -75,6 +85,7 @@ return array(
             2 => 'risk-man.rest.event',
             3 => 'risk-man.rest.odd',
             4 => 'risk-man.rest.odd-selection',
+            5 => 'risk-man.rest.bet-radar',
         ),
     ),
     'zf-rest' => array(
@@ -184,6 +195,22 @@ return array(
             'collection_class' => 'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionCollection',
             'service_name' => 'OddSelection',
         ),
+        'RiskMan\\V1\\Rest\\BetRadar\\Controller' => array(
+            'listener' => 'RiskMan\\V1\\Rest\\BetRadar\\BetRadarResource',
+            'route_name' => 'risk-man.rest.bet-radar',
+            'route_identifier_name' => 'bet_radar_id',
+            'collection_name' => 'bet_radar',
+            'entity_http_methods' => array(),
+            'collection_http_methods' => array(
+                0 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'RiskMan\\V1\\Rest\\BetRadar\\BetRadarEntity',
+            'collection_class' => 'RiskMan\\V1\\Rest\\BetRadar\\BetRadarCollection',
+            'service_name' => 'BetRadar',
+        ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
@@ -192,6 +219,7 @@ return array(
             'RiskMan\\V1\\Rest\\Event\\Controller' => 'HalJson',
             'RiskMan\\V1\\Rest\\Odd\\Controller' => 'HalJson',
             'RiskMan\\V1\\Rest\\OddSelection\\Controller' => 'HalJson',
+            'RiskMan\\V1\\Rest\\BetRadar\\Controller' => 'HalJson',
         ),
         'accept_whitelist' => array(
             'RiskMan\\V1\\Rest\\Single\\Controller' => array(
@@ -219,6 +247,11 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+            'RiskMan\\V1\\Rest\\BetRadar\\Controller' => array(
+                0 => 'application/vnd.risk-man.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
         ),
         'content_type_whitelist' => array(
             'RiskMan\\V1\\Rest\\Single\\Controller' => array(
@@ -238,6 +271,10 @@ return array(
                 1 => 'application/json',
             ),
             'RiskMan\\V1\\Rest\\OddSelection\\Controller' => array(
+                0 => 'application/vnd.risk-man.v1+json',
+                1 => 'application/json',
+            ),
+            'RiskMan\\V1\\Rest\\BetRadar\\Controller' => array(
                 0 => 'application/vnd.risk-man.v1+json',
                 1 => 'application/json',
             ),
@@ -305,6 +342,18 @@ return array(
                 'route_identifier_name' => 'odd_selection_id',
                 'is_collection' => true,
             ),
+            'RiskMan\\V1\\Rest\\BetRadar\\BetRadarEntity' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'risk-man.rest.bet-radar',
+                'route_identifier_name' => 'bet_radar_id',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
+            ),
+            'RiskMan\\V1\\Rest\\BetRadar\\BetRadarCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'risk-man.rest.bet-radar',
+                'route_identifier_name' => 'bet_radar_id',
+                'is_collection' => true,
+            ),
         ),
     ),
     'zf-content-validation' => array(
@@ -322,6 +371,9 @@ return array(
         ),
         'RiskMan\\V1\\Rest\\Multiple\\Controller' => array(
             'input_filter' => 'RiskMan\\V1\\Rest\\Multiple\\Validator',
+        ),
+        'RiskMan\\V1\\Rest\\BetRadar\\Controller' => array(
+            'input_filter' => 'RiskMan\\V1\\Rest\\BetRadar\\Validator',
         ),
     ),
     'input_filter_specs' => array(
@@ -972,6 +1024,28 @@ return array(
                 'name' => 'picks',
             ),
         ),
+        'RiskMan\\V1\\Rest\\BetRadar\\Validator' => array(
+            0 => array(
+                'required' => true,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'data',
+            ),
+            1 => array(
+                'required' => false,
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '1',
+                            'max' => '32',
+                        ),
+                    ),
+                ),
+                'filters' => array(),
+                'name' => 'msg_id',
+            ),
+        ),
     ),
     'zf-mvc-auth' => array(
         'authorization' => array(
@@ -1052,6 +1126,22 @@ return array(
                     'POST' => false,
                     'PUT' => true,
                     'PATCH' => true,
+                    'DELETE' => false,
+                ),
+            ),
+            'RiskMan\\V1\\Rest\\BetRadar\\Controller' => array(
+                'collection' => array(
+                    'GET' => false,
+                    'POST' => true,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+                'entity' => array(
+                    'GET' => false,
+                    'POST' => false,
+                    'PUT' => false,
+                    'PATCH' => false,
                     'DELETE' => false,
                 ),
             ),
