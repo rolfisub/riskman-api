@@ -18,6 +18,8 @@ return array(
             0 => 'RiskMan\\Domain\\Feed\\DomainFeedFactory',
             1 => 'RiskMan\\Domain\\Bet\\DomainBetFactory',
             2 => 'RiskMan\\Model\\ModelFeedFactory',
+            3 => 'RiskMan\\BetRadar\\BetRadarFactory',
+            4 => 'RiskMan\\BetRadar\\Mapper\\BetRadarMsgFactory',
         ),
     ),
     'router' => array(
@@ -1027,7 +1029,12 @@ return array(
         'RiskMan\\V1\\Rest\\BetRadar\\Validator' => array(
             0 => array(
                 'required' => true,
-                'validators' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'RiskMan\\Validator\\ValidateXMLMsg',
+                        'options' => array(),
+                    ),
+                ),
                 'filters' => array(),
                 'name' => 'data',
             ),
