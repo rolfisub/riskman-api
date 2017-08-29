@@ -1,11 +1,20 @@
 <?php
 namespace RiskMan\V1\Rest\BetRadar;
 
+use RiskMan\BetRadar\BetRadar;
+use RiskMan\BetRadar\BetRadarMsg;
+
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
 class BetRadarResource extends AbstractResourceListener
 {
+    
+    protected $betRadar;
+    
+    public function __construct(BetRadar $model) {
+        $this->betRadar = $model;
+    }
     /**
      * Create a resource
      *
@@ -14,6 +23,8 @@ class BetRadarResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $betradarmsg = new BetRadarMsg($data);
+        $this->betRadar->createMsg($betradarmsg);
         return new ApiProblem(405, 'The POST method has not been defined');
     }
 
