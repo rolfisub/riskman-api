@@ -3,6 +3,7 @@ namespace RiskMan\V1\Rest\BetRadar;
 
 use RiskMan\BetRadar\BetRadar;
 use RiskMan\BetRadar\BetRadarMsg;
+use ApiResponse\ApiResponse;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
@@ -11,9 +12,11 @@ class BetRadarResource extends AbstractResourceListener
 {
     
     protected $betRadar;
+    protected $api;
     
-    public function __construct(BetRadar $model) {
+    public function __construct(BetRadar $model, ApiResponse $api) {
         $this->betRadar = $model;
+        $this->api = $api;
     }
     /**
      * Create a resource
@@ -23,9 +26,16 @@ class BetRadarResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $betradarmsg = new BetRadarMsg($data);
-        $this->betRadar->createMsg($betradarmsg);
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $bookId = $this->getIdentity()->getRoleId();
+        $betradarmsg = new BetRadarMsg($data, $bookId);
+        $response = $this->betRadar->createMsg($betradarmsg, $bookId);
+        return $this->api->sendResponse(
+            $response['status'], 
+            $response['detail'], 
+            $response['type'], 
+            $response['title'], 
+            $response['additional']
+        );
     }
 
     /**

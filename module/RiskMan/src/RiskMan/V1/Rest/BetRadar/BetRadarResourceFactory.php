@@ -9,6 +9,7 @@ class BetRadarResourceFactory
     {
         
         $betRadar = $services->get('RiskMan\\BetRadar\\BetRadar');
-        return new BetRadarResource($betRadar);
+        $api = $services->get('ApiResponse');
+        return new BetRadarResource($betRadar, $api);
     }
 }
