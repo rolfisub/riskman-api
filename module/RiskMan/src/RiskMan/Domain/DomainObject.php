@@ -31,12 +31,12 @@ class DomainObject
     public function validateFields($data = null, $fields = null) 
     {
         $problem = [
-                'code' => 422,
-                'type' => 'ValidationError',
-                'title' => 'InvalidData',
-                'details' => 'Field received not found part of this endpoint.',
-                'data' => [
-                    'field_name' => ''
+            'code' => 422,
+            'type' => 'ValidationError',
+            'title' => 'InvalidData',
+            'details' => 'Field received not found part of this endpoint.',
+            'data' => [
+                'field_name' => ''
             ]
         ];
         //if fields not set return invalid

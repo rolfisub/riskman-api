@@ -40,6 +40,57 @@ class RadarMsgParser
     }
     
     /**
+     * Returns array of event odds selections
+     * @return array
+     */
+    public function getOddSelections() 
+    {
+        if($this->m === null) {
+            return false;
+        }
+        $oddsReturn = [];
+        $oddsData = [
+            'odd_selection_id' => '',
+            'odd_selection_name' => '',
+            'odd_id' => '',
+            'event_id' => '',
+            'points' => null,
+            'odd' => ''
+        ];
+        $xml = $this->m->xml;
+        $sports = $xml->Sports;
+        foreach($sports->Sport as $key1 => $sport) {
+            $this->getLangKey($sport->Texts);
+            $categories = $sport->Category;
+            foreach($categories as $key2 => $category) {
+                $leagues = $category->Tournament;
+                foreach($leagues as $key3 => $league) {
+                    $events = $league->Match;
+                    foreach($events as $key4 => $event) {
+                        $oddsData['event_id'] = (string)$event['BetradarMatchID'];
+                        $odds = $event->MatchOdds->Bet;
+                        foreach($odds as $key5 => $bet) {
+                            $oddsData['odd_id'] = $oddsData['event_id'] . '.' . $bet['OddsType'];
+                            $odds = $bet->Odds;
+                            foreach($odds as $key6 => $odd){
+                                $oddsData['odd_selection_id'] = (string) $odd['OutComeId'];
+                                $oddsData['odd_selection_name'] = (string) $odd['OutCome'];
+                                if(isset($odd['SpecialBetValue'])){
+                                    $oddsData['points'] = (int) $odd['SpecialBetValue'];
+                                }
+                                $oddsData['odd'] = (double) $odd;
+                                $oddsReturn[] = $oddsData;
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+        return $oddsReturn;
+    }
+    
+    /**
      * Returns array of event odds
      * @return array
      */
