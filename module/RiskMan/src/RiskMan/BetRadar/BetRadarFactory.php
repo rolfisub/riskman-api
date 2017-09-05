@@ -42,11 +42,15 @@ class BetRadarFactory  implements AbstractFactoryInterface
                         //add configuration here
                     ]);
                     $event = $serviceLocator->get('RiskMan\\Domain\\Feed\\Event');
+                    $odd = $serviceLocator->get('RiskMan\\Domain\\Feed\\Odd');
+                    $oddselection = $serviceLocator->get('RiskMan\\Domain\\Feed\\OddSelection');
                     $radarMsg = $serviceLocator->get('RiskMan\\BetRadar\\BetRadarMsg');
                     $parser = new RadarMsgParser();
                     $o = new $requestedName(
                         $config,
                         $event,
+                        $odd,
+                        $oddselection,
                         $radarMsg,
                         $parser
                     );

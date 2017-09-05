@@ -93,7 +93,6 @@ class Odd extends DomainFeedObject
                 'title' => 'Event Not Found',
                 'details'=> "event_id = " . $data->event_id . " not found, unable to create odd = " . $data->odd_id ,
                 'data' => (array)$data
-                
             ];
         }
         return false;

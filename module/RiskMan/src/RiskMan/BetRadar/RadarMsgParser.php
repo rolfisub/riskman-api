@@ -38,6 +38,50 @@ class RadarMsgParser
     {
         $this->m = $msg;
     }
+    
+    /**
+     * Returns array of event odds
+     * @return array
+     */
+    public function getOdds() 
+    {
+        if($this->m === null) {
+            return false;
+        }
+        $oddsReturn = [];
+        $oddsData = [
+            'odd_id' => '',
+            'odd_name' => '',
+            'event_id' => '',
+            'datetime' => ''
+        ];
+        $xml = $this->m->xml;
+        $sports = $xml->Sports;
+        foreach($sports->Sport as $key1 => $sport) {
+            $this->getLangKey($sport->Texts);
+            $categories = $sport->Category;
+            foreach($categories as $key2 => $category) {
+                $leagues = $category->Tournament;
+                foreach($leagues as $key3 => $league) {
+                    $events = $league->Match;
+                    foreach($events as $key4 => $event) {
+                        $oddsData['event_id'] = (string)$event['BetradarMatchID'];
+                        $oddsData['datetime'] = (string)$event->Fixture->DateInfo->MatchDate;
+                        $odds = $event->MatchOdds->Bet;
+                        foreach($odds as $key5 => $odd) {
+                            $oddsData['odd_id'] = $oddsData['event_id'] . '.' . $odd['OddsType'];
+                            $oddsData['odd_name'] = $oddsData['odd_id'];
+                            $oddsReturn[] = $oddsData;
+                        }
+                        
+                    }
+                }
+            }
+        }
+        return $oddsReturn;
+        
+    }
+    
     /**
      * Returns an array of events to be processed by the domain object
      * @return array array of event objects
