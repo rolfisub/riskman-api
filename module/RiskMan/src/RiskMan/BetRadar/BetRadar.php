@@ -127,7 +127,20 @@ class BetRadar
         }
         
         //create odds selections
+        $oddselections = $this->parser->getOddSelections();
         
+        foreach($oddselections as $key3 => $oddsel) {
+            $problem4 = $this->oddselection->create((object) $oddsel);
+            if($problem4['code'] !== 200) {
+               return [
+                    'status' => $problem4['code'],
+                    'title' => $problem4['title'],
+                    'details' => $problem4['details'],
+                    'additional' => [$problem4['data']],
+                    'type' => $problem4['type']
+                ]; 
+            }
+        }
         //create futures
         
         
