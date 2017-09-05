@@ -25,7 +25,7 @@ class BetRadarMsg extends DomainObject
     {
         $this->mapper = $mapper;
         $this->setFields([
-            'msg_id',
+            'betradarmsg_id',
             'msg'
         ]);
     }
@@ -39,7 +39,7 @@ class BetRadarMsg extends DomainObject
             return $problem;
         }
         
-        $id = $data->msg_id;
+        $id = $data->betradarmsg_id;
         $sqlArr = $this->toSqlArray($data);
         $m = $this->mapper->read($id);
         if ($m){
