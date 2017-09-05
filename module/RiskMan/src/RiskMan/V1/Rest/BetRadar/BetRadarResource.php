@@ -25,10 +25,9 @@ class BetRadarResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function create($data)
-    {
-        $bookId = $this->getIdentity()->getRoleId();
-        $betradarmsg = new BetRadarMsg($data, $bookId);
-        $response = $this->betRadar->createMsg($betradarmsg, $bookId);
+    {        
+        $this->betRadar->setBookId($this->getIdentity()->getRoleId());
+        $response = $this->betRadar->processMsg($data);
         return $this->api->sendResponse(
             $response['status'], 
             $response['detail'], 

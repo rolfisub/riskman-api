@@ -9,6 +9,7 @@
 namespace RiskMan\BetRadar;
 
 use RiskMan\BetRadar\Config;
+use RiskMan\BetRadar\RadarMsgParser;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -24,6 +25,7 @@ class BetRadarFactory  implements AbstractFactoryInterface
         
         $objects = array(
             0 => 'RiskMan\\BetRadar\\BetRadar',
+            1 => 'RiskMan\\BetRadar\\BetRadarMsg'
         );
         
         return in_array($requestedName, $objects);
@@ -35,18 +37,28 @@ class BetRadarFactory  implements AbstractFactoryInterface
             switch ($requestedName){
                 case 'RiskMan\\BetRadar\\BetRadar':
                     //echo "creating domain Player\n";
-                    /**
-                     * Dependencies
-                     */
                     
                     $config = new Config([
                         //add configuration here
                     ]);
-                    $mapper = $serviceLocator->get('RiskMan\\BetRadar\\Mapper\\BetRadarMsg');
-                    
+                    $event = $serviceLocator->get('RiskMan\\Domain\\Feed\\Event');
+                    $radarMsg = $serviceLocator->get('RiskMan\\BetRadar\\BetRadarMsg');
+                    $parser = new RadarMsgParser();
                     $o = new $requestedName(
                         $config,
-                        $mapper
+                        $event,
+                        $radarMsg,
+                        $parser
+                    );
+                    //echo " ...done\n";
+                    return $o;
+                case 'RiskMan\\BetRadar\\BetRadarMsg':
+                    //echo "creating domain Player\n";
+                    
+                    $msgMapper = $serviceLocator->get('RiskMan\\BetRadar\\Mapper\\BetRadarMsg');
+                    
+                    $o = new $requestedName(
+                        $msgMapper
                     );
                     //echo " ...done\n";
                     return $o;
