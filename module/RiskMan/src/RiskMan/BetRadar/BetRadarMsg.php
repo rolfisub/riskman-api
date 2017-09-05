@@ -8,40 +8,87 @@
 
 namespace RiskMan\BetRadar;
 
+use RiskMan\BetRadar\Mapper\BetRadarMsg as MsgMapper;
+use RiskMan\Domain\DomainObject;
 /**
  * Description of BetRadarMsg
  *
  * @author rolf
  */
-class BetRadarMsg 
+class BetRadarMsg extends DomainObject
 {
-    public $book_id;
-    public $msg_id;
-    public $msg;
-    public $xml;
+
+    protected $mapper;
     
-    /**
-     * @param string $input XML String from Bet Radar
-     */
-    public function __construct($input, $bookId)
+    
+    public function __construct(MsgMapper $mapper)
     {
-        $this->book_id = $bookId;
-        $this->msg_id = $input->msg_id;
-        $this->msg = $input->data;
-        try {
-            $this->xml = new \SimpleXMLElement($this->msg);
-        }
-        catch (\Exception $e) {
-            $this->xml = false;
-        }
+        $this->mapper = $mapper;
+        $this->setFields([
+            'msg_id',
+            'msg'
+        ]);
     }
     
-    
-    public function toArray()
+    public function createMsg($data)
     {
+        $this->setModelsBookId([$this->mapper]);
+        
+        $problem = $this->validateFields($data);
+        if($problem) {
+            return $problem;
+        }
+        
+        $id = $data->msg_id;
+        $sqlArr = $this->toSqlArray($data);
+        $m = $this->mapper->read($id);
+        if ($m){
+            //update event
+            $this->mapper->update($id, $sqlArr);
+        } else {
+            //create event
+            $this->mapper->create($sqlArr);
+        }
         return [
-            'msg_id' => $this->msg_id,
-            'msg' => $this->msg
+            'code' => 200,
+            'type' => 'OK',
+            'title' => 'Success',
+            'details' => 'Msg succesfully created or updated.',
+            'data' => $this->returnMsgArray($id)
         ];
+        
+    }
+    
+    private function toSqlArray($data)
+    {
+        $arr = [];
+        if ($data->msg_id){
+            $arr['msg_id'] = $data->msg_id;
+        }
+        if ($data->msg) {
+            $arr['msg'] = $data->msg;
+        }
+        return $arr;
+    }
+    
+    private function returnMsgArray($id)
+    {
+        $m = $this->mapper->read($id);
+        $a = [];
+        if($m) {
+            $a = $m;
+            //delete private data
+            if(isset($a['id'])) {
+                unset($a['id']);
+            }
+            if(isset($a['book_id'])) {
+                unset($a['book_id']);
+            }
+            if(isset($a['datetime'])) {
+                unset($a['datetime']);
+            }
+            return $a;
+        }
+        return false;
     }
 }
