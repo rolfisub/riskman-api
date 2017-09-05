@@ -152,6 +152,11 @@ class BetRadar
         $response['title'] = 'Success.';
         $response['detail'] = 'BetRadar msg processed and saved.';
         $response['additional']['betradarmsg_id'] = $input->betradarmsg_id;
+        $response['additional']['stats'] = [
+            'events' => sizeof($events),
+            'odds' => sizeof($odds),
+            'odds_selections' => sizeof($oddselections)
+        ];
         return $response;
     }
     
