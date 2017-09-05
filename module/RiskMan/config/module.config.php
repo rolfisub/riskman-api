@@ -1031,17 +1031,6 @@ return array(
                 'required' => true,
                 'validators' => array(
                     0 => array(
-                        'name' => 'RiskMan\\Validator\\ValidateXMLMsg',
-                        'options' => array(),
-                    ),
-                ),
-                'filters' => array(),
-                'name' => 'data',
-            ),
-            1 => array(
-                'required' => false,
-                'validators' => array(
-                    0 => array(
                         'name' => 'Zend\\Validator\\StringLength',
                         'options' => array(
                             'min' => '1',
@@ -1051,6 +1040,17 @@ return array(
                 ),
                 'filters' => array(),
                 'name' => 'msg_id',
+            ),
+            1 => array(
+                'required' => true,
+                'validators' => array(
+                     0 => array(
+                        'name' => 'RiskMan\\Validator\\ValidateXMLMsg',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(),
+                'name' => 'msg',
             ),
         ),
     ),
