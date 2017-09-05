@@ -73,7 +73,11 @@ class RadarMsgParser
                             $oddsData['odd_id'] = $oddsData['event_id'] . '.' . $bet['OddsType'];
                             $odds = $bet->Odds;
                             foreach($odds as $key6 => $odd){
-                                $oddsData['odd_selection_id'] = (string) $odd['OutComeId'];
+                                if(isset($odd['OutComeId'])) {
+                                    $oddsData['odd_selection_id'] = (string) $odd['OutComeId'];
+                                } else {
+                                    $oddsData['odd_selection_id'] = (string) $odd['OutCome'];
+                                }
                                 $oddsData['odd_selection_name'] = (string) $odd['OutCome'];
                                 if(isset($odd['SpecialBetValue'])){
                                     $oddsData['points'] = (int) $odd['SpecialBetValue'];
