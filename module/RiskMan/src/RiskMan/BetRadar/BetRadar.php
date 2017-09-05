@@ -11,6 +11,8 @@ namespace RiskMan\BetRadar;
 use RiskMan\BetRadar\Config;
 use RiskMan\BetRadar\BetRadarMsg;
 use RiskMan\Domain\Feed\Event;
+use RiskMan\Domain\Feed\Odd;
+use RiskMan\Domain\Feed\OddSelection;
 use RiskMan\BetRadar\RadarMsgParser;
 
 /**
@@ -32,6 +34,10 @@ class BetRadar
     
     protected $event;
     
+    protected $odd;
+    
+    protected $oddselection;
+    
     protected $radarMsg;
     
     protected $parser;
@@ -44,10 +50,18 @@ class BetRadar
      * @param BetRadarMsg $msgMapper Description
      * @param Event $eventModel Description
      */
-    public function __construct(Config $config, Event $eventModel, BetRadarMsg $radarMsg, RadarMsgParser $parser) 
+    public function __construct(
+            Config $config, 
+            Event $eventModel,
+            Odd $odd,
+            OddSelection $oddsel,
+            BetRadarMsg $radarMsg, 
+            RadarMsgParser $parser) 
     {
         $this->config = $config;
         $this->event = $eventModel;
+        $this->odd = $odd;
+        $this->oddselection = $oddsel;
         $this->radarMsg = $radarMsg;
         $this->parser = $parser;
     }
@@ -97,6 +111,20 @@ class BetRadar
         }
         
         //create odds
+        $odds = $this->parser->getOdds();
+        
+        foreach($odds as $key2 => $odd) {
+            $problem3 = $this->odd->create((object) $odd);
+            if($problem3['code'] !== 200) {
+               return [
+                    'status' => $problem3['code'],
+                    'title' => $problem3['title'],
+                    'details' => $problem3['details'],
+                    'additional' => [$problem3['data']],
+                    'type' => $problem3['type']
+                ]; 
+            }
+        }
         
         //create odds selections
         
@@ -120,6 +148,8 @@ class BetRadar
         $this->bookId = $bookId;
         $this->event->setBookId($this->bookId);
         $this->radarMsg->setBookId($this->bookId);
+        $this->odd->setBookId($this->bookId);
+        $this->oddselection->setBookId($this->bookId);
         return $this;
     }
     
