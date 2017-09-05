@@ -47,7 +47,7 @@ class RadarMsgParser
         if($this->m === null) {
             return false;
         }
-        $events = [];
+        $eventsReturn = [];
         $eventData = [
             'event_id' => '',
             'event_name' => '',
@@ -88,13 +88,12 @@ class RadarMsgParser
                         else {
                             die('Error more than 2 competitors found');
                         }
-                        $events[] = $eventData;
+                        $eventsReturn[] = $eventData;
                     }
                 }
             }
         }
-        
-        return $events;
+        return $eventsReturn;
         
     }
     

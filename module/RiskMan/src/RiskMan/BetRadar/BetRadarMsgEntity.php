@@ -15,14 +15,14 @@ namespace RiskMan\BetRadar;
  */
 class BetRadarMsgEntity 
 {
-    public $msg_id;
+    public $betradarmsg_id;
     public $msg;
     public $xml;
     
     public function __construct($input) 
     {
-        $this->msg_id = $input->msg_id;
-        $this->msg = $input->data;
+        $this->betradarmsg_id = $input->betradarmsg_id;
+        $this->msg = $input->msg;
         try {
             $this->xml = new \SimpleXMLElement($this->msg);
         }

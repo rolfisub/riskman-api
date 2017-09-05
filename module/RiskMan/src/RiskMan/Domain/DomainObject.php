@@ -27,20 +27,7 @@ class DomainObject
         }
         return false;
     }
-    
-    public function setData($data)
-    {
-        if(is_object($data)) {
-            $data = json_decode(json_encode($data), true);
-        }
-        if(is_array($data) && sizeof($data) > 0) {
-            $this->data = $data;
-            return $this;
-        }
-        return false;
-    }
-    
-    
+   
     public function validateFields($data = null, $fields = null) 
     {
         $problem = [
@@ -73,15 +60,6 @@ class DomainObject
                 return $problem;
             }
         }
-        
-        //if data not set set data
-        $this->setData($data);
-        if (null === $this->data) {
-            $problem['details'] = 'Error';
-            $problem['data']['error'] = 'Data not set';
-            return $problem;
-        }
-        
         
         //default return  invalid
         return false;

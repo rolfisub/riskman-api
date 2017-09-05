@@ -67,25 +67,50 @@ class BetRadar
             'additional' => []
         ];        
         //save msg to msg table
-        $problem = $this->radarMsg->createMsg($data);
-        if($problem['status'] !== 200) {
-            return $problem;
+        $problem = $this->radarMsg->createMsg($input);
+        if($problem['code'] !== 200) {
+            return [
+                'status' => $problem['code'],
+                'title' => $problem['title'],
+                'details' => $problem['details'],
+                'additional' => $problem['data'],
+                'type' => $problem['type']
+            ];
         }
         //helper to initialize parser
         $this->parser->init($input);
         
         $events = $this->parser->getEvents();
         
-        var_dump($events);die();
+        //create events
+        foreach($events as $key => $event) {
+            $problem2 = $this->event->create((object)$event);
+            if($problem2['code'] !== 200) {
+               return [
+                    'status' => $problem2['code'],
+                    'title' => $problem2['title'],
+                    'details' => $problem2['details'],
+                    'additional' => $problem2['data'],
+                    'type' => $problem2['type']
+                ]; 
+            }
+        }
+        
+        //create odds
+        
+        //create odds selections
+        
+        //create futures
         
         
         /**
          * end
          */
         $response['status'] = 200;
+        $response['type'] = 'OK';
         $response['title'] = 'Success.';
         $response['detail'] = 'BetRadar msg processed and saved.';
-        $response['additional']['data'] = [$data];
+        $response['additional']['betradarmsg_id'] = $input->betradarmsg_id;
         return $response;
     }
     

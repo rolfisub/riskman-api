@@ -1039,7 +1039,7 @@ return array(
                     ),
                 ),
                 'filters' => array(),
-                'name' => 'msg_id',
+                'name' => 'betradarmsg_id',
             ),
             1 => array(
                 'required' => true,
