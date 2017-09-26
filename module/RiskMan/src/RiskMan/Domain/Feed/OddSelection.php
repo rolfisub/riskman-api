@@ -8,6 +8,7 @@
 
 namespace RiskMan\Domain\Feed;
 use RiskMan\Domain\Feed\DomainFeedObject;
+use RiskMan\Domain\DomainResponse;
 use RiskMan\Model\Feed\Event;
 use RiskMan\Model\Feed\OddSelection as MOs;
 use RiskMan\Model\Feed\Odd;
@@ -83,36 +84,34 @@ class OddSelection extends DomainFeedObject
             //create odd
             $this->os->create($oddSqlArr);
         }
-        return [
+        return new DomainResponse([
             'code' => 200,
             'type' => 'OK',
             'title' => 'Success',
-            'details' => "Odd succesfully created or updated.",
+            'details' => 'Odd succesfully created or updated.',
             'data' => $this->returnOddArray($data->odd_selection_id, $oddSqlArr)
-        ];
+        ]);
     }
     
     private function validateData($data)
     {
+        $problem = new DomainResponse([
+            'code' => 404,
+            'type' => 'Error'
+        ]);
         $e = $this->e->read($data->event_id);
         if(!$e){
-            return [
-                'code' => 404,
-                'type' => 'Error',
-                'title' => 'Event Not Found',
-                'details'=> "event_id = " . $data->event_id . " not found, unable to create odd_selection = " . $data->odd_selection_id ,
-                'data' => (array)$data
-            ];
+            $problem->title = 'Event Not Found';
+            $problem->details = 'event_id = ' . $data->event_id . ' not found, unable to create odd_selection = ' . $data->odd_selection_id;
+            $problem->data = (array)$data;
+            return $problem;
         }
         $o = $this->o->read($data->odd_id);
         if(!$o){
-            return [
-                'code' => 404,
-                'type' => 'Error',
-                'title' => 'Odd Not Found',
-                'details'=> "odd_id = " . $data->odd_id . " not found, unable to create odd_selection = " . $data->odd_selection_id ,
-                'data' => (array)$data
-            ];
+            $problem->title = 'Odd Not Found';
+            $problem->details = 'odd_id = ' . $data->odd_id . ' not found, unable to create odd_selection = ' . $data->odd_selection_id;
+            $problem->data = (array)$data;
+            return $problem;
         }        
         return false;
     }

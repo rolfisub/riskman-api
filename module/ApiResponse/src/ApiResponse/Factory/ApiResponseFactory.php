@@ -16,10 +16,10 @@ class ApiResponseFactory implements FactoryInterface
 {
     public function createService (ServiceLocatorInterface $serviceLocator) 
     {
-        //$serverCallable = $serviceLocator->get('ZF\OAuth2\Service\OAuth2Server');
-        //$oauthServer = $serverCallable();
+//        $serverCallable = $serviceLocator->get('ZF\OAuth2\Service\OAuth2Server');
+//        $oauthServer = $serverCallable();
         $oauthServer = null;
         $log = $serviceLocator->get('ApiLog');
-        return new ApiResponse($log,$oauthServer);
+        return new ApiResponse($log, $oauthServer);
     }
 }

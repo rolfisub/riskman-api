@@ -34,11 +34,11 @@ class OddSelectionResource extends AbstractResourceListener
         $response = $this->dos->create($data);
         //return response
         return $this->api->sendResponse(
-            $response['code'],
-            $response['details'],
-            $response['type'],
-            $response['title'],
-            ['data' => $response['data']]
+            $response->code,
+            $response->details,
+            $response->type,
+            $response->title,
+            ['data' => $response->data]
         );
     }
 

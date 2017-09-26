@@ -8,6 +8,7 @@
 
 namespace RiskMan\Domain\Feed;
 use RiskMan\Domain\Feed\DomainFeedObject;
+use RiskMan\Domain\DomainResponse;
 use RiskMan\Model\Feed\Odd as MOdd;
 use RiskMan\Model\Feed\Event;
 
@@ -74,13 +75,13 @@ class Odd extends DomainFeedObject
             //create odd
             $this->o->create($oddSqlArr);
         }
-        return [
+        return new DomainResponse([
             'code' => 200,
             'type' => 'OK',
             'title' => 'Success',
             'details' => "Odd succesfully created or updated.",
             'data' => $this->returnOddArray($data->odd_id, $oddSqlArr)
-        ];
+        ]);
     }
     
     private function validateData($data)

@@ -7,6 +7,7 @@
  */
 
 namespace RiskMan\Domain;
+use RiskMan\Domain\DomainResponse;
 
 /**
  * Description of DomainObject
@@ -30,20 +31,20 @@ class DomainObject
    
     public function validateFields($data = null, $fields = null) 
     {
-        $problem = [
+        $problem = new DomainResponse([
             'code' => 422,
-            'type' => 'ValidationError',
+            'type' => 'Validation Error',
             'title' => 'InvalidData',
             'details' => 'Field received not found part of this endpoint.',
             'data' => [
                 'field_name' => ''
             ]
-        ];
+        ]);
         //if fields not set return invalid
         $this->setFields($fields);
         if (null === $this->fields) {
-            $problem['details'] = 'Error';
-            $problem['data']['error'] = 'Fields not set, Please contact Support';
+            $problem->details = 'Error';
+            $problem->data['error'] = 'Fields not set, Please contact Support';
             return $problem;
         }
         
@@ -56,7 +57,7 @@ class DomainObject
                 }
             }
             if($count <= 0) {
-                $problem['data']['field_name'] = $key;
+                $problem->data['field_name'] = $key;
                 return $problem;
             }
         }
