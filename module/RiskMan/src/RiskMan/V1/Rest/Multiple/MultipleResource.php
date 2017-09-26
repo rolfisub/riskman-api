@@ -32,11 +32,11 @@ class MultipleResource extends AbstractResourceListener
         $this->dm->setBookId($this->getIdentity()->getRoleId());
         $response = $this->dm->create($data);
         return $this->api->sendResponse(
-            $response['code'],
-            $response['details'],
-            $response['type'],
-            $response['title'],
-            ['data' => $response['data']]
+            $response->code,
+            $response->details,
+            $response->type,
+            $response->title,
+            ['data' => $response->data]
         );
     }
 

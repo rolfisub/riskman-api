@@ -8,10 +8,12 @@
 
 namespace RiskMan\Domain\Feed;
 use RiskMan\Domain\Feed\DomainFeedObject;
+use RiskMan\Domain\DomainResponse;
 use RiskMan\Model\Feed\Event as MEvent;
 use RiskMan\Model\Feed\Sport;
 use RiskMan\Model\Feed\League;
 use RiskMan\Model\Feed\Region;
+
 
 
 /**
@@ -88,14 +90,13 @@ class Event extends DomainFeedObject
             //create event
             $this->e->create($eventSqlArr);
         }
-
-        return [
+        return new DomainResponse([
             'code' => 200,
             'type' => 'OK',
             'title' => 'Success',
             'details' => 'Event succesfully created or updated.',
             'data' => $this->returnEventArray($data->event_id,$eventSqlArr)
-        ];
+        ]);
     }
     
     private function returnEventArray($event_id, $event_arr)

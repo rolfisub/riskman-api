@@ -10,6 +10,7 @@ namespace RiskMan\BetRadar;
 
 use RiskMan\BetRadar\Mapper\BetRadarMsg as MsgMapper;
 use RiskMan\Domain\DomainObject;
+use RiskMan\Domain\DomainResponse;
 /**
  * Description of BetRadarMsg
  *
@@ -49,13 +50,13 @@ class BetRadarMsg extends DomainObject
             //create event
             $this->mapper->create($sqlArr);
         }
-        return [
+        return new DomainResponse([
             'code' => 200,
             'type' => 'OK',
             'title' => 'Success',
             'details' => 'Msg succesfully created or updated.',
             'data' => $this->returnMsgArray($id)
-        ];
+        ]);
         
     }
     

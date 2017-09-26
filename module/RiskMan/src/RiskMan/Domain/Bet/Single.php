@@ -8,6 +8,7 @@
 
 namespace RiskMan\Domain\Bet;
 use RiskMan\Domain\Bet\DomainBetObject;
+use RiskMan\Domain\DomainResponse;
 use RiskMan\Model\Bet\Single as MS;
 
 use RiskMan\Model\Feed\Event;
@@ -78,7 +79,9 @@ class Single extends DomainBetObject
             'risk',
             'win',
             'odd',
-            'points'
+            'points',
+            'player_id',
+            'player_data'
         ]);
     }
     
@@ -89,7 +92,10 @@ class Single extends DomainBetObject
             $this->ms,
             $this->e,
             $this->o,
-            $this->os
+            $this->os,
+            $this->de,
+            $this->do,
+            $this->dos
         ]);
         
         $id = $data->single_id;
@@ -126,54 +132,43 @@ class Single extends DomainBetObject
             'odd_id' => $objectsnew['o']['id'],
             'odd_selection_id' => $objectsnew['os']['id'],
         ]);
-        
-        return [
+        return new DomainResponse([
             'code' => 200,
             'type' => 'OK',
             'title' => 'Success',
             'details' => "Single succesfully created or updated.",
             'data' => $this->returnOddArray($msnew, $objectsnew )
-        ];
+        ]);
     }
     
     
     
     private function validateData($data)
     {
+        $response = new DomainResponse([
+            'code' => 404,
+            'type' => 'Error'
+        ]);
         $e = $this->e->read($data->event_id);
         if(!$e){
-            return [
-                'code' => 404,
-                'type' => 'Error',
-                'title' => 'Event Not Found',
-                'details'=> "event_id = " . $data->event_id . " not found, unable to create single = " . $data->single_id,
-                'data' => (array)$data
-                
-            ];
+            $response->title = 'Event Not Found';
+            $response->details = 'event_id = ' . $data->event_id . ' not found, unable to create single = ' . $data->single_id;
+            $response->data = (array)$data;
+            return $response;
         }
-        //var_dump($data->odd_id, ['event_id' => $e['id']]);die();
         $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
         if(!$o){
-            return [
-                'code' => 404,
-                'type' => 'Error',
-                'title' => 'Odd Not Found',
-                'details'=> "odd_id = " . $data->odd_id . " not found, unable to create create single = " . $data->single_id,
-                'data' => (array)$data
-                
-            ];
+            $response->title = 'Odd Not Found';
+            $response->details = 'odd_id = ' . $data->odd_id . ' not found, unable to create create single = ' . $data->single_id;
+            $response->data = (array)$data;
+            return $response;
         }
-        //var_dump($data->odd_selection_id, ['odd_id' => $o['id'], 'event_id' => $e['id']]);die();    
         $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id'], 'event_id' => $e['id']]);
         if(!$os){
-            return [
-                'code' => 404,
-                'type' => 'Error',
-                'title' => 'Odd Selection Not Found',
-                'details'=> "odd_selection_id = " . $data->odd_selection_id . " not found, unable to create create single = " . $data->single_id,
-                'data' => (array)$data
-                
-            ];
+            $response->title = 'Odd Selection Not Found';
+            $response->details = 'odd_selection_id = ' . $data->odd_selection_id . ' not found, unable to create create single = ' . $data->single_id;
+            $response->data = (array)$data;
+            return $response;
         }
         return false;
     }
