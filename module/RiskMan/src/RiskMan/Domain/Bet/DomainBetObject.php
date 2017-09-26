@@ -8,6 +8,7 @@
 
 namespace RiskMan\Domain\Bet;
 use RiskMan\Domain\DomainObject;
+use RiskMan\Domain\DomainResponse;
 
 use RiskMan\Domain\Feed\Event;
 use RiskMan\Domain\Feed\Odd;
@@ -58,13 +59,13 @@ class DomainBetObject extends DomainObject
         $this->de = $de;
         $this->do = $do;
         $this->dos = $dos;
-        $this->validationResponse = [
+        $this->validationResponse = new DomainResponse([
             'code' => 422,
-            'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
+            'type' => 'Validation Error',
             'title' => 'Unprocessable Entity',
             'details'=> 'Failed Validation',
             'data' => []
-        ];
+        ]);
     }
     
     public function createOtherFeedObjects($data)
@@ -102,7 +103,7 @@ class DomainBetObject extends DomainObject
                 foreach($data['odd_selection_data'] as $key => $val) {
                     
                     if(!is_array($val)){
-                        $this->validationResponse['data'][] = 'odd_selection_data must be an array of odd selections';
+                        $this->validationResponse->data[] = 'odd_selection_data must be an array of odd selections';
                         return $this->validationResponse;
                     }
                     $problem = $this->validateAndCreate(
@@ -115,7 +116,7 @@ class DomainBetObject extends DomainObject
                     }
                 }
             } else {
-                $this->validationResponse['data'][] = 'odd_selection_data must be an array';
+                $this->validationResponse->data[] = 'odd_selection_data must be an array';
                 return $this->validationResponse;
             }
         }
@@ -150,7 +151,7 @@ class DomainBetObject extends DomainObject
             $field_name = 'odd_selection';
         }
         $problem = $o->create((object)$data);
-        if($problem['code'] != 200) {
+        if($problem->code != 200) {
             return $problem;
         }
          
@@ -227,7 +228,7 @@ class DomainBetObject extends DomainObject
             $v->setOptions($validator['options']);
             $valid = $v->isValid($value);
             if(!$valid){
-                $this->validationResponse['validation_messages'] = $v->getMessages();
+                $this->validationResponse->data['validation_messages'] = $v->getMessages();
                 return $this->validationResponse;
             }
         }

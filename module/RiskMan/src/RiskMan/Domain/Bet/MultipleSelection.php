@@ -8,6 +8,7 @@
 
 namespace RiskMan\Domain\Bet;
 use RiskMan\Domain\Bet\DomainBetObject;
+use RiskMan\Domain\DomainResponse;
 use RiskMan\Model\Bet\MultipleSelection as MS;
 use RiskMan\Model\Bet\Multiple as M;
 
@@ -133,73 +134,59 @@ class MultipleSelection extends DomainBetObject
             'odd_selection_id' => $objectsnew['os']['id'],
         ]);
         
-        return [
+        return new DomainResponse([
             'code' => 200,
             'type' => 'OK',
             'title' => 'Success',
-            'details' => "Bet succesfully created or updated.",
+            'details' => 'Bet succesfully created or updated.',
             'data' => $this->returnOddArray($msnew, $objectsnew )
-        ];
+        ]);
     }
     
     
     
     private function validateData($data)
     {
+        $problem = new DomainResponse([
+            'code' => 404,
+            'type' => 'Error'
+        ]);
         $m = $this->m->read($data->multiple_id);
         if(!$m){
-            return [
-                'code' => 404,
-                'type' => 'Error',
-                'title' => 'Event Not Found',
-                'details'=> "multiple_id = " . $data->multiple_id . " not found, unable to create multiple_selection = " . $data->multiple_selection_id,
-                'data' => (array)$data
-
-            ];
+            $problem->title = 'Multiple Not Found';
+            $problem->details = 'multiple_id = ' . $data->multiple_id . ' not found, unable to create multiple_selection = ' . $data->multiple_selection_id;
+            $problem->data = (array)$data;
+            return $problem;
         }
         $e = $this->e->read($data->event_id);
         if(!$e){
-            return [
-                'code' => 404,
-                'type' => 'Error',
-                'title' => 'Event Not Found',
-                'details'=> "event_id = " . $data->event_id . " not found, unable to create multiple_selection = " . $data->multiple_selection_id,
-                'data' => (array)$data
-
-            ];
+            $problem->title = 'Event Not Found';
+            $problem->details = 'event_id = ' . $data->event_id . ' not found, unable to create multiple_selection = ' . $data->multiple_selection_id;
+            $problem->data = (array)$data;
+            return $problem;
         }
         $o = $this->o->read($data->odd_id, ['event_id' => $e['id']]);
         if(!$o){
-            return [
-                'code' => 404,
-                'type' => 'Error',
-                'title' => 'Odd Not Found',
-                'details'=> "odd_id = " . $data->odd_id . " not found, unable to create create multiple_selection = " . $data->multiple_selection_id,
-                'data' => (array)$data
-
-            ];
+            $problem->title = 'Odd Not Found';
+            $problem->details = 'odd_id = ' . $data->odd_id . ' not found, unable to create create multiple_selection = ' . $data->multiple_selection_id;
+            $problem->data = (array)$data;
+            return $problem;
         }
         $os = $this->os->read($data->odd_selection_id, ['odd_id' => $o['id'], 'event_id' => $e['id']]);
         if(!$os){
-            return [
-                'code' => 404,
-                'type' => 'Error',
-                'title' => 'Odd Selection Not Found',
-                'details'=> "odd_selection_id = " . $data->odd_selection_id . " not found, unable to create create multiple_selection = " . $data->multiple_selection_id,
-                'data' => (array)$data
-
-            ];
+            $problem->title = 'Odd Selection Not Found';
+            $problem->details = 'odd_selection_id = ' . $data->odd_selection_id . ' not found, unable to create create multiple_selection = ' . $data->multiple_selection_id;
+            $problem->data = (array)$data;
+            return $problem;
         }
         //need to check if any other pick already has the same pick
         $mres = $this->ms->checkForExistingPick($data->multiple_selection_id, $m['id'], $e['id'], $o['id'], $os['id']);
         if($mres) {
-            return [
-                'code' => 422,
-                'type' => 'Error',
-                'title' => 'Pick Already exists',
-                'details'=> 'Existing multiple selection detected using different id. Abort.',
-                'data' => (array)$data
-            ];
+            $problem->code = 422;
+            $problem->title = 'Pick Already exists';
+            $problem->details = 'Existing multiple selection detected using different id. Aborting.';
+            $problem->data = (array)$data;
+            return $problem;
         }
         return false;
     }
