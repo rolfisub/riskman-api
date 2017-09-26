@@ -28,12 +28,12 @@ class BetRadarResource extends AbstractResourceListener
     {        
         $this->betRadar->setBookId($this->getIdentity()->getRoleId());
         $response = $this->betRadar->processMsg($data);
-        return $this->api->sendResponse( 
-            $response['status'], 
-            $response['detail'], 
-            $response['type'], 
-            $response['title'], 
-            $response['additional']
+        return $this->api->sendResponse(
+            $response->code,
+            $response->details,
+            $response->type,
+            $response->title,
+            ['data' => $response->data]
         );
     }
 

@@ -32,11 +32,11 @@ class SingleResource extends AbstractResourceListener
         $this->ds->setBookId($this->getIdentity()->getRoleId());
         $response = $this->ds->create($data);
         return $this->api->sendResponse(
-            $response['code'],
-            $response['details'],
-            $response['type'],
-            $response['title'],
-            ['data' => $response['data']]
+            $response->code,
+            $response->details,
+            $response->type,
+            $response->title,
+            ['data' => $response->data]
         );
     }
 

@@ -14,6 +14,7 @@ use RiskMan\Domain\Feed\Event;
 use RiskMan\Domain\Feed\Odd;
 use RiskMan\Domain\Feed\OddSelection;
 use RiskMan\BetRadar\RadarMsgParser;
+use RiskMan\Domain\DomainResponse;
 
 /**
  * Description of BetRadar
@@ -73,23 +74,17 @@ class BetRadar
      */
     public function processMsg($input)
     {
-        $response = [
+        $response = new DomainResponse([
             'status' => 404,
             'title' => '',
             'detail'=> '',
             'type'=> '',
-            'additional' => []
-        ];        
+            'data' => []
+        ]);        
         //save msg to msg table
         $problem = $this->radarMsg->createMsg($input);
-        if($problem['code'] !== 200) {
-            return [
-                'status' => $problem['code'],
-                'title' => $problem['title'],
-                'details' => $problem['details'],
-                'additional' => $problem['data'],
-                'type' => $problem['type']
-            ];
+        if($problem->code !== 200) {
+            return $problem;
         }
         //helper to initialize parser
         $this->parser->init($input);
@@ -99,14 +94,8 @@ class BetRadar
         //create events
         foreach($events as $key => $event) {
             $problem2 = $this->event->create((object)$event);
-            if($problem2['code'] !== 200) {
-               return [
-                    'status' => $problem2['code'],
-                    'title' => $problem2['title'],
-                    'details' => $problem2['details'],
-                    'additional' => $problem2['data'],
-                    'type' => $problem2['type']
-                ]; 
+            if($problem2->code !== 200) {
+               return $problem2;
             }
         }
         
@@ -115,14 +104,8 @@ class BetRadar
         
         foreach($odds as $key2 => $odd) {
             $problem3 = $this->odd->create((object) $odd);
-            if($problem3['code'] !== 200) {
-               return [
-                    'status' => $problem3['code'],
-                    'title' => $problem3['title'],
-                    'details' => $problem3['details'],
-                    'additional' => [$problem3['data']],
-                    'type' => $problem3['type']
-                ]; 
+            if($problem3->code !== 200) {
+               return $problem3;
             }
         }
         
@@ -131,14 +114,8 @@ class BetRadar
         
         foreach($oddselections as $key3 => $oddsel) {
             $problem4 = $this->oddselection->create((object) $oddsel);
-            if($problem4['code'] !== 200) {
-               return [
-                    'status' => $problem4['code'],
-                    'title' => $problem4['title'],
-                    'details' => $problem4['details'],
-                    'additional' => [$problem4['data']],
-                    'type' => $problem4['type']
-                ]; 
+            if($problem4->code !== 200) {
+               return $problem4;
             }
         }
         //create futures
@@ -147,12 +124,12 @@ class BetRadar
         /**
          * end
          */
-        $response['status'] = 200;
-        $response['type'] = 'OK';
-        $response['title'] = 'Success.';
-        $response['detail'] = 'BetRadar msg processed and saved.';
-        $response['additional']['betradarmsg_id'] = $input->betradarmsg_id;
-        $response['additional']['stats'] = [
+        $response->status = 200;
+        $response->type = 'OK';
+        $response->title = 'Success.';
+        $response->details = 'BetRadar msg processed and saved.';
+        $response->data['betradarmsg_id'] = $input->betradarmsg_id;
+        $response->data['stats'] = [
             'events' => sizeof($events),
             'odds' => sizeof($odds),
             'odds_selections' => sizeof($oddselections)

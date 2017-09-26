@@ -38,11 +38,11 @@ class OddResource extends AbstractResourceListener
         $response = $this->do->create($data);
         //return response
         return $this->api->sendResponse(
-            $response['code'],
-            $response['details'],
-            $response['type'],
-            $response['title'],
-            ['data' => $response['data']]
+            $response->code,
+            $response->details,
+            $response->type,
+            $response->title,
+            ['data' => $response->data]
         );
     }
 
