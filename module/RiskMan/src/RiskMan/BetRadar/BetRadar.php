@@ -74,6 +74,7 @@ class BetRadar
      */
     public function processMsg($input)
     {
+        
         $response = new DomainResponse([
             'status' => 404,
             'title' => '',
@@ -86,9 +87,11 @@ class BetRadar
         if($problem->code !== 200) {
             return $problem;
         }
+        
+       
         //helper to initialize parser
         $this->parser->init($input);
-        
+         
         $events = $this->parser->getEvents();
         
         //create events
@@ -99,6 +102,7 @@ class BetRadar
             }
         }
         
+        
         //create odds
         $odds = $this->parser->getOdds();
         
@@ -108,6 +112,8 @@ class BetRadar
                return $problem3;
             }
         }
+        $time = [];
+        $time['start'] = microtime(true);
         
         //create odds selections
         $oddselections = $this->parser->getOddSelections();
@@ -119,8 +125,10 @@ class BetRadar
             }
         }
         //create futures
-        
-        
+//        $time['end'] = microtime(true);
+//        $time['total'] = $time['end'] - $time['start'];
+//        var_dump($time);die();
+//        
         /**
          * end
          */

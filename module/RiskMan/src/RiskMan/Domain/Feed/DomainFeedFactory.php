@@ -7,8 +7,14 @@
  */
 
 namespace RiskMan\Domain\Feed;
+
+use RiskMan\BookOptions\BookOptions;
+
+
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+
+
 
 /**
  * Description of DomainFactory
@@ -43,7 +49,8 @@ class DomainFeedFactory implements AbstractFactoryInterface
                     $league = $serviceLocator->get('RiskMan\\Model\\Feed\\League');
                     $region = $serviceLocator->get('RiskMan\\Model\\Feed\\Region');
                     $event  = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
-                    $o = new $requestedName($event, $sport, $league, $region);
+                    $bo = $serviceLocator->get(BookOptions::class);
+                    $o = new $requestedName($event, $sport, $league, $region, $bo);
                 //    echo " ...done\n";
                     return $o;
                     
@@ -51,7 +58,8 @@ class DomainFeedFactory implements AbstractFactoryInterface
                   //  echo "creating domain Odd\n";
                     $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
                     $odd = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
-                    $o = new $requestedName($e, $odd);
+                    $bo = $serviceLocator->get(BookOptions::class);
+                    $o = new $requestedName($e, $odd, $bo);
                     //echo " ...done\n";
                     return $o;
                     
@@ -60,7 +68,8 @@ class DomainFeedFactory implements AbstractFactoryInterface
                     $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
                     $o = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
                     $os = $serviceLocator->get('RiskMan\\Model\\Feed\\OddSelection');
-                    $or = new $requestedName($o, $os, $e);
+                    $bo = $serviceLocator->get(BookOptions::class);
+                    $or = new $requestedName($o, $os, $e, $bo);
                    // echo " ...done\n";
                     return $or;
             }

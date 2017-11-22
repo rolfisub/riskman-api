@@ -105,6 +105,14 @@ class ModelObject
         return $this->exec($u);
     }
     
+    public function updateByKey($key, $data, $where = null)
+    {
+        $u = $this->sql->update();
+        $u->set($data);
+        $u->where(['id' => $key]);
+        return $this->exec($u);
+    }
+    
     public function delete ($id, $where = null)
     {
         $d = $this->sql->delete();

@@ -13,6 +13,7 @@ use RiskMan\Model\Feed\Event as MEvent;
 use RiskMan\Model\Feed\Sport;
 use RiskMan\Model\Feed\League;
 use RiskMan\Model\Feed\Region;
+use RiskMan\BookOptions\BookOptions;
 
 
 
@@ -43,15 +44,21 @@ class Event extends DomainFeedObject
      */
     protected $r;
     
+    /**
+     * @var BookOptions
+     */
+    protected $bookOptions;
+    
     /*
      * constructor TODO: Annotations
      */
-    public function __construct(MEvent $event, Sport $sport, League $league, Region $region) 
+    public function __construct(MEvent $event, Sport $sport, League $league, Region $region, BookOptions $bo) 
     {
         $this->e = $event;
         $this->s = $sport;
         $this->l = $league;
         $this->r = $region;
+        $this->bookOptions = $bo;
         $this->setFields([
             'event_id',
             'event_name',

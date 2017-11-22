@@ -12,6 +12,7 @@ use RiskMan\Domain\DomainResponse;
 use RiskMan\Model\Feed\Event;
 use RiskMan\Model\Feed\OddSelection as MOs;
 use RiskMan\Model\Feed\Odd;
+use RiskMan\BookOptions\BookOptions;
 
 
 /**
@@ -34,15 +35,21 @@ class OddSelection extends DomainFeedObject
      * @var RiskMan\Model\Feed\Event
      */
     protected $e;
+    
+    /**
+     * @var BookOptions
+     */
+    protected $bookOptions;
 
     /*
      * constructor TODO: Annotations
      */
-    public function __construct(Odd $o, MOs $os, Event $e) 
+    public function __construct(Odd $o, MOs $os, Event $e, BookOptions $bo) 
     {
         $this->os = $os;
         $this->o = $o;
         $this->e = $e;
+        $this->bookOptions = $bo;
         $this->setFields([
             'odd_selection_id',
             'odd_selection_name',
@@ -56,21 +63,26 @@ class OddSelection extends DomainFeedObject
     //POST
     public function create($data)
     {
+        
+        
         $this->setModelsBookId([
             $this->os,
             $this->o,
             $this->e
         ]);
         
+        
         $id = $data->odd_selection_id;
         $problem = $this->validateFields($data);
         if($problem){
             return $problem;
         }
+        
         $problem2 = $this->validateData($data);
         if($problem2){
             return $problem2;
         }
+       
         $o = $this->o->read($data->odd_id);
         $odd_id  = $o['id'];
         $e = $this->e->read($data->event_id);
@@ -79,11 +91,13 @@ class OddSelection extends DomainFeedObject
         $os = $this->os->read($id,['odd_id' => $odd_id, 'event_id' => $event_id]);
         if ($os){
             //update odd
+            //$this->os->updateByKey($os['id'], $oddSqlArr);
             $this->os->update($id, $oddSqlArr);
         } else {
             //create odd
             $this->os->create($oddSqlArr);
         }
+        
         return new DomainResponse([
             'code' => 200,
             'type' => 'OK',

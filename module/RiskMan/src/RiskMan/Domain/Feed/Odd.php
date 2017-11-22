@@ -11,6 +11,7 @@ use RiskMan\Domain\Feed\DomainFeedObject;
 use RiskMan\Domain\DomainResponse;
 use RiskMan\Model\Feed\Odd as MOdd;
 use RiskMan\Model\Feed\Event;
+use RiskMan\BookOptions\BookOptions;
 
 
 
@@ -32,13 +33,19 @@ class Odd extends DomainFeedObject
      */
     protected $e;
 
+    /**
+     * @var BookOptions
+     */
+    protected $bookOptions;
+    
     /*
      * constructor TODO: Annotations
      */
-    public function __construct(Event $e, MOdd $odd) 
+    public function __construct(Event $e, MOdd $odd, BookOptions $bo) 
     {
         $this->o = $odd;
         $this->e = $e;
+        $this->bookOptions = $bo;
         $this->setFields([
             'odd_id',
             'odd_name',
@@ -88,13 +95,13 @@ class Odd extends DomainFeedObject
     {
         $e = $this->e->read($data->event_id);
         if(!$e){
-            return [
+            return new DomainResponse([
                 'code' => 404,
                 'type' => 'Error',
                 'title' => 'Event Not Found',
                 'details'=> "event_id = " . $data->event_id . " not found, unable to create odd = " . $data->odd_id ,
                 'data' => (array)$data
-            ];
+            ]);
         }
         return false;
     }

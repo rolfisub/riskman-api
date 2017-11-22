@@ -13,6 +13,8 @@ return array(
             'RiskMan\\V1\\Rest\\Odd\\OddResource' => 'RiskMan\\V1\\Rest\\Odd\\OddResourceFactory',
             'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResource' => 'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResourceFactory',
             'RiskMan\\V1\\Rest\\BetRadar\\BetRadarResource' => 'RiskMan\\V1\\Rest\\BetRadar\\BetRadarResourceFactory',
+            RiskMan\BookOptions\BookOptions::class => RiskMan\BookOptions\BookOptionsFactory::class,
+            RiskMan\BookOptions\Mapper::class => RiskMan\BookOptions\MapperFactory::class
         ),
         'abstract_factories' => array(
             0 => 'RiskMan\\Domain\\Feed\\DomainFeedFactory',
@@ -20,6 +22,7 @@ return array(
             2 => 'RiskMan\\Model\\ModelFeedFactory',
             3 => 'RiskMan\\BetRadar\\BetRadarFactory',
             4 => 'RiskMan\\BetRadar\\Mapper\\BetRadarMsgFactory',
+            5 => 'RiskMan\\Suggestive\\SuggestiveFactory'
         ),
     ),
     'router' => array(
