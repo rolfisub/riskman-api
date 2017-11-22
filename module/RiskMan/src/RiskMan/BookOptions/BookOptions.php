@@ -18,16 +18,24 @@ class BookOptions
     }
     
     /**
+     * placeholder for options object
+     * @var Options 
+     */
+    protected $options;
+    
+    /**
      * Gets book options
      * @param int $bookId
      * @return Options
      */
     public function getOptions($book_id)
     {
-        $data = $this->mapper->getOptions($book_id);
-        if(is_array($data[0])) {
-            return new Options($book_id, $data[0]);
+        if(null === $this->options) {
+            $data = $this->mapper->getOptions($book_id);
+            if(is_array($data[0])) {
+                $this->options = new Options($book_id, $data[0]);
+            }
         }
-        return false;
+        return $this->options;
     }
 }

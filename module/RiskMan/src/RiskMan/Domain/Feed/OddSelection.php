@@ -13,6 +13,7 @@ use RiskMan\Model\Feed\Event;
 use RiskMan\Model\Feed\OddSelection as MOs;
 use RiskMan\Model\Feed\Odd;
 use RiskMan\BookOptions\BookOptions;
+use RiskMan\OddFormat\OddFormat;
 
 
 /**
@@ -40,6 +41,12 @@ class OddSelection extends DomainFeedObject
      * @var BookOptions
      */
     protected $bookOptions;
+    
+    /**
+     * Odd converter
+     * $var OddFormat
+     */
+    protected $oddConverter;
 
     /*
      * constructor TODO: Annotations
@@ -50,6 +57,7 @@ class OddSelection extends DomainFeedObject
         $this->o = $o;
         $this->e = $e;
         $this->bookOptions = $bo;
+        $this->oddConverter = new OddFormat();
         $this->setFields([
             'odd_selection_id',
             'odd_selection_name',
@@ -58,6 +66,7 @@ class OddSelection extends DomainFeedObject
             'points',
             'odd',
         ]);
+        
     }
     
     //POST
@@ -82,11 +91,20 @@ class OddSelection extends DomainFeedObject
         if($problem2){
             return $problem2;
         }
-       
+        
+        /**
+         * convert input odd to American format
+         */
+        $options = $this->bookOptions->getOptions($this->getBookId());
+        $data->odd = $this->oddConverter->convertFromTo($options->odd_format, 'American', $data->odd);
+        
+        //get needed objects
         $o = $this->o->read($data->odd_id);
         $odd_id  = $o['id'];
         $e = $this->e->read($data->event_id);
         $event_id  = $e['id'];
+        
+        //check for update or insert
         $oddSqlArr = $this->toSqlArray($data);
         $os = $this->os->read($id,['odd_id' => $odd_id, 'event_id' => $event_id]);
         if ($os){
