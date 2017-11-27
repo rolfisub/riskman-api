@@ -180,6 +180,14 @@ class OddSelection extends DomainFeedObject
             $a['odd_id'] = $o['odd_id']; 
             $a['event_id'] = $e['event_id']; 
             
+            //format odd back to origin format
+            /**
+            * convert input odd to Original format
+            */
+            $options = $this->bookOptions->getOptions($this->getBookId());
+            $a['odd'] = $this->oddConverter->convertFromTo('American', $options->odd_format, $a['odd']);
+            
+            
             return $a;
         }
         return false;
