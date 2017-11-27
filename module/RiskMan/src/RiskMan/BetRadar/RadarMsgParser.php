@@ -9,6 +9,7 @@
 namespace RiskMan\BetRadar;
 
 use RiskMan\BetRadar\BetRadarMsgEntity;
+use RiskMan\Domain\DomainResponse;
 /**
  * Description of RadarMsgParser
  *
@@ -38,6 +39,12 @@ class RadarMsgParser
     {
         $this->m = $msg;
     }
+    
+    public function getMsg()
+    {
+        return $this->m;
+    }
+    
     
     /**
      * Returns array of event odds selections
@@ -94,6 +101,63 @@ class RadarMsgParser
         return $oddsReturn;
     }
     
+    /**
+     * 
+     * @param array $data
+     */
+    public function updateMsgOddSelectionData(DomainResponse $res)
+    {
+        $data = $res->data;
+        $xml = $this->m->xml;
+        $sports = $xml->Sports;
+        foreach($sports->Sport as $key1 => $sport) {
+            $this->getLangKey($sport->Texts);
+            $categories = $sport->Category;
+            foreach($categories as $key2 => $category) {
+                $leagues = $category->Tournament;
+                foreach($leagues as $key3 => $league) {
+                    $events = $league->Match;
+                    foreach($events as $key4 => $event) {
+                        if($data['event_id'] == (string)$event['BetradarMatchID']) {
+                            $odds = $event->MatchOdds->Bet;
+                            foreach($odds as $key5 => $bet) {
+                                if($data['odd_id'] == $data['event_id'] . '.' . $bet['OddsType']) {
+                                    
+                                    $odds = $bet->Odds;
+                                    foreach($odds as $key6 => $odd){
+                                        $odd_sel_id = '';
+                                        if(isset($odd['OutComeId'])) {
+                                            $odd_sel_id = (string) $odd['OutComeId'];
+                                        } else {
+                                            $odd_sel_id = (string) $odd['OutCome'];
+                                        }
+                                        
+                                        if($data['odd_selection_id'] == $odd_sel_id) {
+                                            if(isset($odd['SpecialBetValue'])){
+                                                $odd['SpecialBetValue'] = $data['points'];
+                                            }
+                                            $odd[0] = number_format($data['odd'], 4, '.', '');
+                                        }
+                                        
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    public function getXMLString()
+    {
+        return $this->m->updateXMLString();
+    }
+
+
     /**
      * Returns array of event odds
      * @return array

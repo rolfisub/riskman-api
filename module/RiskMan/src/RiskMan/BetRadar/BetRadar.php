@@ -81,14 +81,17 @@ class BetRadar
             'detail'=> '',
             'type'=> '',
             'data' => []
-        ]);        
+        ]);    
+        
+        $time = [];
+        $time['saveMsg']['start'] = microtime(true);
+        
         //save msg to msg table
         $problem = $this->radarMsg->createMsg($input);
         if($problem->code !== 200) {
             return $problem;
         }
         
-       
         //helper to initialize parser
         $this->parser->init($input);
          
@@ -112,8 +115,7 @@ class BetRadar
                return $problem3;
             }
         }
-        $time = [];
-        $time['start'] = microtime(true);
+        
         
         //create odds selections
         $oddselections = $this->parser->getOddSelections();
@@ -122,13 +124,13 @@ class BetRadar
             $problem4 = $this->oddselection->create((object) $oddsel);
             if($problem4->code !== 200) {
                return $problem4;
+            } else {
+               $this->parser->updateMsgOddSelectionData($problem4);
             }
         }
-        //create futures
-//        $time['end'] = microtime(true);
-//        $time['total'] = $time['end'] - $time['start'];
-//        var_dump($time);die();
-//        
+        
+        $time['saveMsg']['end'] = microtime(true);
+        $time['saveMsg']['total'] = $time['saveMsg']['end'] - $time['saveMsg']['start'];
         /**
          * end
          */
@@ -137,10 +139,12 @@ class BetRadar
         $response->title = 'Success.';
         $response->details = 'BetRadar msg processed and saved.';
         $response->data['betradarmsg_id'] = $input->betradarmsg_id;
+        $response->data['msg'] = $this->parser->getXMLString();
         $response->data['stats'] = [
             'events' => sizeof($events),
             'odds' => sizeof($odds),
-            'odds_selections' => sizeof($oddselections)
+            'odds_selections' => sizeof($oddselections),
+            'time_stats' => $time
         ];
         return $response;
     }

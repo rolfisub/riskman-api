@@ -30,4 +30,10 @@ class BetRadarMsgEntity
             $this->xml = false;
         };
     }
+    
+    public function updateXMLString()
+    {
+        $this->msg = $this->xml->asXML();
+        return $this->msg;
+    }
 }

@@ -35,7 +35,7 @@ class OddFormat
     {
         //if not a valid odd format
         if(!in_array($from, $this->oddFormats) || !in_array($to, $this->oddFormats)) {
-            throw new Exception('Invalid odd format provided to odd converter.', 500);
+            throw new \Exception('Invalid odd format provided to odd converter.', 500);
         }
         
         //validate value
@@ -63,6 +63,7 @@ class OddFormat
     private function DecimalToAmerican ($value)
     {
         $value = (float)$value;
+        if($value === 0){return $value;}
         if($value >= 2.0) {
             return round(($value - 1) * 100, 0);
         } else {
@@ -77,6 +78,7 @@ class OddFormat
      */
     private function AmericanToDecimal ($value)
     {
+        if($value === 0){return $value;}
         if($value > 0) {
             return 1 + (abs($value) / 100);
         } else {
@@ -93,19 +95,19 @@ class OddFormat
     {
         //check if value is not double or int
         if(!is_numeric($value)) {
-            throw new Exception('Value provided to odd converter is not numeric.', 500);
+            throw new \Exception('Value provided to odd converter is not numeric.', 500);
         }
         //validate american
         if($from === 'American')
         {
             if($value < 100 && $value >= -100){
-                throw new Exception('Value is not in American format', 500);
+                throw new \Exception('Value is not in American format', 500);
             }
         }
         //validate decimal
         if($from === 'Decimal') {
-            if($value >= 0 && $value < 1) {
-                throw new Exception('Value is not in Decimal format', 500);
+            if($value < 1 && $value != 0) {
+                throw new \Exception('Value is not in Decimal format value = ' . $value, 500);
             }
         }
         
