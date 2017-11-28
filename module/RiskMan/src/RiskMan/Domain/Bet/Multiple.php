@@ -20,6 +20,9 @@ use RiskMan\Model\Feed\Event;
 use RiskMan\Model\Feed\Odd;
 use RiskMan\Model\Feed\OddSelection;
 
+use RiskMan\BookCurrency\BookCurrency;
+use RiskMan\BookOptions\BookOptions;
+
 use RiskMan\Domain\Feed\Event as DEvent;
 use RiskMan\Domain\Feed\Odd as DOdd;
 use RiskMan\Domain\Feed\OddSelection as DOSelection;
@@ -82,10 +85,12 @@ class Multiple extends DomainBetObject
         DMS $dms, 
         Event $e, 
         Odd $o, 
-        OddSelection $os
+        OddSelection $os,
+        BookCurrency $bc,
+        BookOptions $bo
     ) 
     {
-        parent::__construct($sm, $de, $do, $dos);
+        parent::__construct($sm, $de, $do, $dos, $bc, $bo);
         $this->mm = $mm;
         $this->ms = $ms;
         $this->dms = $dms;
@@ -236,6 +241,12 @@ class Multiple extends DomainBetObject
             }
             if(isset($a['book_id'])) {
                 unset($a['book_id']);
+            }
+            
+            //add currency field
+            $a['risk_usd'] = $this->bookCurrency->convertToUSD($a['risk'], $this->getBookId());
+            if(isset($a['win'])) {
+                $a['win_usd'] = $this->bookCurrency->convertToUSD($a['win'], $this->getBookId());
             }
             
             return $a;

@@ -14,6 +14,10 @@ use RiskMan\Domain\Feed\Event;
 use RiskMan\Domain\Feed\Odd;
 use RiskMan\Domain\Feed\OddSelection;
 
+use RiskMan\BookCurrency\BookCurrency;
+use RiskMan\BookOptions\BookOptions;
+use RiskMan\OddFormat\OddFormat;
+
 use Zend\ServiceManager\ServiceLocatorInterface as SM;
 
 /**
@@ -48,17 +52,34 @@ class DomainBetObject extends DomainObject
      * 
      */
     protected $validationResponse;
-    //put your code here
+    
+    /**
+     * @var BookCurrency
+     */
+    protected $bookCurrency;
+    
+    /**
+     * @var BookOptions
+     */
+    protected $bookOptions;
+    
+    /**
+     * @var OddFormat
+     */
+    protected $oddFormat;
     
     //create feed objects if necessary
     //optimisation for http requests
     
-    public function __construct(SM $sm, Event $de, Odd $do, OddSelection $dos) 
+    public function __construct(SM $sm, Event $de, Odd $do, OddSelection $dos, BookCurrency $bc, BookOptions $bo) 
     {
         $this->sm = $sm;
         $this->de = $de;
         $this->do = $do;
         $this->dos = $dos;
+        $this->bookCurrency = $bc;
+        $this->bookOptions = $bo;
+        $this->oddFormat = new OddFormat();
         $this->validationResponse = new DomainResponse([
             'code' => 422,
             'type' => 'Validation Error',

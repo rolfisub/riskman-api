@@ -16,6 +16,8 @@ use RiskMan\Model\Feed\Event;
 use RiskMan\Model\Feed\Odd;
 use RiskMan\Model\Feed\OddSelection;
 
+use RiskMan\BookCurrency\BookCurrency;
+use RiskMan\BookOptions\BookOptions;
 
 use RiskMan\Domain\Feed\Event as DEvent;
 use RiskMan\Domain\Feed\Odd as DOdd;
@@ -68,10 +70,12 @@ class MultipleSelection extends DomainBetObject
         M $m, 
         Event $e, 
         Odd $o, 
-        OddSelection $os
+        OddSelection $os,
+        BookCurrency $bc,
+        BookOptions $bo
     ) 
     {
-        parent::__construct($sm, $de, $do, $dos);   
+        parent::__construct($sm, $de, $do, $dos, $bc, $bo);   
         $this->ms = $ms;
         $this->m = $m;
         $this->e = $e;

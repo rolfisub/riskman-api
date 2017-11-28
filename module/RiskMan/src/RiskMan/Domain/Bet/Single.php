@@ -21,7 +21,6 @@ use RiskMan\Domain\Feed\OddSelection as DOSelection;
 
 use RiskMan\BookCurrency\BookCurrency;
 use RiskMan\BookOptions\BookOptions;
-use RiskMan\OddFormat\OddFormat;
 
 use Zend\ServiceManager\ServiceLocatorInterface as SM;
 
@@ -53,20 +52,7 @@ class Single extends DomainBetObject
      */
     protected $os;
     
-    /**
-     * @var BookCurrency
-     */
-    protected $bookCurrency;
     
-    /**
-     * @var BookOptions
-     */
-    protected $bookOptions;
-    
-    /**
-     * @var OddFormat
-     */
-    protected $oddFormat;
 
     /*
      * constructor TODO: Annotations
@@ -84,14 +70,11 @@ class Single extends DomainBetObject
         BookOptions $bo
     ) 
     {
-        parent::__construct($sm, $de, $do, $dos);
+        parent::__construct($sm, $de, $do, $dos, $bc, $bo);
         $this->ms = $ms;
         $this->e = $e;
         $this->o = $o;
         $this->os = $os;
-        $this->bookCurrency = $bc;
-        $this->bookOptions = $bo;
-        $this->oddFormat = new OddFormat();
         $this->setFields([
             'single_id',
             'event_id',
