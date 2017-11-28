@@ -19,6 +19,10 @@ use RiskMan\Domain\Feed\Event as DEvent;
 use RiskMan\Domain\Feed\Odd as DOdd;
 use RiskMan\Domain\Feed\OddSelection as DOSelection;
 
+use RiskMan\BookCurrency\BookCurrency;
+use RiskMan\BookOptions\BookOptions;
+use RiskMan\OddFormat\OddFormat;
+
 use Zend\ServiceManager\ServiceLocatorInterface as SM;
 
 
@@ -48,6 +52,21 @@ class Single extends DomainBetObject
      * @var RiskMan\Model\Feed\OddSelection
      */
     protected $os;
+    
+    /**
+     * @var BookCurrency
+     */
+    protected $bookCurrency;
+    
+    /**
+     * @var BookOptions
+     */
+    protected $bookOptions;
+    
+    /**
+     * @var OddFormat
+     */
+    protected $oddFormat;
 
     /*
      * constructor TODO: Annotations
@@ -60,7 +79,9 @@ class Single extends DomainBetObject
         MS $ms, 
         Event $e, 
         Odd $o, 
-        OddSelection $os
+        OddSelection $os,
+        BookCurrency $bc,
+        BookOptions $bo
     ) 
     {
         parent::__construct($sm, $de, $do, $dos);
@@ -68,6 +89,9 @@ class Single extends DomainBetObject
         $this->e = $e;
         $this->o = $o;
         $this->os = $os;
+        $this->bookCurrency = $bc;
+        $this->bookOptions = $bo;
+        $this->oddFormat = new OddFormat();
         $this->setFields([
             'single_id',
             'event_id',
@@ -112,6 +136,13 @@ class Single extends DomainBetObject
         if($problem3){
             return $problem3;
         }
+        
+        /**
+         * convert input odd to American format
+         */
+        $options = $this->bookOptions->getOptions($this->getBookId());
+        $data->odd = $this->oddFormat->convertFromTo($options->odd_format, 'American', $data->odd);
+        
         $objects = $this->getObjects($data);
         $SqlArr = $this->toSqlArray($data, null, $objects);
         $ms = $this->ms->read($id, [
@@ -234,6 +265,7 @@ class Single extends DomainBetObject
     {
         if($ms){
             $a = $ms;
+            
             //delete private data
             if(isset($a['id'])) {
                 unset($a['id']);
@@ -255,6 +287,18 @@ class Single extends DomainBetObject
             $a['event_name'] = $o['e']['name'];
             $a['odd_id'] = $o['o']['odd_id'];
             $a['odd_selection_id'] = $o['os']['odd_selection_id'];
+            
+            //add currency field
+            $a['risk_usd'] = $this->bookCurrency->convertToUSD($a['risk'], $this->getBookId());
+            if(isset($a['win'])) {
+                $a['win_usd'] = $this->bookCurrency->convertToUSD($a['win'], $this->getBookId());
+            }
+            
+            /**
+            * convert input odd to Original format
+            */
+            $options = $this->bookOptions->getOptions($this->getBookId());
+            $a['odd'] = $this->oddFormat->convertFromTo('American', $options->odd_format, $a['odd']);
             
             return $a;
         }

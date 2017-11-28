@@ -10,6 +10,9 @@ namespace RiskMan\Domain\Bet;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+use RiskMan\BookCurrency\BookCurrency;
+use RiskMan\BookOptions\BookOptions;
+
 /**
  * Description of DomainFactory
  *
@@ -45,6 +48,9 @@ class DomainBetFactory implements AbstractFactoryInterface
                     $e = $serviceLocator->get('RiskMan\\Model\\Feed\\Event');
                     $o = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
                     $os = $serviceLocator->get('RiskMan\\Model\\Feed\\OddSelection');
+                    $bc = $serviceLocator->get(BookCurrency::class);
+                    $bo = $serviceLocator->get(BookOptions::class);
+                    
                     
                     $single  = $serviceLocator->get('RiskMan\\Model\\Bet\\Single');
                     $o = new $requestedName(
@@ -55,7 +61,9 @@ class DomainBetFactory implements AbstractFactoryInterface
                         $single, 
                         $e, 
                         $o, 
-                        $os
+                        $os,
+                        $bc,
+                        $bo
                     );
                     //echo " ...done\n";
                     return $o;

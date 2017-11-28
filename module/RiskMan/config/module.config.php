@@ -14,7 +14,9 @@ return array(
             'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResource' => 'RiskMan\\V1\\Rest\\OddSelection\\OddSelectionResourceFactory',
             'RiskMan\\V1\\Rest\\BetRadar\\BetRadarResource' => 'RiskMan\\V1\\Rest\\BetRadar\\BetRadarResourceFactory',
             RiskMan\BookOptions\BookOptions::class => RiskMan\BookOptions\BookOptionsFactory::class,
-            RiskMan\BookOptions\Mapper::class => RiskMan\BookOptions\MapperFactory::class
+            RiskMan\BookOptions\Mapper::class => RiskMan\BookOptions\MapperFactory::class,
+            RiskMan\BookCurrency\BookCurrency::class => RiskMan\BookCurrency\BookCurrencyFactory::class,
+            RiskMan\BookCurrency\Mapper::class => RiskMan\BookCurrency\MapperFactory::class
         ),
         'abstract_factories' => array(
             0 => 'RiskMan\\Domain\\Feed\\DomainFeedFactory',

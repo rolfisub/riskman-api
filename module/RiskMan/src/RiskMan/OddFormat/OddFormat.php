@@ -63,7 +63,7 @@ class OddFormat
     private function DecimalToAmerican ($value)
     {
         $value = (float)$value;
-        if($value === 0){return $value;}
+        if($value == 0){return $value;}
         if($value >= 2.0) {
             return round(($value - 1) * 100, 0);
         } else {
@@ -78,7 +78,7 @@ class OddFormat
      */
     private function AmericanToDecimal ($value)
     {
-        if($value === 0){return $value;}
+        if($value == 0){return $value;}
         if($value > 0) {
             return 1 + (abs($value) / 100);
         } else {
