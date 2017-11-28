@@ -115,6 +115,13 @@ class MultipleSelection extends DomainBetObject
         if($problem2){
             return $problem2;
         }
+        
+        /**
+         * convert input odd to American format
+         */
+        $options = $this->bookOptions->getOptions($this->getBookId());
+        $data->odd = $this->oddFormat->convertFromTo($options->odd_format, 'American', $data->odd);
+        
         $objects = $this->getObjects($data);
         $SqlArr = $this->toSqlArray($data, null, $objects);
         $ms = $this->ms->read($id, [
@@ -289,6 +296,12 @@ class MultipleSelection extends DomainBetObject
             $a['event_name'] = $o['e']['name'];
             $a['odd_id'] = $o['o']['odd_id'];
             $a['odd_selection_id'] = $o['os']['odd_selection_id'];
+            
+            /**
+            * convert input odd to Original format
+            */
+            $options = $this->bookOptions->getOptions($this->getBookId());
+            $a['odd'] = $this->oddFormat->convertFromTo('American', $options->odd_format, $a['odd']);
             
             return $a;
         }
