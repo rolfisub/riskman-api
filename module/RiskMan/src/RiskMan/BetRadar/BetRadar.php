@@ -76,7 +76,7 @@ class BetRadar
     {
         
         $response = new DomainResponse([
-            'status' => 404,
+            'code' => 404,
             'title' => '',
             'detail'=> '',
             'type'=> '',
@@ -94,7 +94,8 @@ class BetRadar
         
         //helper to initialize parser
         $this->parser->init($input);
-         
+        
+        $time['events']['start'] = microtime(true);
         $events = $this->parser->getEvents();
         
         //create events
@@ -104,8 +105,11 @@ class BetRadar
                return $problem2;
             }
         }
+        $time['events']['end'] = microtime(true);
+        $time['events']['total'] = $time['events']['end'] - $time['events']['start'];
         
         
+        $time['odds']['start'] = microtime(true);
         //create odds
         $odds = $this->parser->getOdds();
         
@@ -115,8 +119,10 @@ class BetRadar
                return $problem3;
             }
         }
+        $time['odds']['end'] = microtime(true);
+        $time['odds']['total'] = $time['odds']['end'] - $time['odds']['start'];
         
-        
+        $time['oddsel']['start'] = microtime(true);
         //create odds selections
         $oddselections = $this->parser->getOddSelections();
         
@@ -128,13 +134,15 @@ class BetRadar
                $this->parser->updateMsgOddSelectionData($problem4);
             }
         }
+        $time['oddsel']['end'] = microtime(true);
+        $time['oddsel']['total'] = $time['oddsel']['end'] - $time['oddsel']['start'];
         
         $time['saveMsg']['end'] = microtime(true);
         $time['saveMsg']['total'] = $time['saveMsg']['end'] - $time['saveMsg']['start'];
         /**
          * end
          */
-        $response->status = 200;
+        $response->code = 200;
         $response->type = 'OK';
         $response->title = 'Success.';
         $response->details = 'BetRadar msg processed and saved.';

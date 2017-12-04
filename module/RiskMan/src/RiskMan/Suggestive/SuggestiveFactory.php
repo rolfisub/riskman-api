@@ -4,7 +4,7 @@ namespace RiskMan\Suggestive;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-use Riskman\Suggestive\Suggestive as SuggestiveModel;
+use RiskMan\Suggestive\Suggestive as SuggestiveModel;
 use RiskMan\Suggestive\SuggestiveMapper;
 
 
@@ -23,7 +23,6 @@ class SuggestiveFactory implements AbstractFactoryInterface
             0 => SuggestiveModel::class,
             1 => SuggestiveMapper::class,
         );
-        
         return in_array($requestedName, $objects);
     }
 

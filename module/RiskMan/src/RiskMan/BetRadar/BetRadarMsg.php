@@ -63,8 +63,8 @@ class BetRadarMsg extends DomainObject
     private function toSqlArray($data)
     {
         $arr = [];
-        if ($data->msg_id){
-            $arr['msg_id'] = $data->msg_id;
+        if ($data->betradarmsg_id){
+            $arr['betradarmsg_id'] = $data->betradarmsg_id;
         }
         if ($data->msg) {
             $arr['msg'] = $data->msg;

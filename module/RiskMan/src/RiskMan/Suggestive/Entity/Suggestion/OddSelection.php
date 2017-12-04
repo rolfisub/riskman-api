@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace RiskMan\Suggestive\Entity;
+namespace RiskMan\Suggestive\Entity\Suggestion;
 
 /**
  * Description of OddSelection

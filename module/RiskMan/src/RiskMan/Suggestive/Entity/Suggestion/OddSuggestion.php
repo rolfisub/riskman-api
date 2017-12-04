@@ -6,9 +6,9 @@
  * and open the template in the editor.
  */
 
-namespace RiskMan\Suggestive\Entity;
+namespace RiskMan\Suggestive\Entity\Suggestion;
 
-use RiskMan\Suggestive\Entity\Limit;
+use RiskMan\Suggestive\Entity\Suggestion\Limit;
 use RiskMan\Suggestive\Entity\Bets\Single;
 use RiskMan\Suggestive\Entity\Bets\Multiple;
 

@@ -76,21 +76,25 @@ class RadarMsgParser
                     foreach($events as $key4 => $event) {
                         $oddsData['event_id'] = (string)$event['BetradarMatchID'];
                         $odds = $event->MatchOdds->Bet;
-                        foreach($odds as $key5 => $bet) {
-                            $oddsData['odd_id'] = $oddsData['event_id'] . '.' . $bet['OddsType'];
-                            $odds = $bet->Odds;
-                            foreach($odds as $key6 => $odd){
-                                if(isset($odd['OutComeId'])) {
-                                    $oddsData['odd_selection_id'] = (string) $odd['OutComeId'];
-                                } else {
-                                    $oddsData['odd_selection_id'] = (string) $odd['OutCome'];
+                        if(is_array($odds)) {
+                            foreach($odds as $key5 => $bet) {
+                                $oddsData['odd_id'] = $oddsData['event_id'] . '.' . $bet['OddsType'];
+                                $odds = $bet->Odds;
+                                foreach($odds as $key6 => $odd){
+                                    if(isset($odd['OutComeId'])) {
+                                        $oddsData['odd_selection_id'] = (string) $odd['OutComeId'];
+                                    } else {
+                                        $oddsData['odd_selection_id'] = (string) $odd['OutCome'];
+                                    }
+                                    $oddsData['odd_selection_name'] = (string) $odd['OutCome'];
+                                    if(isset($odd['SpecialBetValue'])){
+                                        $oddsData['points'] = (int) $odd['SpecialBetValue'];
+                                    }
+                                    $oddsData['odd'] = (double) $odd;
+                                    if($oddsData['odd']) {
+                                        $oddsReturn[] = $oddsData;
+                                    }
                                 }
-                                $oddsData['odd_selection_name'] = (string) $odd['OutCome'];
-                                if(isset($odd['SpecialBetValue'])){
-                                    $oddsData['points'] = (int) $odd['SpecialBetValue'];
-                                }
-                                $oddsData['odd'] = (double) $odd;
-                                $oddsReturn[] = $oddsData;
                             }
                         }
                         
@@ -120,27 +124,29 @@ class RadarMsgParser
                     foreach($events as $key4 => $event) {
                         if($data['event_id'] == (string)$event['BetradarMatchID']) {
                             $odds = $event->MatchOdds->Bet;
-                            foreach($odds as $key5 => $bet) {
-                                if($data['odd_id'] == $data['event_id'] . '.' . $bet['OddsType']) {
-                                    
-                                    $odds = $bet->Odds;
-                                    foreach($odds as $key6 => $odd){
-                                        $odd_sel_id = '';
-                                        if(isset($odd['OutComeId'])) {
-                                            $odd_sel_id = (string) $odd['OutComeId'];
-                                        } else {
-                                            $odd_sel_id = (string) $odd['OutCome'];
-                                        }
-                                        
-                                        if($data['odd_selection_id'] == $odd_sel_id) {
-                                            if(isset($odd['SpecialBetValue'])){
-                                                $odd['SpecialBetValue'] = $data['points'];
+                            if(is_array($odds)){
+                                foreach($odds as $key5 => $bet) {
+                                    if($data['odd_id'] == $data['event_id'] . '.' . $bet['OddsType']) {
+
+                                        $odds = $bet->Odds;
+                                        foreach($odds as $key6 => $odd){
+                                            $odd_sel_id = '';
+                                            if(isset($odd['OutComeId'])) {
+                                                $odd_sel_id = (string) $odd['OutComeId'];
+                                            } else {
+                                                $odd_sel_id = (string) $odd['OutCome'];
                                             }
-                                            $odd[0] = number_format($data['odd'], 4, '.', '');
+
+                                            if($data['odd_selection_id'] == $odd_sel_id) {
+                                                if(isset($odd['SpecialBetValue'])){
+                                                    $odd['SpecialBetValue'] = $data['points'];
+                                                }
+                                                $odd[0] = number_format($data['odd'], 4, '.', '');
+                                            }
+
                                         }
-                                        
+
                                     }
-                                    
                                 }
                             }
                         }
@@ -187,10 +193,12 @@ class RadarMsgParser
                         $oddsData['event_id'] = (string)$event['BetradarMatchID'];
                         $oddsData['datetime'] = (string)$event->Fixture->DateInfo->MatchDate;
                         $odds = $event->MatchOdds->Bet;
-                        foreach($odds as $key5 => $odd) {
-                            $oddsData['odd_id'] = $oddsData['event_id'] . '.' . $odd['OddsType'];
-                            $oddsData['odd_name'] = $oddsData['odd_id'];
-                            $oddsReturn[] = $oddsData;
+                        if(is_array($odds)) {
+                            foreach($odds as $key5 => $odd) {
+                                $oddsData['odd_id'] = $oddsData['event_id'] . '.' . $odd['OddsType'];
+                                $oddsData['odd_name'] = $oddsData['odd_id'];
+                                $oddsReturn[] = $oddsData;
+                            }
                         }
                         
                     }

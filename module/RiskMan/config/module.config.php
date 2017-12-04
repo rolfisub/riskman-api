@@ -16,7 +16,8 @@ return array(
             RiskMan\BookOptions\BookOptions::class => RiskMan\BookOptions\BookOptionsFactory::class,
             RiskMan\BookOptions\Mapper::class => RiskMan\BookOptions\MapperFactory::class,
             RiskMan\BookCurrency\BookCurrency::class => RiskMan\BookCurrency\BookCurrencyFactory::class,
-            RiskMan\BookCurrency\Mapper::class => RiskMan\BookCurrency\MapperFactory::class
+            RiskMan\BookCurrency\Mapper::class => RiskMan\BookCurrency\MapperFactory::class,
+            RiskMan\BookCentline\BookCentline::class => RiskMan\BookCentline\BookCentlineFactory::class
         ),
         'abstract_factories' => array(
             0 => 'RiskMan\\Domain\\Feed\\DomainFeedFactory',
@@ -24,7 +25,7 @@ return array(
             2 => 'RiskMan\\Model\\ModelFeedFactory',
             3 => 'RiskMan\\BetRadar\\BetRadarFactory',
             4 => 'RiskMan\\BetRadar\\Mapper\\BetRadarMsgFactory',
-            5 => 'RiskMan\\Suggestive\\SuggestiveFactory'
+            5 =>  RiskMan\Suggestive\SuggestiveFactory::class
         ),
     ),
     'router' => array(

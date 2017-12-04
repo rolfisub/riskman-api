@@ -9,6 +9,7 @@
 namespace RiskMan\Domain\Feed;
 
 use RiskMan\BookOptions\BookOptions;
+use RiskMan\Suggestive\Suggestive;
 
 
 use Zend\ServiceManager\AbstractFactoryInterface;
@@ -30,9 +31,7 @@ class DomainFeedFactory implements AbstractFactoryInterface
         $objects = array(
             0 => 'RiskMan\\Domain\\Feed\\Event',
             1 => 'RiskMan\\Domain\\Feed\\Odd',
-            2 => 'RiskMan\\Domain\\Feed\\OddSelection',
-            
-            
+            2 => 'RiskMan\\Domain\\Feed\\OddSelection'
         );
         return in_array($requestedName, $objects);
     }
@@ -69,7 +68,8 @@ class DomainFeedFactory implements AbstractFactoryInterface
                     $o = $serviceLocator->get('RiskMan\\Model\\Feed\\Odd');
                     $os = $serviceLocator->get('RiskMan\\Model\\Feed\\OddSelection');
                     $bo = $serviceLocator->get(BookOptions::class);
-                    $or = new $requestedName($o, $os, $e, $bo);
+                    $ss = $serviceLocator->get(Suggestive::class);
+                    $or = new $requestedName($o, $os, $e, $bo, $ss);
                    // echo " ...done\n";
                     return $or;
             }

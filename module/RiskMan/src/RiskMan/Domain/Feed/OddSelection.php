@@ -14,6 +14,8 @@ use RiskMan\Model\Feed\OddSelection as MOs;
 use RiskMan\Model\Feed\Odd;
 use RiskMan\BookOptions\BookOptions;
 use RiskMan\OddFormat\OddFormat;
+use RiskMan\Suggestive\Suggestive;
+use RiskMan\Suggestive\Entity\Feed\OddSelection as SuggestionOSEntity;
 
 
 /**
@@ -44,20 +46,27 @@ class OddSelection extends DomainFeedObject
     
     /**
      * Odd converter
-     * $var OddFormat
+     * @var OddFormat
      */
     protected $oddConverter;
+    
+    /**
+     * Suggestive service
+     * @var Suggestive
+     */
+    protected $suggestive;
 
     /*
      * constructor TODO: Annotations
      */
-    public function __construct(Odd $o, MOs $os, Event $e, BookOptions $bo) 
+    public function __construct(Odd $o, MOs $os, Event $e, BookOptions $bo, Suggestive $ss) 
     {
         $this->os = $os;
         $this->o = $o;
         $this->e = $e;
         $this->bookOptions = $bo;
         $this->oddConverter = new OddFormat();
+        $this->suggestive = $ss;
         $this->setFields([
             'odd_selection_id',
             'odd_selection_name',
@@ -98,11 +107,24 @@ class OddSelection extends DomainFeedObject
         $options = $this->bookOptions->getOptions($this->getBookId());
         $data->odd = $this->oddConverter->convertFromTo($options->odd_format, 'American', $data->odd);
         
+        
+        
         //get needed objects
         $o = $this->o->read($data->odd_id);
         $odd_id  = $o['id'];
         $e = $this->e->read($data->event_id);
         $event_id  = $e['id'];
+        
+        /**
+         * get odd suggestion from odd change
+         */
+        $SuggestionOSEntity = new SuggestionOSEntity();
+        $SuggestionOSEntity->book_id = $this->getBookId();
+        $SuggestionOSEntity->odd = $data->odd;
+        $SuggestionOSEntity->odd_id = $odd_id;
+        $SuggestionOSEntity->odd_selection_id = $data->odd_selection_id;
+        $suggestion = $this->suggestive->getFeedSuggestion($SuggestionOSEntity);
+        
         
         //check for update or insert
         $oddSqlArr = $this->toSqlArray($data);

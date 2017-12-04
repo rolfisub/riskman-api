@@ -3,7 +3,10 @@
 namespace RiskMan\Suggestive;
 
 use RiskMan\Suggestive\SuggestiveMapper;
-use RiskMan\Suggestive\Entity\OddSuggestion;
+use RiskMan\Suggestive\Entity\Suggestion\OddSuggestion;
+use RiskMan\Suggestive\Entity\Feed\OddSelection;
+use RiskMan\Suggestive\Entity\Bets\Single;
+use RiskMan\Suggestive\Entity\Bets\Multiple;
 /**
  * Suggestive class will be used as a base class for storing common methods
  *
@@ -17,22 +20,33 @@ class Suggestive
         $this->mapper = $sm;
     }
     
-    
-    
     /**
-     * Generated suggestion after bet
-     * @var OddSuggestion
+     * gets an odds suggestion from a feed event
+     * @return OddSuggestion Description
+     * @param OddSelection $os
      */
-    protected $new;
-    
-    /**
-     * This function generates the new suggestion
-     */
-    public function getNew($odd_id, $odd_selection_id, $risk)
+    public function getFeedSuggestion(OddSelection $os)
     {
-        if(!$this->new) {
-            $this->new = new OddSuggestion();
-        }
-        return $this->new;
+        die("entry point for feed suggestion");
+    }
+    
+    /**
+     * returns odd suggestion from a single event bet
+     * @return OddSuggestion Description
+     * @param Single $s
+     */
+    public function getSingleSuggestion(Single $s)
+    {
+        
+    }
+    
+    /**
+     * returns oddsugestion based of multiple event bet
+     * @return OddSuggestion Description
+     * @param Multiple $m
+     */
+    public function getMultipleSuggestion(Multiple $m)
+    {
+        
     }
 }

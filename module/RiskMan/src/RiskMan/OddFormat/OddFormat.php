@@ -95,7 +95,7 @@ class OddFormat
     {
         //check if value is not double or int
         if(!is_numeric($value)) {
-            throw new \Exception('Value provided to odd converter is not numeric.', 500);
+            throw new \Exception('Value provided to odd converter is not numeric. value = ' . $value, 500);
         }
         //validate american
         if($from === 'American')

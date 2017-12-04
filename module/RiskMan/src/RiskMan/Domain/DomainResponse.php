@@ -23,10 +23,10 @@ class DomainResponse
     
     public function __construct(array $data) 
     {
-        $this->code = $data['code'] ? $data['code'] : 500;
-        $this->type = $data['type'] ? $data['type'] : 'undefined';
-        $this->title = $data['title'] ? $data['title'] : 'undefined';
-        $this->details = $data['details'] ? $data['details'] : 'undefined';
-        $this->data = $data['data'] ? $data['data'] : [];
+        $this->code = isset($data['code']) ? $data['code'] : 500;
+        $this->type = isset($data['type']) ? $data['type'] : 'undefined';
+        $this->title = isset($data['title']) ? $data['title'] : 'undefined';
+        $this->details = isset($data['details']) ? $data['details'] : 'undefined';
+        $this->data = isset($data['data']) ? $data['data'] : [];
     }
 }
